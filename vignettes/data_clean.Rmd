@@ -1,120 +1,69 @@
 ---
 title: "data_clean"
 author: "Brad Cannell"
-date: "May 4, 2016"
+date: "May 18, 2016"
 output: html_document
 ---
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
-**Load Packages**
+**Load packages and functions**
 ```{r message=FALSE}
-library(rprojroot)
-library(data.table)
-library(readxl)
+# Packages
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# devtools::install_github("mbcann01/dataclean")
+library(dataclean) # Use this instead of str() to prevent showing raw data values
 ```
 
 **Import Data**   
 ```{r}
-# Root directory
-root <- rprojroot::find_root("DESCRIPTION")
+ema <- read_csv("data/Cleaned Daily EMA April 2016.csv")
 
-# Pilot screener responses
-fpath <- paste0(root, "/inst/extdata/pilot_data_2015_10_27.csv")
-detectpt <- data.table::fread(fpath)
-
-# Pilot reports to APS
-fpath <- paste0(root, "/inst/extdata/DETECT_APS Data_110515.xlsx")
-detectptreports <- data.table::setDT(readxl::read_excel(fpath))
+about_data(ema)
+names(ema)
 ```
-------   
 
-&nbsp;   
+-------------------------------------------------------------------------------   
 
-# Clean Pilot Screener Responses
+&nbsp;  
 
-**Recode Data**   
-Recode "NULL" to NA and convert "Yes" and "No" to numeric.
+**Convert to factor variables**   
 ```{r}
-# Recode values
-detectpt <- data.table::setDT(lapply(detectpt, function(x){
-  x[x == "NULL"] <- NA
-  x[x == "Dont Know"] <- 9L
-  x[x == "No"] <- 0L
-  x[x == "Yes"] <- 1L
-  x <- as.integer(x)
-  return(x)
-}))
+likert <- c(
+  "Strongly disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly agree"
+)
+
+ema <- ema %>%
+  dplyr::mutate(
+    happy_f = factor(happy, levels = c(0:4), labels = likert),
+    frustrated_f = factor(frustrated, levels = c(0:4), labels = likert),
+    sad_f = factor(sad, levels = c(0:4), labels = likert),
+    worried_f = factor(worried, levels = c(0:4), labels = likert),
+    restless_f = factor(restless, levels = c(0:4), labels = likert),
+    excited_f = factor(excited, levels = c(0:4), labels = likert),
+    calm_f = factor(calm, levels = c(0:4), labels = likert),
+    lonely_f = factor(lonely, levels = c(0:4), labels = likert),
+    bored_f = factor(bored, levels = c(0:4), labels = likert),
+    sluggish_f = factor(sluggish, levels = c(0:4), labels = likert)
+  )
+
+about_data(ema)
+names(ema)
 ```
 
-**Flatten out the data set so that I only have one row per incident ID.**   
-Currently the data is structured with 26 rows per incident ID (one for each screening item), with only one non-missing value per row. Every other value in each row is an NA.   
-
-Collapse all the rows for each incident ID into a single row with a non-missing value for each screening item (where possible).
-```{r warning=FALSE}
-# Collapse rows
-detectpt <- detectpt[, lapply(.SD, max, na.rm = TRUE), by = incidentID]
-
-# Recode -Inf to NA
-detectpt <- data.table::setDT(lapply(detectpt, function(x){
-  x[is.infinite(x)] <- NA
-  return(x)
-}))
-```
-
-**Convert Screening Questions to Factors**
-```{r}
-temp <- data.table::setDT(lapply(detectpt[, .SD, .SDcol = -1], factor, 
-  levels = c(0, 1, 9),
-  labels = c("No", "Yes", "Don't Know")))
-detectpt <- cbind(detectpt[, .(incidentID)], temp)
-rm(temp)
-```
-
-**Data Info**
-```{r echo=FALSE}
-data_info <- function(x){
-  cat("Data Set:", deparse(substitute(x)), "\n")
-  cat("Class:", class(x), "\n")
-  cat(nrow(x), "Rows and", ncol(x), "Variables", "\n")
-  cat("Variable Names:", "\n")
-  names(x)
-}
-data_info(detectpt)
-```
-
-**Save Data**
-```{r}
-save(detectpt, file = paste0(root, "/data/detectpt.RData"))
-```
-------   
-
-&nbsp;
-
-# Clean Reports to APS   
-
-**Rename Variables**
-```{r}
-names(detectptreports) <- c("agency", "confirmation_number", "report_date", "e_report", "response_number")
-```
-
-**Subset the Data**
-```{r}
-# Keep reports to APS only
-detectptreports <- detectptreports[agency == "APS"]
-
-# Drop confirmation number
-detectptreports <- detectptreports[, .SD, .SDcol = -2]
-
-# Number of reports
-nrow(detectptreports)
-```
-
-Unfortunately, there is currently no way to link these reports with the screener responses.   
-
------
+-------------------------------------------------------------------------------
 
 #### Session Info:
 ```{r echo=FALSE}

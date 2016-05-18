@@ -14,4 +14,8 @@ Get started by viewing the vignettes below.
 Vignettes
 ---------
 
-[mChat exploratory analysis](https://rawgit.com/mbcann01/detectPilotTest/master/vignettes/exploratory_analysis.html)
+[Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
+
+[Exploratory analysis]()
+
+[Plot - Cicumplex Model of Affect]()

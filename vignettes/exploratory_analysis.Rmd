@@ -7,23 +7,40 @@ output: html_document
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
-**Load Packages**
+**Load packages and functions**
 ```{r message=FALSE}
+# Packages
 library(readr)
+library(dplyr)
 library(ggplot2)
+
+# Functions
+source("functions/about_data.R") # Use this instead of str() to prevent showing raw data values
 ```
 
 **Import Data**   
 ```{r}
-# April only
 ema <- read_csv("data/Cleaned Daily EMA April 2016.csv")
+
+about_data(ema)
+names(ema)
 ```
+
 -------------------------------------------------------------------------------   
 
 &nbsp;
 
+**Summarize numeric variables**
+```{r}
+ema_num <- ema %>%
+  dplyr::select()
+
+```
 
 
 
