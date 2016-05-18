@@ -35,7 +35,7 @@ names(ema)
 
 &nbsp;  
 
-**Convert to factor variables**   
+**Convert categorical variables to class factor**   
 ```{r}
 likert <- c(
   "Strongly disagree",
