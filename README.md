@@ -14,6 +14,8 @@ Get started by viewing the vignettes below.
 Vignettes
 ---------
 
+[Codebook](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html)
+
 [Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
 
 [Exploratory analysis]()

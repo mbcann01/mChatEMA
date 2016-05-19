@@ -1,0 +1,49 @@
+---
+title: "Codebook"
+author: "Brad Cannell"
+date: "May 19, 2016"
+output: html_document
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
+```
+
+**Load packages and functions**
+```{r message=FALSE}
+# Packages
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# devtools::install_github("mbcann01/dataclean")
+library(dataclean) # Use this instead of str() to prevent showing raw data values
+```
+
+**Load data**   
+```{r}
+load("data/ema_april_2016.RData")
+about_data(ema)
+```
+
+-------------------------------------------------------------------------------   
+
+&nbsp;  
+
+**Create Codebook**   
+
+Remember, this is currently April, 2016 only.
+
+```{r}
+codebook(ema)
+```
+
+-------------------------------------------------------------------------------
+
+#### Session Info:
+```{r echo=FALSE}
+sessionInfo()
+```
