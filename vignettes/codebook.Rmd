@@ -14,19 +14,14 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 
 **Load packages and functions**
 ```{r message=FALSE}
-# Packages
-library(readr)
-library(dplyr)
-library(ggplot2)
-
 # devtools::install_github("mbcann01/dataclean")
-library(dataclean) # Use this instead of str() to prevent showing raw data values
+library(dataclean)
 ```
 
 **Load data**   
 ```{r}
-load("data/ema_april_2016.RData")
-about_data(ema)
+load("data/daily_april_2016.RData")
+about_data(daily)
 ```
 
 -------------------------------------------------------------------------------   
@@ -37,8 +32,8 @@ about_data(ema)
 
 Remember, this is currently April, 2016 only.
 
-```{r}
-codebook(ema)
+```{r highlight=FALSE}
+codebook(daily)
 ```
 
 -------------------------------------------------------------------------------

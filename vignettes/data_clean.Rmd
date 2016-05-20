@@ -1,7 +1,6 @@
 ---
 title: "Data Clean"
-author: "Brad Cannell"
-date: "May 19, 2016"
+date: "May 20, 2016"
 output: html_document
 ---
 
@@ -15,8 +14,9 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 **Load packages and functions**
 ```{r message=FALSE}
 # Packages
-library(readr)
+library(readxl)
 library(dplyr)
+library(stringr)
 library(ggplot2)
 
 # devtools::install_github("mbcann01/dataclean")
@@ -25,17 +25,207 @@ library(dataclean) # Use this instead of str() to prevent showing raw data value
 
 **Import Data**   
 ```{r}
-ema <- read_csv("data/Cleaned Daily EMA April 2016.csv")
+daily <- readxl::read_excel("data/raw data/daily_2016_05_02.xls")
 
-about_data(ema)
-names(ema)
+# Create character vector to rename variables upon import
+new_names <- c(
+  "case_number",
+  "date",
+  "id",
+  "happy",
+  "frustrated",
+  "sad",
+  "worried",
+  "restless",
+  "excited",
+  "calm",
+  "lonely",
+  "bored",
+  "sluggish",
+  "pre_location",
+  "pre_action",
+  "pre_who1",
+  "pre_who2",
+  "pre_yesterday",
+  "min_walk",
+  "min_walk_c",
+  "min_run",
+  "min_run_c",
+  "min_act",
+  "min_act_c",
+  "min_sit",
+  "min_sit_c",
+  "pedometer1",
+  "pedometer2",
+  "steps",
+  "phys_act_sat1",
+  "phys_act_sat2",
+  "serv_fruit1",
+  "serv_fruit2",
+  "serv_veg",
+  "serv_ssb1",
+  "serv_ssb2",
+  "serv_sweets1",
+  "serv_sweets2",
+  "serv_meat",
+  "food_sat1",
+  "food_sat2",
+  "take_meds1",
+  "take_meds2",
+  "which_meds1",
+  "why_no_meds",
+  "free_time",
+  "free_time_act",
+  "free_time_sat1",
+  "free_time_sat2",
+  "min_talk1",
+  "min_talk2",
+  "min_group1",
+  "min_group2",
+  "interaction_sat1",
+  "interaction_sat2",
+  "subs_check1",
+  "subs_check2",
+  "num_drinks1",
+  "num_drinks2",
+  "subs_time",
+  "first_drink",
+  "last_drink",
+  "num_cigs1",
+  "num_cigs2",
+  "first_cig",
+  "last_cig",
+  "opiate",
+  "num_heroin",
+  "num_opiate",
+  "stim",
+  "num_coc",
+  "num_stim",
+  "alert_time",
+  "alert_action",
+  "start_time",
+  "completed",
+  "which_meds2"
+)
+
+# Rename variables
+names(daily) <- new_names
+
+about_data(daily)
+```
+
+-------------------------------------------------------------------------------   
+
+&nbsp; 
+
+**Convert date / time variables**
+```{r}
+daily <- daily %>%
+  dplyr::mutate(
+    # Create new POSIX class variable by combining date and start time
+    start_time = as.POSIXct(paste(date, start_time), format = "%Y-%m-%d %H:%M")
+  )
 ```
 
 -------------------------------------------------------------------------------   
 
 &nbsp;  
 
-**Convert categorical variables to class factor**   
+**Create dummy variables for multiple answer questions**
+```{r}
+daily <- daily %>%
+  dplyr::mutate(
+    
+    # Where are you right now?
+    bus_loc        = ifelse(grepl("Bus", pre_location), 1, 0),
+    church_loc     = ifelse(grepl("Church", pre_location), 1, 0),
+    home_loc       = ifelse(grepl("Home", pre_location), 1, 0),
+    frifam_loc     = ifelse(grepl("Friend's", pre_location), 1, 0),
+    store_loc      = ifelse(grepl("Store", pre_location), 1, 0),
+    outdoors_loc   = ifelse(grepl("Outdoors", pre_location), 1, 0),
+    other_loc      = ifelse(grepl("Other", pre_location), 1, 0),
+    restaurant_loc = ifelse(grepl("Restaurant", pre_location), 1, 0),
+    school_loc     = ifelse(grepl("school", pre_location), 1, 0),
+    work_loc       = ifelse(grepl("Work", pre_location), 1, 0),
+    
+    # What were you doing right before your phone rang/vibrated?
+    other_act      = ifelse(grepl("Other", pre_action), 1, 0),
+    sit_act        = ifelse(grepl("Sitting", pre_action), 1, 0),
+    sleep_act      = ifelse(grepl("Sleeping", pre_action), 1, 0),
+    stand_act      = ifelse(grepl("Standing", pre_action), 1, 0),
+    walk_act       = ifelse(grepl("Walking", pre_action), 1, 0),
+    talk_act       = ifelse(grepl("Talking", pre_action), 1, 0),
+    
+    # Which of these things did you do yesterday?
+    bike_yest      = ifelse(grepl("Walk or bicycle", pre_yesterday), 1, 0),
+    run_yest       = ifelse(grepl("running", pre_yesterday), 1, 0),
+    cleaning_yest  = ifelse(grepl("cleaning", pre_yesterday), 1, 0),
+    none_yest      = ifelse(grepl("None", pre_yesterday), 1, 0),
+    
+    # Which medication didn’t you take? 
+    medtype_dep    = ifelse(grepl("Depression", which_meds2), 1, 0),
+    medtype_psy    = ifelse(grepl("Psychiatric", which_meds2), 1, 0),
+    medtype_ast    = ifelse(grepl("Asthma", which_meds2), 1, 0),
+    medtype_bp     = ifelse(grepl("Blood pressure", which_meds2), 1, 0),
+    medtype_diab   = ifelse(grepl("Diabetes", which_meds2), 1, 0),
+    medtype_pain   = ifelse(grepl("Pain", which_meds2), 1, 0),
+    medtype_chol   = ifelse(grepl("Cholesterol", which_meds2), 1, 0),
+    medtype_anti   = ifelse(grepl("Antibiotic", which_meds2), 1, 0),
+    medtype_other  = ifelse(grepl("Other", which_meds2), 1, 0),
+    
+    # Why didn’t you take medications?
+    meds_ran_out   = ifelse(grepl("Ran", why_no_meds), 1, 0),
+    meds_forgot    = ifelse(grepl("Forgot", why_no_meds), 1, 0),
+    meds_no_need   = ifelse(grepl("need", why_no_meds), 1, 0),
+    meds_side      = ifelse(grepl("Side effects", why_no_meds), 1, 0),
+    meds_other     = ifelse(grepl("Other", why_no_meds), 1, 0),
+    
+    # What did you do in your free time yesterday?
+    none_free      = ifelse(grepl("None", free_time_act), 1, 0),
+    tv_free        = ifelse(grepl("Watched TV", free_time_act), 1, 0),
+    internet_free  = ifelse(grepl("Surfed the i", free_time_act), 1, 0),
+    book_free      = ifelse(grepl("Read a book", free_time_act), 1, 0),
+    music_free     = ifelse(grepl("music or played", free_time_act), 1, 0),
+    craft_free     = ifelse(grepl("Arts,", free_time_act), 1, 0),
+    cleaned_free   = ifelse(grepl("Cleaned", free_time_act), 1, 0),
+    pets_free      = ifelse(grepl("of pets", free_time_act), 1, 0),
+    pray_free      = ifelse(grepl("Prayed,", free_time_act), 1, 0),
+    sport_free     = ifelse(grepl("Played a sport", free_time_act), 1, 0),
+    walk_free      = ifelse(grepl("or jog", free_time_act), 1, 0),
+    shop_free      = ifelse(grepl("Went shopping", free_time_act), 1, 0),
+    volunteer_free = ifelse(grepl("Volunteered", free_time_act), 1, 0),
+    social_free    = ifelse(grepl("Socialized with", free_time_act), 1, 0),
+    
+    # Which of the following did you use yesterday, even once?
+    alc_sub        = ifelse(grepl("Alcohol", subs_check1), 1, 0),
+    cig_sub        = ifelse(grepl("Tobacco", subs_check1), 1, 0),
+    mar_sub        = ifelse(grepl("Marijuana", subs_check1), 1, 0),
+    opi_sub        = ifelse(grepl("Opiates", subs_check1), 1, 0),
+    stim_sub       = ifelse(grepl("Stimulants", subs_check1), 1, 0),
+    herb_sub       = ifelse(grepl("Herbal", subs_check1), 1, 0),
+    other_sub      = ifelse(grepl("Another drug", subs_check1), 1, 0),
+    none_sub       = ifelse(grepl("None", subs_check1), 1, 0),
+    
+    # Which of the following opiates did you used yesterday?
+    op_heroin      = ifelse(grepl("Heroin", opiate), 1, 0),
+    op_methadone   = ifelse(grepl("Methadone", opiate), 1, 0),
+    op_pills       = ifelse(grepl("Pills", opiate), 1, 0),
+    op_other       = ifelse(grepl("Other", opiate), 1, 0)
+  )
+
+# View(daily[c("why_no_meds", "meds_ran_out", "meds_forgot", "meds_no_need", "meds_side", "meds_other")])
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;  
+
+**Variable manipulation**   
+Covert categorical variables to class factor   
+Coerce some variables from character to numeric   
+Rename variables   
+Drop unneeded variables   
 ```{r}
 likert <- c(
   "Strongly disagree",
@@ -45,29 +235,361 @@ likert <- c(
   "Strongly agree"
 )
 
-ema <- ema %>%
+yesno <- c(
+  "No",
+  "Yes"
+)
+
+minutes <- c(
+  "10 or less minutes",
+  "11-20",
+  "21-30",
+  "31-40",
+  "41-50",
+  "more than 50"
+)
+
+hours <- c(
+  "4 or fewer hours",
+  "More than 4 hours- 6 hours",
+  "More than 6 hours- 8 hours",
+  "More than 8 hours- 10 hours",
+  "More than 10 hours - 12 hours",
+  "More than 12 hours"
+)
+
+hours2 <- c(
+  "2 or fewer hours",
+  "More than 2 hours- 4 hours",
+  "More than 4 hours- 6 hours",
+  "More than 6 hours- 8 hours",
+  "More than 8 hours- 10 hours",
+  "More than 10 hours"
+)
+
+satisfy <- c(
+  "Not at all",
+  "A little",
+  "Somewhat",
+  "Very",
+  "Extremely satisfied"
+)
+
+meaningful_time <- c(
+  "15 or less minutes",
+  "16-30 minutes",
+  "31 min- 1 hour",
+  "More than 1 hour- 2 hours",
+  "More than 2 hours- 3 hours",
+  "More than 3 hours- 4 hours",
+  "More than 4 hours"
+)
+
+drinks <- c(
+  "1 drink",
+  "2 drinks",
+  "3 drinks",
+  "4 drinks",
+  "5 drinks",
+  "6 drinks",
+  "7 or more drinks"
+)
+
+time <- c(
+  "Before 9am",
+  "9-11:59am", 
+  "12-2:59pm", 
+  "3-5:59pm",
+  "6-8:59pm", 
+  "9pm or later"
+)
+
+cig_count <- c(
+  "0 cigarettes",
+  "One puff to one cigarette",
+  "2-5 cigarettes",
+  "6-10 cigarettes",
+  "11-15 cigarettes",
+  "16-20 cigarettes",
+  "More than 20 cigarettes"
+)
+
+cigs_time <- c(
+  "within 5 minutes",
+  "6-30 minutes", 
+  "31-60 minutes", 
+  "after 60 minutes"
+)
+
+how_many <- c(
+  "1", 
+  "2", 
+  "3", 
+  "4", 
+  "5 or more"
+)
+
+test <- daily %>%
   dplyr::mutate(
-    happy_f = factor(happy, levels = c(0:4), labels = likert),
-    frustrated_f = factor(frustrated, levels = c(0:4), labels = likert),
-    sad_f = factor(sad, levels = c(0:4), labels = likert),
-    worried_f = factor(worried, levels = c(0:4), labels = likert),
-    restless_f = factor(restless, levels = c(0:4), labels = likert),
-    excited_f = factor(excited, levels = c(0:4), labels = likert),
-    calm_f = factor(calm, levels = c(0:4), labels = likert),
-    lonely_f = factor(lonely, levels = c(0:4), labels = likert),
-    bored_f = factor(bored, levels = c(0:4), labels = likert),
-    sluggish_f = factor(sluggish, levels = c(0:4), labels = likert)
+    
+    # Convert to class factor
+    happy           = factor(happy, levels = likert, labels = likert),
+    frustrated      = factor(frustrated, levels = likert, labels = likert),
+    sad             = factor(sad, levels = likert, labels = likert),
+    worried         = factor(worried, levels = likert, labels = likert),
+    restless        = factor(restless, levels = likert, labels = likert),
+    excited         = factor(excited, levels = likert, labels = likert),
+    calm            = factor(calm, levels = likert, labels = likert),
+    lonely          = factor(lonely, levels = likert, labels = likert),
+    bored           = factor(bored, levels = likert, labels = likert),
+    sluggish        = factor(sluggish, levels = likert, labels = likert),
+    
+    bus_loc         = factor(bus_loc, levels = 0:1, labels = yesno),
+    church_loc      = factor(church_loc, levels = 0:1, labels = yesno),
+    home_loc        = factor(home_loc, levels = 0:1, labels = yesno),
+    frifam_loc      = factor(frifam_loc, levels = 0:1, labels = yesno),
+    store_loc       = factor(store_loc, levels = 0:1, labels = yesno),
+    outdoors_loc    = factor(outdoors_loc, levels = 0:1, labels = yesno),
+    other_loc       = factor(other_loc, levels = 0:1, labels = yesno),
+    restaurant_loc  = factor(restaurant_loc, levels = 0:1, labels = yesno),
+    school_loc      = factor(school_loc, levels = 0:1, labels = yesno),
+    work_loc        = factor(work_loc, levels = 0:1, labels = yesno),
+    
+    other_act       = factor(other_act, levels = 0:1, labels = yesno),
+    sit_act         = factor(sit_act, levels = 0:1, labels = yesno),
+    sleep_act       = factor(sleep_act, levels = 0:1, labels = yesno),
+    stand_act       = factor(stand_act, levels = 0:1, labels = yesno),
+    walk_act        = factor(walk_act, levels = 0:1, labels = yesno),
+    talk_act        = factor(talk_act, levels = 0:1, labels = yesno),
+    
+    pre_who         = factor(pre_who2, levels = 0:1, labels = yesno),
+    
+    bike_yest       = factor(bike_yest, levels = 0:1, labels = yesno),
+    run_yest        = factor(run_yest, levels = 0:1, labels = yesno),
+    cleaning_yest   = factor(cleaning_yest, levels = 0:1, labels = yesno),
+    none_yest       = factor(none_yest, levels = 0:1, labels = yesno),
+    
+    min_walk        = factor(min_walk, levels = minutes, labels = minutes),
+    min_run         = factor(min_run, levels = minutes, labels = minutes),
+    min_act         = factor(min_act, levels = minutes, labels = minutes),
+    min_sit         = factor(min_sit, levels = hours, labels = hours),
+    pedometer       = factor(pedometer2, levels = 0:1, labels = yesno),
+    phys_act_sat    = factor(phys_act_sat1, levels = satisfy, labels = satisfy),
+    serv_fruit      = factor(serv_fruit1, levels = how_many, labels = how_many),
+    serv_veg        = factor(serv_veg, levels = how_many, labels = how_many),
+    serv_ssb        = factor(serv_ssb1, levels = how_many, labels = how_many),
+    serv_sweets     = factor(serv_sweets1, levels = how_many, labels = how_many),
+    serv_meat       = factor(serv_meat, levels = how_many, labels = how_many),
+    food_sat        = factor(food_sat1, levels = satisfy, labels = satisfy),
+    
+    take_meds       = factor(take_meds2, levels = 0:1, labels = yesno),
+    
+    medtype_dep     = factor(medtype_dep, levels = 0:1, labels = yesno),
+    medtype_psy     = factor(medtype_psy, levels = 0:1, labels = yesno),
+    medtype_ast     = factor(medtype_ast, levels = 0:1, labels = yesno),
+    medtype_bp      = factor(medtype_bp, levels = 0:1, labels = yesno),
+    medtype_diab    = factor(medtype_diab, levels = 0:1, labels = yesno),
+    medtype_pain    = factor(medtype_pain, levels = 0:1, labels = yesno),
+    medtype_chol    = factor(medtype_chol, levels = 0:1, labels = yesno),
+    medtype_anti    = factor(medtype_anti, levels = 0:1, labels = yesno),
+    medtype_other   = factor(medtype_other, levels = 0:1, labels = yesno),
+    
+    meds_ran_out    = factor(meds_ran_out, levels = 0:1, labels = yesno),
+    meds_forgot     = factor(meds_forgot, levels = 0:1, labels = yesno),
+    meds_no_need    = factor(meds_no_need, levels = 0:1, labels = yesno),
+    meds_side       = factor(meds_side, levels = 0:1, labels = yesno),
+    meds_other      = factor(meds_other, levels = 0:1, labels = yesno),
+    
+    free_time       = factor(free_time, levels = hours2, labels = hours2),
+    none_free       = factor(none_free, levels = 0:1, labels = yesno),
+    tv_free         = factor(tv_free, levels = 0:1, labels = yesno),
+    internet_free   = factor(internet_free, levels = 0:1, labels = yesno),
+    book_free       = factor(book_free, levels = 0:1, labels = yesno),
+    music_free      = factor(music_free, levels = 0:1, labels = yesno),
+    craft_free      = factor(craft_free, levels = 0:1, labels = yesno),
+    cleaned_free    = factor(cleaned_free, levels = 0:1, labels = yesno),
+    pets_free       = factor(pets_free, levels = 0:1, labels = yesno),
+    pray_free       = factor(pray_free, levels = 0:1, labels = yesno),
+    sport_free      = factor(sport_free, levels = 0:1, labels = yesno),
+    walk_free       = factor(walk_free, levels = 0:1, labels = yesno),
+    shop_free       = factor(shop_free, levels = 0:1, labels = yesno),
+    volunteer_free  = factor(volunteer_free, levels = 0:1, labels = yesno),
+    social_free     = factor(social_free, levels = 0:1, labels = yesno),
+    free_time_sat   = factor(free_time_sat1, levels = satisfy, labels = satisfy),
+    
+    min_talk        = factor(min_talk1, levels = meaningful_time, labels = meaningful_time),
+    min_group       = factor(min_group1, levels = meaningful_time, labels = meaningful_time),
+    interaction_sat = factor(interaction_sat1, levels = satisfy, labels = satisfy),
+    
+    alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
+    cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
+    mar_sub         = factor(mar_sub, levels = 0:1, labels = yesno),
+    opi_sub         = factor(opi_sub, levels = 0:1, labels = yesno),
+    stim_sub        = factor(stim_sub, levels = 0:1, labels = yesno),
+    herb_sub        = factor(herb_sub, levels = 0:1, labels = yesno),
+    other_sub       = factor(other_sub, levels = 0:1, labels = yesno),
+    none_sub        = factor(none_sub, levels = 0:1, labels = yesno),
+    
+    num_drinks      = factor(num_drinks1, levels = drinks, labels = drinks),
+    subs_time       = factor(subs_time, levels = time, labels = time),
+    first_drink     = factor(first_drink, levels = time, labels = time),
+    last_drink      = factor(last_drink, levels = time, labels = time),
+    num_cigs        = factor(num_cigs1, levels = cig_count, labels = cig_count),
+    first_cig       = factor(first_cig, levels = cigs_time, labels = cigs_time),
+    last_cig        = factor(last_cig, levels = time, labels = time),
+
+    op_heroin       = factor(op_heroin, levels = 0:1, labels = yesno),
+    op_methadone    = factor(op_methadone, levels = 0:1, labels = yesno),
+    op_pills        = factor(op_pills, levels = 0:1, labels = yesno),
+    op_other        = factor(op_other, levels = 0:1, labels = yesno),
+    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many),
+    
+    # Coerce variable type
+    case_number     = as.integer(case_number),
+    min_walk_c      = as.integer(min_walk_c),
+    min_run_c       = as.integer(min_run_c),
+    min_act_c       = as.integer(min_act_c),
+    min_sit_c       = as.integer(min_sit_c),
+    steps           = as.integer(steps),
+    alert_time      = as.numeric(alert_time)
+  ) %>%
+
+  # Rename variables
+  rename(
+    min_talk_c      = min_talk2,
+    min_group_c     = min_group2,
+    num_cigs_c      = num_cigs2
+  ) %>%
+  
+  # Reorder variables and keep only variables of interest
+  select(
+    case_number,
+    date,
+    id,
+    happy,
+    frustrated,
+    sad,
+    worried,
+    restless,
+    excited,
+    calm,
+    lonely,
+    bored,
+    sluggish,
+    bus_loc,
+    church_loc,
+    home_loc,
+    frifam_loc,
+    store_loc,
+    outdoors_loc,
+    other_loc,
+    restaurant_loc,
+    school_loc,
+    work_loc,
+    other_act,
+    sit_act,
+    sleep_act,
+    stand_act,
+    walk_act,
+    talk_act,
+    pre_who,
+    bike_yest,
+    run_yest,
+    cleaning_yest,
+    none_yest,
+    min_walk,
+    min_walk_c,
+    min_run,
+    min_run_c,
+    min_act,
+    min_act_c,
+    min_sit,
+    min_sit_c,
+    pedometer,
+    steps,
+    phys_act_sat,
+    serv_fruit,
+    serv_veg,
+    serv_ssb,
+    serv_sweets,
+    serv_meat,
+    food_sat,
+    take_meds,
+    medtype_dep,
+    medtype_psy,
+    medtype_ast,
+    medtype_bp,
+    medtype_diab,
+    medtype_pain,
+    medtype_chol,
+    medtype_anti,
+    medtype_other,
+    meds_ran_out,
+    meds_forgot,
+    meds_no_need,
+    meds_side,
+    meds_other,
+    none_free,
+    tv_free,
+    internet_free,
+    book_free,
+    music_free,
+    craft_free,
+    cleaned_free,
+    pets_free,
+    pray_free,
+    sport_free,
+    walk_free,
+    shop_free,
+    volunteer_free,
+    social_free,
+    free_time_sat,
+    min_talk,
+    min_group,
+    interaction_sat,
+    alc_sub,
+    cig_sub,
+    mar_sub,
+    opi_sub,
+    stim_sub,
+    herb_sub,
+    other_sub,
+    none_sub,
+    num_drinks,
+    subs_time,
+    first_drink,
+    last_drink,
+    num_cigs,
+    first_cig,
+    last_cig,
+    op_heroin,
+    op_methadone,
+    op_pills,
+    op_other,
+    num_opiate,
+    stim,
+    num_coc,
+    num_stim,
+    alert_time,
+    alert_action,
+    start_time,
+    completed
   )
 
-about_data(ema)
-names(ema)
+about_data(daily)
+names(daily)
 ```
 
 -------------------------------------------------------------------------------
 
 **Save as RData**
 ```{r}
-save(ema, file = "data/ema_april_2016.RData")
+save(daily, file = "data/daily_april_2016.RData")
+```
+
+**Clean up environment**
+```{r}
+rm(list = setdiff(ls(), "daily"))
 ```
 
 -------------------------------------------------------------------------------

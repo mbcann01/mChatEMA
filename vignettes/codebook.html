@@ -124,22 +124,30 @@ $(document).ready(function () {
 
 
 <p><strong>Load packages and functions</strong></p>
-<pre class="r"><code># Packages
-library(readr)
-library(dplyr)
-library(ggplot2)
-
-# devtools::install_github(&quot;mbcann01/dataclean&quot;)
-library(dataclean) # Use this instead of str() to prevent showing raw data values</code></pre>
+<pre class="r"><code># devtools::install_github(&quot;mbcann01/dataclean&quot;)
+library(dataclean)</code></pre>
 <p><strong>Load data</strong></p>
-<pre class="r"><code>load(&quot;data/ema_april_2016.RData&quot;)
-about_data(ema)
-#&gt; 1390 observations and 95 variables in the data</code></pre>
+<pre class="r"><code>load(&quot;data/daily_april_2016.RData&quot;)
+about_data(daily)
+#&gt; 1390 observations and 137 variables in the data</code></pre>
 <hr />
 <p> </p>
 <p><strong>Create Codebook</strong></p>
 <p>Remember, this is currently April, 2016 only.</p>
-<pre class="r"><code>codebook(ema)
+<pre class="text"><code>codebook(daily)
+#&gt; ---------------------------------------------------------------------- 
+#&gt; case_number 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 91 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  case_number       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; date 
 #&gt; ---------------------------------------------------------------------- 
@@ -148,97 +156,29 @@ about_data(ema)
 #&gt; Unique: 27 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;      date          
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
+#&gt;       date                    
+#&gt;  Min.   :2016-04-01 00:00:00  
+#&gt;  1st Qu.:2016-04-12 00:00:00  
+#&gt;  Median :2016-04-20 00:00:00  
+#&gt;  Mean   :2016-04-18 10:57:50  
+#&gt;  3rd Qu.:2016-04-26 00:00:00  
+#&gt;  Max.   :2016-05-01 00:00:00  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; Case_Number 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 91 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   Case_Number   
-#&gt;  Min.   :10286  
-#&gt;  1st Qu.:10419  
-#&gt;  Median :10480  
-#&gt;  Mean   :10530  
-#&gt;  3rd Qu.:10655  
-#&gt;  Max.   :10880  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; ID 
+#&gt; id 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
 #&gt; Unique: 1390 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;        ID      
+#&gt;        id      
 #&gt;  Min.   :2957  
 #&gt;  1st Qu.:3304  
 #&gt;  Median :3652  
 #&gt;  Mean   :3738  
 #&gt;  3rd Qu.:3999  
 #&gt;  Max.   :6280  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Alert_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 125 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    Alert_time   
-#&gt;  Min.   : 0.02  
-#&gt;  1st Qu.:10.50  
-#&gt;  Median :10.50  
-#&gt;  Mean   :10.37  
-#&gt;  3rd Qu.:10.53  
-#&gt;  Max.   :22.67  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Alert_action 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;  Alert_action      
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Assessment_Start_Time_4137 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 156 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  Assessment_Start_Time_4137
-#&gt;  Length:1390               
-#&gt;  Class :character          
-#&gt;  Mode  :character          
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; End_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;    End_time        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; happy 
@@ -248,13 +188,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;      happy      
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:2.000  
-#&gt;  Median :3.000  
-#&gt;  Mean   :2.617  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
+#&gt;     happy          
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; frustrated 
@@ -264,13 +201,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    frustrated  
-#&gt;  Min.   :0.00  
-#&gt;  1st Qu.:1.00  
-#&gt;  Median :1.00  
-#&gt;  Mean   :1.44  
-#&gt;  3rd Qu.:2.00  
-#&gt;  Max.   :4.00  
+#&gt;   frustrated       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; sad 
@@ -280,13 +214,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;       sad       
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.296  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
+#&gt;      sad           
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; worried 
@@ -296,13 +227,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     worried     
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.558  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
+#&gt;    worried         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; restless 
@@ -312,13 +240,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     restless   
-#&gt;  Min.   :0.00  
-#&gt;  1st Qu.:1.00  
-#&gt;  Median :1.00  
-#&gt;  Mean   :1.47  
-#&gt;  3rd Qu.:2.00  
-#&gt;  Max.   :4.00  
+#&gt;    restless        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; excited 
@@ -328,13 +253,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     excited     
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.124  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
+#&gt;    excited         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; calm 
@@ -344,13 +266,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;       calm      
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:2.000  
-#&gt;  Median :3.000  
-#&gt;  Mean   :2.477  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
+#&gt;      calm          
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; lonely 
@@ -360,13 +279,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;      lonely     
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.484  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
+#&gt;     lonely         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; bored 
@@ -376,13 +292,10 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;      bored      
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.311  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
+#&gt;     bored          
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; sluggish 
@@ -392,13 +305,939 @@ about_data(ema)
 #&gt; Unique: 5 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     sluggish    
+#&gt;    sluggish        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pre_location 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 36 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  pre_location      
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pre_action 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 38 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   pre_action       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pre_who1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    pre_who1        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pre_who2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;     pre_who2     
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :0.0000  
+#&gt;  Mean   :0.2554  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pre_yesterday 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 11 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  pre_yesterday     
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_walk 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 780 
+#&gt; Summary: 
+#&gt;    min_walk        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_walk_c 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 780 
+#&gt; Summary: 
+#&gt;    min_walk_c   
+#&gt;  Min.   : 5.00  
+#&gt;  1st Qu.:16.00  
+#&gt;  Median :26.00  
+#&gt;  Mean   :29.93  
+#&gt;  3rd Qu.:36.00  
+#&gt;  Max.   :50.00  
+#&gt;  NA's   :780    
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_run 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 1163 
+#&gt; Summary: 
+#&gt;    min_run         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_run_c 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 1163 
+#&gt; Summary: 
+#&gt;    min_run_c    
+#&gt;  Min.   : 5.00  
+#&gt;  1st Qu.:26.00  
+#&gt;  Median :36.00  
+#&gt;  Mean   :35.37  
+#&gt;  3rd Qu.:46.00  
+#&gt;  Max.   :50.00  
+#&gt;  NA's   :1163   
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_act 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 710 
+#&gt; Summary: 
+#&gt;    min_act         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_act_c 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 710 
+#&gt; Summary: 
+#&gt;    min_act_c    
+#&gt;  Min.   : 5.00  
+#&gt;  1st Qu.:26.00  
+#&gt;  Median :36.00  
+#&gt;  Mean   :36.46  
+#&gt;  3rd Qu.:50.00  
+#&gt;  Max.   :50.00  
+#&gt;  NA's   :710    
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_sit 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    min_sit         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_sit_c 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    min_sit_c     
+#&gt;  Min.   : 4.000  
+#&gt;  1st Qu.: 5.000  
+#&gt;  Median : 7.000  
+#&gt;  Mean   : 6.612  
+#&gt;  3rd Qu.: 9.000  
+#&gt;  Max.   :12.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pedometer1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   pedometer1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; pedometer2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    pedometer2     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.04317  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; steps 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 41 
+#&gt; Miss: 1330 
+#&gt; Summary: 
+#&gt;      steps      
+#&gt;  Min.   :   30  
+#&gt;  1st Qu.: 2000  
+#&gt;  Median : 3100  
+#&gt;  Mean   : 3718  
+#&gt;  3rd Qu.: 5500  
+#&gt;  Max.   :10258  
+#&gt;  NA's   :1330   
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; phys_act_sat1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  phys_act_sat1     
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; phys_act_sat2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  phys_act_sat2  
 #&gt;  Min.   :0.000  
 #&gt;  1st Qu.:1.000  
+#&gt;  Median :2.000  
+#&gt;  Mean   :1.828  
+#&gt;  3rd Qu.:2.000  
+#&gt;  Max.   :4.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_fruit1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  serv_fruit1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_fruit2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   serv_fruit2   
+#&gt;  Min.   :0.000  
+#&gt;  1st Qu.:0.000  
 #&gt;  Median :1.000  
-#&gt;  Mean   :1.701  
+#&gt;  Mean   :1.249  
+#&gt;  3rd Qu.:2.000  
+#&gt;  Max.   :5.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_veg 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    serv_veg        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_ssb1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   serv_ssb1        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_ssb2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    serv_ssb2    
+#&gt;  Min.   :0.000  
+#&gt;  1st Qu.:0.000  
+#&gt;  Median :1.000  
+#&gt;  Mean   :1.663  
+#&gt;  3rd Qu.:3.000  
+#&gt;  Max.   :5.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_sweets1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  serv_sweets1      
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_sweets2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   serv_sweets2   
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :1.0000  
+#&gt;  Mean   :0.9158  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :5.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; serv_meat 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   serv_meat        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; food_sat1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   food_sat1        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; food_sat2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    food_sat2    
+#&gt;  Min.   :0.000  
+#&gt;  1st Qu.:1.000  
+#&gt;  Median :2.000  
+#&gt;  Mean   :1.906  
+#&gt;  3rd Qu.:2.000  
+#&gt;  Max.   :4.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; take_meds1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   take_meds1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; take_meds2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    take_meds2    
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:1.0000  
+#&gt;  Median :1.0000  
+#&gt;  Mean   :0.9324  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; which_meds1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;   which_meds1  
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; why_no_meds 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 9 
+#&gt; Miss: 1296 
+#&gt; Summary: 
+#&gt;  why_no_meds       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; free_time 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   free_time        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; free_time_act 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 378 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  free_time_act     
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; free_time_sat1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  free_time_sat1    
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; free_time_sat2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  free_time_sat2 
+#&gt;  Min.   :0.000  
+#&gt;  1st Qu.:1.000  
+#&gt;  Median :2.000  
+#&gt;  Mean   :2.135  
 #&gt;  3rd Qu.:3.000  
 #&gt;  Max.   :4.000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_talk1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   min_talk1        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_talk2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    min_talk2     
+#&gt;  Min.   :  8.00  
+#&gt;  1st Qu.: 23.00  
+#&gt;  Median : 90.00  
+#&gt;  Mean   : 88.07  
+#&gt;  3rd Qu.:150.00  
+#&gt;  Max.   :240.00  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_group1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   min_group1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; min_group2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    min_group2    
+#&gt;  Min.   :  8.00  
+#&gt;  1st Qu.:  8.00  
+#&gt;  Median : 23.00  
+#&gt;  Mean   : 42.57  
+#&gt;  3rd Qu.: 45.00  
+#&gt;  Max.   :240.00  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; interaction_sat1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  interaction_sat1  
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; interaction_sat2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  interaction_sat2
+#&gt;  Min.   :0.000   
+#&gt;  1st Qu.:2.000   
+#&gt;  Median :2.000   
+#&gt;  Mean   :2.242   
+#&gt;  3rd Qu.:3.000   
+#&gt;  Max.   :4.000   
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; subs_check1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 22 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  subs_check1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; subs_check2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 4 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   subs_check2    
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :1.0000  
+#&gt;  Mean   :0.6619  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :3.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_drinks1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 1281 
+#&gt; Summary: 
+#&gt;  num_drinks1       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_drinks2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 1281 
+#&gt; Summary: 
+#&gt;   num_drinks2   
+#&gt;  Min.   :0.000  
+#&gt;  1st Qu.:2.000  
+#&gt;  Median :2.000  
+#&gt;  Mean   :2.596  
+#&gt;  3rd Qu.:3.000  
+#&gt;  Max.   :5.000  
+#&gt;  NA's   :1281   
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; subs_time 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 1369 
+#&gt; Summary: 
+#&gt;   subs_time        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; first_drink 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 1304 
+#&gt; Summary: 
+#&gt;  first_drink       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; last_drink 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 6 
+#&gt; Miss: 1304 
+#&gt; Summary: 
+#&gt;   last_drink       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_cigs1 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 8 
+#&gt; Miss: 791 
+#&gt; Summary: 
+#&gt;   num_cigs1        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_cigs2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 8 
+#&gt; Miss: 791 
+#&gt; Summary: 
+#&gt;    num_cigs2     
+#&gt;  Min.   : 0.000  
+#&gt;  1st Qu.: 3.000  
+#&gt;  Median : 8.000  
+#&gt;  Mean   : 8.336  
+#&gt;  3rd Qu.:13.000  
+#&gt;  Max.   :20.000  
+#&gt;  NA's   :791     
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; first_cig 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 791 
+#&gt; Summary: 
+#&gt;   first_cig        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; last_cig 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 7 
+#&gt; Miss: 820 
+#&gt; Summary: 
+#&gt;    last_cig        
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; opiate 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 3 
+#&gt; Miss: 1329 
+#&gt; Summary: 
+#&gt;     opiate         
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_heroin 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;    num_heroin  
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_opiate 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 5 
+#&gt; Miss: 1347 
+#&gt; Summary: 
+#&gt;   num_opiate       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; stim 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;       stim     
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_coc 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;     num_coc    
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; num_stim 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;     num_stim   
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; alert_time 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 125 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   alert_time       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; alert_action 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;   alert_action 
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; start_time 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 604 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    start_time                 
+#&gt;  Min.   :2016-04-01 00:01:00  
+#&gt;  1st Qu.:2016-04-12 10:31:00  
+#&gt;  Median :2016-04-20 10:30:00  
+#&gt;  Mean   :2016-04-18 21:20:51  
+#&gt;  3rd Qu.:2016-04-26 10:31:45  
+#&gt;  Max.   :2016-05-01 21:09:00  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; completed 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 1 
+#&gt; Miss: 1390 
+#&gt; Summary: 
+#&gt;    completed   
+#&gt;  Min.   : NA   
+#&gt;  1st Qu.: NA   
+#&gt;  Median : NA   
+#&gt;  Mean   :NaN   
+#&gt;  3rd Qu.: NA   
+#&gt;  Max.   : NA   
+#&gt;  NA's   :1390  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; which_meds2 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 24 
+#&gt; Miss: 1295 
+#&gt; Summary: 
+#&gt;  which_meds2       
+#&gt;  Length:1390       
+#&gt;  Class :character  
+#&gt;  Mode  :character  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; bus_loc 
@@ -533,16 +1372,16 @@ about_data(ema)
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 2 
+#&gt; Unique: 1 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    school_loc      
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.006475  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
+#&gt;    school_loc
+#&gt;  Min.   :0   
+#&gt;  1st Qu.:0   
+#&gt;  Median :0   
+#&gt;  Mean   :0   
+#&gt;  3rd Qu.:0   
+#&gt;  Max.   :0   
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; work_loc 
@@ -657,267 +1496,292 @@ about_data(ema)
 #&gt;  Max.   :1.0000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; min_walk 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_walk        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_walk_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_walk_c   
-#&gt;  Min.   : 0.00  
-#&gt;  1st Qu.: 0.00  
-#&gt;  Median : 0.00  
-#&gt;  Mean   :13.13  
-#&gt;  3rd Qu.:26.00  
-#&gt;  Max.   :50.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_run 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_run         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_run_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_run_c     
-#&gt;  Min.   : 0.000  
-#&gt;  1st Qu.: 0.000  
-#&gt;  Median : 0.000  
-#&gt;  Mean   : 5.776  
-#&gt;  3rd Qu.: 0.000  
-#&gt;  Max.   :50.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_act         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_act_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_act_c    
-#&gt;  Min.   : 0.00  
-#&gt;  1st Qu.: 0.00  
-#&gt;  Median : 0.00  
-#&gt;  Mean   :17.84  
-#&gt;  3rd Qu.:36.00  
-#&gt;  Max.   :50.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_sit 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_sit         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_sit_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_sit_c     
-#&gt;  Min.   : 4.000  
-#&gt;  1st Qu.: 5.000  
-#&gt;  Median : 7.000  
-#&gt;  Mean   : 6.612  
-#&gt;  3rd Qu.: 9.000  
-#&gt;  Max.   :12.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_who 
+#&gt; bike_yest 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
 #&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     pre_who      
+#&gt;    bike_yest     
 #&gt;  Min.   :0.0000  
 #&gt;  1st Qu.:0.0000  
 #&gt;  Median :0.0000  
-#&gt;  Mean   :0.2554  
+#&gt;  Mean   :0.4388  
 #&gt;  3rd Qu.:1.0000  
 #&gt;  Max.   :1.0000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; pedometer 
+#&gt; run_yest 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
 #&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    pedometer      
+#&gt;     run_yest     
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :0.0000  
+#&gt;  Mean   :0.1633  
+#&gt;  3rd Qu.:0.0000  
+#&gt;  Max.   :1.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; cleaning_yest 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  cleaning_yest   
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :0.0000  
+#&gt;  Mean   :0.4892  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; none_yest 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    none_yest     
+#&gt;  Min.   :0.0000  
+#&gt;  1st Qu.:0.0000  
+#&gt;  Median :0.0000  
+#&gt;  Mean   :0.2691  
+#&gt;  3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; medtype_dep 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   medtype_dep     
 #&gt;  Min.   :0.00000  
 #&gt;  1st Qu.:0.00000  
 #&gt;  Median :0.00000  
-#&gt;  Mean   :0.04317  
+#&gt;  Mean   :0.04029  
 #&gt;  3rd Qu.:0.00000  
 #&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; steps 
+#&gt; medtype_psy 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 41 
-#&gt; Miss: 1330 
-#&gt; Summary: 
-#&gt;      steps      
-#&gt;  Min.   :   30  
-#&gt;  1st Qu.: 2000  
-#&gt;  Median : 3100  
-#&gt;  Mean   : 3718  
-#&gt;  3rd Qu.: 5500  
-#&gt;  Max.   :10258  
-#&gt;  NA's   :1330   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; phys_act_sat 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;   phys_act_sat  
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.828  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
+#&gt;   medtype_psy     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.03094  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; serv_fruit 
+#&gt; medtype_ast 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 6 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    serv_fruit   
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:0.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.249  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :5.000  
+#&gt;   medtype_ast     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01079  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; serv_ssb 
+#&gt; medtype_bp 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 6 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     serv_ssb    
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:0.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.663  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :5.000  
+#&gt;    medtype_bp     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.02662  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; serv_sweets 
+#&gt; medtype_diab 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 6 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;   serv_sweets    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.9158  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :5.0000  
+#&gt;   medtype_diab     
+#&gt;  Min.   :0.000000  
+#&gt;  1st Qu.:0.000000  
+#&gt;  Median :0.000000  
+#&gt;  Mean   :0.005755  
+#&gt;  3rd Qu.:0.000000  
+#&gt;  Max.   :1.000000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; serv_veg 
+#&gt; medtype_pain 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 272 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;     serv_veg    
-#&gt;  Min.   :1.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.817  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :5.000  
-#&gt;  NA's   :272    
+#&gt;   medtype_pain    
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01223  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; serv_meat 
+#&gt; medtype_chol 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 420 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    serv_meat    
-#&gt;  Min.   :1.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.695  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :5.000  
-#&gt;  NA's   :420    
+#&gt;   medtype_chol     
+#&gt;  Min.   :0.000000  
+#&gt;  1st Qu.:0.000000  
+#&gt;  Median :0.000000  
+#&gt;  Mean   :0.003597  
+#&gt;  3rd Qu.:0.000000  
+#&gt;  Max.   :1.000000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; medtype_anti 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   medtype_anti     
+#&gt;  Min.   :0.000000  
+#&gt;  1st Qu.:0.000000  
+#&gt;  Median :0.000000  
+#&gt;  Mean   :0.001439  
+#&gt;  3rd Qu.:0.000000  
+#&gt;  Max.   :1.000000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; medtype_other 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;  medtype_other    
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01799  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; meds_ran_out 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   meds_ran_out    
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.04245  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; meds_forgot 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   meds_forgot     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01942  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; meds_no_need 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;   meds_no_need      
+#&gt;  Min.   :0.0000000  
+#&gt;  1st Qu.:0.0000000  
+#&gt;  Median :0.0000000  
+#&gt;  Mean   :0.0007194  
+#&gt;  3rd Qu.:0.0000000  
+#&gt;  Max.   :1.0000000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; meds_side 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    meds_side        
+#&gt;  Min.   :0.0000000  
+#&gt;  1st Qu.:0.0000000  
+#&gt;  Median :0.0000000  
+#&gt;  Mean   :0.0007194  
+#&gt;  3rd Qu.:0.0000000  
+#&gt;  Max.   :1.0000000  
+#&gt; 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; meds_other 
+#&gt; ---------------------------------------------------------------------- 
+#&gt; Label: NA 
+#&gt; Class: character 
+#&gt; Unique: 2 
+#&gt; Miss: 0 
+#&gt; Summary: 
+#&gt;    meds_other     
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01295  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; none_free 
@@ -1144,141 +2008,6 @@ about_data(ema)
 #&gt;  Max.   :1.0000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; food_sat 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     food_sat    
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.906  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; take_meds 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    take_meds     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:1.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.9324  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   free_time        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time_sat 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  free_time_sat  
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.135  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_talk 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_talk        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_talk_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_talk_c    
-#&gt;  Min.   :  8.00  
-#&gt;  1st Qu.: 23.00  
-#&gt;  Median : 90.00  
-#&gt;  Mean   : 88.07  
-#&gt;  3rd Qu.:150.00  
-#&gt;  Max.   :240.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_group 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   min_group        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_group_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   min_group_c    
-#&gt;  Min.   :  8.00  
-#&gt;  1st Qu.:  8.00  
-#&gt;  Median : 23.00  
-#&gt;  Mean   : 42.57  
-#&gt;  3rd Qu.: 45.00  
-#&gt;  Max.   :240.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; interaction_sat 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  interaction_sat
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:2.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.242  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
 #&gt; alc_sub 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
@@ -1407,220 +2136,68 @@ about_data(ema)
 #&gt;  Max.   :1.0000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; sub_count 
+#&gt; op_heroin 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 4 
+#&gt; Unique: 1 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    sub_count     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.6619  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :3.0000  
+#&gt;    op_heroin
+#&gt;  Min.   :0  
+#&gt;  1st Qu.:0  
+#&gt;  Median :0  
+#&gt;  Mean   :0  
+#&gt;  3rd Qu.:0  
+#&gt;  Max.   :0  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; num_drinks 
+#&gt; op_methadone 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1281 
-#&gt; Summary: 
-#&gt;    num_drinks   
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:2.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.596  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :5.000  
-#&gt;  NA's   :1281   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_cigs 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 8 
-#&gt; Miss: 791 
-#&gt; Summary: 
-#&gt;     num_cigs     
-#&gt;  Min.   : 0.000  
-#&gt;  1st Qu.: 3.000  
-#&gt;  Median : 8.000  
-#&gt;  Mean   : 8.336  
-#&gt;  3rd Qu.:13.000  
-#&gt;  Max.   :20.000  
-#&gt;  NA's   :791     
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_opiate 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;    num_opiate    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1094  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :4.0000  
+#&gt;   op_methadone    
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.01295  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; happy_f 
+#&gt; op_pills 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 5 
+#&gt; Unique: 2 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;               happy_f   
-#&gt;  Strongly disagree: 53  
-#&gt;  Disagree         :127  
-#&gt;  Neutral          :386  
-#&gt;  Agree            :557  
-#&gt;  Strongly agree   :267  
+#&gt;     op_pills      
+#&gt;  Min.   :0.00000  
+#&gt;  1st Qu.:0.00000  
+#&gt;  Median :0.00000  
+#&gt;  Mean   :0.03094  
+#&gt;  3rd Qu.:0.00000  
+#&gt;  Max.   :1.00000  
 #&gt; 
 #&gt; ---------------------------------------------------------------------- 
-#&gt; frustrated_f 
+#&gt; op_other 
 #&gt; ---------------------------------------------------------------------- 
 #&gt; Label: NA 
 #&gt; Class: character 
-#&gt; Unique: 5 
+#&gt; Unique: 1 
 #&gt; Miss: 0 
 #&gt; Summary: 
-#&gt;             frustrated_f
-#&gt;  Strongly disagree:267  
-#&gt;  Disagree         :564  
-#&gt;  Neutral          :299  
-#&gt;  Agree            :201  
-#&gt;  Strongly agree   : 59  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sad_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;                sad_f    
-#&gt;  Strongly disagree:286  
-#&gt;  Disagree         :634  
-#&gt;  Neutral          :292  
-#&gt;  Agree            :129  
-#&gt;  Strongly agree   : 49  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; worried_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;              worried_f  
-#&gt;  Strongly disagree:257  
-#&gt;  Disagree         :512  
-#&gt;  Neutral          :282  
-#&gt;  Agree            :266  
-#&gt;  Strongly agree   : 73  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; restless_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;              restless_f 
-#&gt;  Strongly disagree:268  
-#&gt;  Disagree         :519  
-#&gt;  Neutral          :327  
-#&gt;  Agree            :234  
-#&gt;  Strongly agree   : 42  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; excited_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;              excited_f  
-#&gt;  Strongly disagree: 68  
-#&gt;  Disagree         :325  
-#&gt;  Neutral          :532  
-#&gt;  Agree            :296  
-#&gt;  Strongly agree   :169  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; calm_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;                calm_f   
-#&gt;  Strongly disagree: 53  
-#&gt;  Disagree         :171  
-#&gt;  Neutral          :444  
-#&gt;  Agree            :504  
-#&gt;  Strongly agree   :218  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; lonely_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;               lonely_f  
-#&gt;  Strongly disagree:290  
-#&gt;  Disagree         :543  
-#&gt;  Neutral          :281  
-#&gt;  Agree            :146  
-#&gt;  Strongly agree   :130  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; bored_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;               bored_f   
-#&gt;  Strongly disagree:296  
-#&gt;  Disagree         :568  
-#&gt;  Neutral          :354  
-#&gt;  Agree            :142  
-#&gt;  Strongly agree   : 30  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sluggish_f 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;              sluggish_f 
-#&gt;  Strongly disagree:224  
-#&gt;  Disagree         :475  
-#&gt;  Neutral          :279  
-#&gt;  Agree            :317  
-#&gt;  Strongly agree   : 95</code></pre>
+#&gt;     op_other
+#&gt;  Min.   :0  
+#&gt;  1st Qu.:0  
+#&gt;  Median :0  
+#&gt;  Mean   :0  
+#&gt;  3rd Qu.:0  
+#&gt;  Max.   :0</code></pre>
 <hr />
 <div id="session-info" class="section level4">
 <h4>Session Info:</h4>
@@ -1635,15 +2212,12 @@ about_data(ema)
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] dataclean_0.1.0 ggplot2_2.1.0   dplyr_0.4.3     readr_0.2.2    
+#&gt; [1] dataclean_0.1.0
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_0.12.5      digest_0.6.9     assertthat_0.1   plyr_1.8.3      
-#&gt;  [5] grid_3.3.0       R6_2.1.2         gtable_0.2.0     DBI_0.4-1       
-#&gt;  [9] formatR_1.4      magrittr_1.5     scales_0.4.0     evaluate_0.9    
-#&gt; [13] stringi_1.0-1    rmarkdown_0.9.6  tools_3.3.0      stringr_1.0.0   
-#&gt; [17] munsell_0.4.3    yaml_2.1.13      parallel_3.3.0   colorspace_1.2-6
-#&gt; [21] htmltools_0.3.5  knitr_1.13</code></pre>
+#&gt;  [1] magrittr_1.5    formatR_1.4     tools_3.3.0     htmltools_0.3.5
+#&gt;  [5] yaml_2.1.13     Rcpp_0.12.5     stringi_1.0-1   rmarkdown_0.9.6
+#&gt;  [9] knitr_1.13      stringr_1.0.0   digest_0.6.9    evaluate_0.9</code></pre>
 </div>
 
 
