@@ -7,7 +7,7 @@ Purpose
 
 This repository currently contains analyses related to the mChat EMA data. The data used in these analyses are not available from this repository. All analyses and findings are preliminary, and are not intended for treatment, prevention, publication, or dissemination purposes.
 
-Get started by viewing the vignettes below.
+**Get started by viewing the vignettes below.**
 
  
 
