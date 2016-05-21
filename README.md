@@ -20,8 +20,6 @@ Vignettes
 
 [Individual substance trajectories](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood.html)
 
-Under Construction:
-
-[Exploratory analysis]()
+Under Construction: [Exploratory analysis]()
 
 Under Construction: [Plot - Cicumplex Model of Affect]()

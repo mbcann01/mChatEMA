@@ -33,7 +33,6 @@ Get started by viewing the vignettes below.
 [Individual substance trajectories](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood.html)
 
 Under Construction:
-
 [Exploratory analysis]()
 
 Under Construction:
