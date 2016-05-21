@@ -14,7 +14,7 @@ Get started by viewing the vignettes below.
 Vignettes
 ---------
 
-<a href = "https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html" target = "_blank"> Codebook </a>
+[Codebook](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html){:target="\_blank"}
 
 [Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean_2.html)
 
