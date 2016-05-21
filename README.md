@@ -16,8 +16,12 @@ Vignettes
 
 [Codebook](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html)
 
-[Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean_2.html)
+[Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
+
+[Individual substance trajectories](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood.html)
+
+Under Construction:
 
 [Exploratory analysis]()
 
-[Plot - Cicumplex Model of Affect]()
+Under Construction: [Plot - Cicumplex Model of Affect]()

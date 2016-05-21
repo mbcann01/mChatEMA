@@ -1,0 +1,32 @@
+---
+title: "Lagged mood"
+output: html_document
+---
+
+---
+title: "Data Clean"
+date: "May 20, 2016"
+output: html_document
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
+```
+
+-------------------------------------------------------------------------------
+
+Doug has been working on the lagged mood analysis. His charts are pasted below:
+
+![](/Users/bradcannell/Dropbox/Research/mChat/SAS/Ind Alc Trajs.png)
+
+![](/Users/bradcannell/Dropbox/Research/mChat/SAS/Ind Cig Trajs.png) 
+
+![](/Users/bradcannell/Dropbox/Research/mChat/SAS/Ind Marj Trajs.png) 
+
+#### Session Info:
+```{r session_info, echo=FALSE}
+sessionInfo()
+```
