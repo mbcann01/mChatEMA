@@ -178,11 +178,14 @@ daily <- daily %>%
     meds_forgot    = ifelse(grepl("Forgot", why_no_meds), 1, 0),
     meds_no_need   = ifelse(grepl("need", why_no_meds), 1, 0),
     meds_side      = ifelse(grepl("Side effects", why_no_meds), 1, 0),
+    meds_lost      = ifelse(grepl("lost", why_no_meds), 1, 0),
     meds_other     = ifelse(grepl("Other", why_no_meds), 1, 0),
     
     # What did you do in your free time yesterday?
     none_free      = ifelse(grepl("None", free_time_act), 1, 0),
     tv_free        = ifelse(grepl("Watched TV", free_time_act), 1, 0),
+    games_free     = ifelse(grepl("computer games", free_time_act), 1, 0),
+    movie_free     = ifelse(grepl("movie", free_time_act), 1, 0),
     internet_free  = ifelse(grepl("Surfed the i", free_time_act), 1, 0),
     book_free      = ifelse(grepl("Read a book", free_time_act), 1, 0),
     music_free     = ifelse(grepl("music or played", free_time_act), 1, 0),
@@ -192,6 +195,7 @@ daily <- daily %>%
     pray_free      = ifelse(grepl("Prayed,", free_time_act), 1, 0),
     sport_free     = ifelse(grepl("Played a sport", free_time_act), 1, 0),
     walk_free      = ifelse(grepl("or jog", free_time_act), 1, 0),
+    cards_free     = ifelse(grepl("cards", free_time_act), 1, 0),
     shop_free      = ifelse(grepl("Went shopping", free_time_act), 1, 0),
     volunteer_free = ifelse(grepl("Volunteered", free_time_act), 1, 0),
     social_free    = ifelse(grepl("Socialized with", free_time_act), 1, 0),
@@ -329,7 +333,7 @@ how_many <- c(
   "5 or more"
 )
 
-test <- daily %>%
+daily <- daily %>%
   dplyr::mutate(
     
     # Convert to class factor
@@ -398,11 +402,14 @@ test <- daily %>%
     meds_forgot     = factor(meds_forgot, levels = 0:1, labels = yesno),
     meds_no_need    = factor(meds_no_need, levels = 0:1, labels = yesno),
     meds_side       = factor(meds_side, levels = 0:1, labels = yesno),
+    meds_lost       = factor(meds_lost, levels = 0:1, labels = yesno),
     meds_other      = factor(meds_other, levels = 0:1, labels = yesno),
     
     free_time       = factor(free_time, levels = hours2, labels = hours2),
     none_free       = factor(none_free, levels = 0:1, labels = yesno),
     tv_free         = factor(tv_free, levels = 0:1, labels = yesno),
+    games_free      = factor(games_free, levels = 0:1, labels = yesno),
+    movie_free      = factor(movie_free, levels = 0:1, labels = yesno),
     internet_free   = factor(internet_free, levels = 0:1, labels = yesno),
     book_free       = factor(book_free, levels = 0:1, labels = yesno),
     music_free      = factor(music_free, levels = 0:1, labels = yesno),
@@ -412,6 +419,7 @@ test <- daily %>%
     pray_free       = factor(pray_free, levels = 0:1, labels = yesno),
     sport_free      = factor(sport_free, levels = 0:1, labels = yesno),
     walk_free       = factor(walk_free, levels = 0:1, labels = yesno),
+    cards_free      = factor(cards_free, levels = 0:1, labels = yesno),
     shop_free       = factor(shop_free, levels = 0:1, labels = yesno),
     volunteer_free  = factor(volunteer_free, levels = 0:1, labels = yesno),
     social_free     = factor(social_free, levels = 0:1, labels = yesno),
@@ -528,9 +536,13 @@ test <- daily %>%
     meds_forgot,
     meds_no_need,
     meds_side,
+    meds_lost,
     meds_other,
+    free_time,
     none_free,
     tv_free,
+    games_free,
+    movie_free,
     internet_free,
     book_free,
     music_free,
@@ -540,6 +552,7 @@ test <- daily %>%
     pray_free,
     sport_free,
     walk_free,
+    cards_free,
     shop_free,
     volunteer_free,
     social_free,

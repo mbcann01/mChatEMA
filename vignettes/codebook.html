@@ -9,9 +9,8 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Brad Cannell" />
 
-<meta name="date" content="2016-05-19" />
+<meta name="date" content="2016-05-20" />
 
 <title>Codebook</title>
 
@@ -117,8 +116,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Codebook</h1>
-<h4 class="author"><em>Brad Cannell</em></h4>
-<h4 class="date"><em>May 19, 2016</em></h4>
+<h4 class="date"><em>May 20, 2016</em></h4>
 
 </div>
 
@@ -129,2081 +127,1724 @@ library(dataclean)</code></pre>
 <p><strong>Load data</strong></p>
 <pre class="r"><code>load(&quot;data/daily_april_2016.RData&quot;)
 about_data(daily)
-#&gt; 1390 observations and 137 variables in the data</code></pre>
+#&gt; 1390 observations and 116 variables in the data</code></pre>
 <hr />
 <p> </p>
 <p><strong>Create Codebook</strong></p>
 <p>Remember, this is currently April, 2016 only.</p>
-<pre class="text"><code>codebook(daily)
-#&gt; ---------------------------------------------------------------------- 
-#&gt; case_number 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 91 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  case_number       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; date 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 27 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;       date                    
-#&gt;  Min.   :2016-04-01 00:00:00  
-#&gt;  1st Qu.:2016-04-12 00:00:00  
-#&gt;  Median :2016-04-20 00:00:00  
-#&gt;  Mean   :2016-04-18 10:57:50  
-#&gt;  3rd Qu.:2016-04-26 00:00:00  
-#&gt;  Max.   :2016-05-01 00:00:00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; id 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1390 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;        id      
-#&gt;  Min.   :2957  
-#&gt;  1st Qu.:3304  
-#&gt;  Median :3652  
-#&gt;  Mean   :3738  
-#&gt;  3rd Qu.:3999  
-#&gt;  Max.   :6280  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; happy 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     happy          
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; frustrated 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   frustrated       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sad 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;      sad           
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; worried 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    worried         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; restless 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    restless        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; excited 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    excited         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; calm 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;      calm          
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; lonely 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     lonely         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; bored 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     bored          
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sluggish 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    sluggish        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_location 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 36 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  pre_location      
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_action 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 38 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   pre_action       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_who1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    pre_who1        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_who2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     pre_who2     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2554  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pre_yesterday 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 11 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  pre_yesterday     
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_walk 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 780 
-#&gt; Summary: 
-#&gt;    min_walk        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_walk_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 780 
-#&gt; Summary: 
-#&gt;    min_walk_c   
-#&gt;  Min.   : 5.00  
-#&gt;  1st Qu.:16.00  
-#&gt;  Median :26.00  
-#&gt;  Mean   :29.93  
-#&gt;  3rd Qu.:36.00  
-#&gt;  Max.   :50.00  
-#&gt;  NA's   :780    
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_run 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1163 
-#&gt; Summary: 
-#&gt;    min_run         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_run_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1163 
-#&gt; Summary: 
-#&gt;    min_run_c    
-#&gt;  Min.   : 5.00  
-#&gt;  1st Qu.:26.00  
-#&gt;  Median :36.00  
-#&gt;  Mean   :35.37  
-#&gt;  3rd Qu.:46.00  
-#&gt;  Max.   :50.00  
-#&gt;  NA's   :1163   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 710 
-#&gt; Summary: 
-#&gt;    min_act         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_act_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 710 
-#&gt; Summary: 
-#&gt;    min_act_c    
-#&gt;  Min.   : 5.00  
-#&gt;  1st Qu.:26.00  
-#&gt;  Median :36.00  
-#&gt;  Mean   :36.46  
-#&gt;  3rd Qu.:50.00  
-#&gt;  Max.   :50.00  
-#&gt;  NA's   :710    
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_sit 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_sit         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_sit_c 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_sit_c     
-#&gt;  Min.   : 4.000  
-#&gt;  1st Qu.: 5.000  
-#&gt;  Median : 7.000  
-#&gt;  Mean   : 6.612  
-#&gt;  3rd Qu.: 9.000  
-#&gt;  Max.   :12.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pedometer1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   pedometer1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pedometer2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    pedometer2     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.04317  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; steps 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 41 
-#&gt; Miss: 1330 
-#&gt; Summary: 
-#&gt;      steps      
-#&gt;  Min.   :   30  
-#&gt;  1st Qu.: 2000  
-#&gt;  Median : 3100  
-#&gt;  Mean   : 3718  
-#&gt;  3rd Qu.: 5500  
-#&gt;  Max.   :10258  
-#&gt;  NA's   :1330   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; phys_act_sat1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  phys_act_sat1     
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; phys_act_sat2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  phys_act_sat2  
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.828  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_fruit1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  serv_fruit1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_fruit2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   serv_fruit2   
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:0.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.249  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :5.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_veg 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    serv_veg        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_ssb1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   serv_ssb1        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_ssb2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    serv_ssb2    
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:0.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :1.663  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :5.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_sweets1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  serv_sweets1      
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_sweets2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   serv_sweets2   
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.9158  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :5.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; serv_meat 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   serv_meat        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; food_sat1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   food_sat1        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; food_sat2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    food_sat2    
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :1.906  
-#&gt;  3rd Qu.:2.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; take_meds1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   take_meds1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; take_meds2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    take_meds2    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:1.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.9324  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; which_meds1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;   which_meds1  
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; why_no_meds 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 9 
-#&gt; Miss: 1296 
-#&gt; Summary: 
-#&gt;  why_no_meds       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   free_time        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 378 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  free_time_act     
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time_sat1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  free_time_sat1    
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; free_time_sat2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  free_time_sat2 
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.135  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :4.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_talk1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   min_talk1        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_talk2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_talk2     
-#&gt;  Min.   :  8.00  
-#&gt;  1st Qu.: 23.00  
-#&gt;  Median : 90.00  
-#&gt;  Mean   : 88.07  
-#&gt;  3rd Qu.:150.00  
-#&gt;  Max.   :240.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_group1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   min_group1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; min_group2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    min_group2    
-#&gt;  Min.   :  8.00  
-#&gt;  1st Qu.:  8.00  
-#&gt;  Median : 23.00  
-#&gt;  Mean   : 42.57  
-#&gt;  3rd Qu.: 45.00  
-#&gt;  Max.   :240.00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; interaction_sat1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  interaction_sat1  
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; interaction_sat2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  interaction_sat2
-#&gt;  Min.   :0.000   
-#&gt;  1st Qu.:2.000   
-#&gt;  Median :2.000   
-#&gt;  Mean   :2.242   
-#&gt;  3rd Qu.:3.000   
-#&gt;  Max.   :4.000   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; subs_check1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 22 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  subs_check1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; subs_check2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 4 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   subs_check2    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.6619  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :3.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_drinks1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1281 
-#&gt; Summary: 
-#&gt;  num_drinks1       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_drinks2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1281 
-#&gt; Summary: 
-#&gt;   num_drinks2   
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:2.000  
-#&gt;  Median :2.000  
-#&gt;  Mean   :2.596  
-#&gt;  3rd Qu.:3.000  
-#&gt;  Max.   :5.000  
-#&gt;  NA's   :1281   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; subs_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 1369 
-#&gt; Summary: 
-#&gt;   subs_time        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; first_drink 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 1304 
-#&gt; Summary: 
-#&gt;  first_drink       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; last_drink 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 6 
-#&gt; Miss: 1304 
-#&gt; Summary: 
-#&gt;   last_drink       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_cigs1 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 8 
-#&gt; Miss: 791 
-#&gt; Summary: 
-#&gt;   num_cigs1        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_cigs2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 8 
-#&gt; Miss: 791 
-#&gt; Summary: 
-#&gt;    num_cigs2     
-#&gt;  Min.   : 0.000  
-#&gt;  1st Qu.: 3.000  
-#&gt;  Median : 8.000  
-#&gt;  Mean   : 8.336  
-#&gt;  3rd Qu.:13.000  
-#&gt;  Max.   :20.000  
-#&gt;  NA's   :791     
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; first_cig 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 791 
-#&gt; Summary: 
-#&gt;   first_cig        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; last_cig 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 7 
-#&gt; Miss: 820 
-#&gt; Summary: 
-#&gt;    last_cig        
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; opiate 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 3 
-#&gt; Miss: 1329 
-#&gt; Summary: 
-#&gt;     opiate         
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_heroin 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;    num_heroin  
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_opiate 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 5 
-#&gt; Miss: 1347 
-#&gt; Summary: 
-#&gt;   num_opiate       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; stim 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;       stim     
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_coc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;     num_coc    
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; num_stim 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;     num_stim   
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; alert_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 125 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   alert_time       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; alert_action 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;   alert_action 
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; start_time 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 604 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    start_time                 
-#&gt;  Min.   :2016-04-01 00:01:00  
-#&gt;  1st Qu.:2016-04-12 10:31:00  
-#&gt;  Median :2016-04-20 10:30:00  
-#&gt;  Mean   :2016-04-18 21:20:51  
-#&gt;  3rd Qu.:2016-04-26 10:31:45  
-#&gt;  Max.   :2016-05-01 21:09:00  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; completed 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 1390 
-#&gt; Summary: 
-#&gt;    completed   
-#&gt;  Min.   : NA   
-#&gt;  1st Qu.: NA   
-#&gt;  Median : NA   
-#&gt;  Mean   :NaN   
-#&gt;  3rd Qu.: NA   
-#&gt;  Max.   : NA   
-#&gt;  NA's   :1390  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; which_meds2 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 24 
-#&gt; Miss: 1295 
-#&gt; Summary: 
-#&gt;  which_meds2       
-#&gt;  Length:1390       
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; bus_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     bus_loc       
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.05899  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; church_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    church_loc     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01942  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; home_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     home_loc     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:1.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.7626  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; frifam_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    frifam_loc     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.06835  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; store_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    store_loc      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01799  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; outdoors_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   outdoors_loc    
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.08201  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; other_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    other_loc      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.05683  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; restaurant_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  restaurant_loc    
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.002878  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; school_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    school_loc
-#&gt;  Min.   :0   
-#&gt;  1st Qu.:0   
-#&gt;  Median :0   
-#&gt;  Mean   :0   
-#&gt;  3rd Qu.:0   
-#&gt;  Max.   :0   
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; work_loc 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     work_loc      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01583  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; other_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    other_act     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1755  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sit_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     sit_act      
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4799  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sleep_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    sleep_act     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2108  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; stand_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    stand_act     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1396  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; walk_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     walk_act      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.07842  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; talk_act 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     talk_act     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1892  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; bike_yest 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    bike_yest     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4388  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; run_yest 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     run_yest     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1633  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; cleaning_yest 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  cleaning_yest   
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4892  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; none_yest 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    none_yest     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2691  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_dep 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_dep     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.04029  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_psy 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_psy     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.03094  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_ast 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_ast     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01079  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_bp 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    medtype_bp     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.02662  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_diab 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_diab     
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.005755  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_pain 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_pain    
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01223  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_chol 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_chol     
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.003597  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_anti 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   medtype_anti     
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.001439  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; medtype_other 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  medtype_other    
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01799  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; meds_ran_out 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   meds_ran_out    
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.04245  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; meds_forgot 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   meds_forgot     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01942  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; meds_no_need 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   meds_no_need      
-#&gt;  Min.   :0.0000000  
-#&gt;  1st Qu.:0.0000000  
-#&gt;  Median :0.0000000  
-#&gt;  Mean   :0.0007194  
-#&gt;  3rd Qu.:0.0000000  
-#&gt;  Max.   :1.0000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; meds_side 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    meds_side        
-#&gt;  Min.   :0.0000000  
-#&gt;  1st Qu.:0.0000000  
-#&gt;  Median :0.0000000  
-#&gt;  Mean   :0.0007194  
-#&gt;  3rd Qu.:0.0000000  
-#&gt;  Max.   :1.0000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; meds_other 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    meds_other     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01295  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; none_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    none_free      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.03885  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; tv_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     tv_free     
-#&gt;  Min.   :0.000  
-#&gt;  1st Qu.:1.000  
-#&gt;  Median :1.000  
-#&gt;  Mean   :0.846  
-#&gt;  3rd Qu.:1.000  
-#&gt;  Max.   :1.000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; internet_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  internet_free   
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :1.0000  
-#&gt;  Mean   :0.5043  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; book_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    book_free     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2302  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; music_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    music_free    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2453  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; craft_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    craft_free    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1137  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; cleaned_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   cleaned_free   
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4374  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pets_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    pets_free     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1906  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; pray_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    pray_free     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.2827  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; sport_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    sport_free     
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01799  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; walk_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    walk_free     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1705  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; shop_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    shop_free     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.1583  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; volunteer_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;  volunteer_free   
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.09424  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; social_free 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   social_free    
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.3532  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; alc_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     alc_sub      
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.0777  
-#&gt;  3rd Qu.:0.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; cig_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     cig_sub      
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4309  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; mar_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     mar_sub       
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.06619  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; opi_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     opi_sub       
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.04388  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; stim_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     stim_sub       
-#&gt;  Min.   :0.000000  
-#&gt;  1st Qu.:0.000000  
-#&gt;  Median :0.000000  
-#&gt;  Mean   :0.005036  
-#&gt;  3rd Qu.:0.000000  
-#&gt;  Max.   :1.000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; herb_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     herb_sub        
-#&gt;  Min.   :0.0000000  
-#&gt;  1st Qu.:0.0000000  
-#&gt;  Median :0.0000000  
-#&gt;  Mean   :0.0007194  
-#&gt;  3rd Qu.:0.0000000  
-#&gt;  Max.   :1.0000000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; other_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    other_sub
-#&gt;  Min.   :0  
-#&gt;  1st Qu.:0  
-#&gt;  Median :0  
-#&gt;  Mean   :0  
-#&gt;  3rd Qu.:0  
-#&gt;  Max.   :0  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; none_sub 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     none_sub     
-#&gt;  Min.   :0.0000  
-#&gt;  1st Qu.:0.0000  
-#&gt;  Median :0.0000  
-#&gt;  Mean   :0.4619  
-#&gt;  3rd Qu.:1.0000  
-#&gt;  Max.   :1.0000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; op_heroin 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;    op_heroin
-#&gt;  Min.   :0  
-#&gt;  1st Qu.:0  
-#&gt;  Median :0  
-#&gt;  Mean   :0  
-#&gt;  3rd Qu.:0  
-#&gt;  Max.   :0  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; op_methadone 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;   op_methadone    
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.01295  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; op_pills 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 2 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     op_pills      
-#&gt;  Min.   :0.00000  
-#&gt;  1st Qu.:0.00000  
-#&gt;  Median :0.00000  
-#&gt;  Mean   :0.03094  
-#&gt;  3rd Qu.:0.00000  
-#&gt;  Max.   :1.00000  
-#&gt; 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; op_other 
-#&gt; ---------------------------------------------------------------------- 
-#&gt; Label: NA 
-#&gt; Class: character 
-#&gt; Unique: 1 
-#&gt; Miss: 0 
-#&gt; Summary: 
-#&gt;     op_other
-#&gt;  Min.   :0  
-#&gt;  1st Qu.:0  
-#&gt;  Median :0  
-#&gt;  Mean   :0  
-#&gt;  3rd Qu.:0  
-#&gt;  Max.   :0</code></pre>
+<pre><code>-------------------------------------------------------------------------------------------------------------- 
+case_number 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Case number 
+Class: integer 
+Unique: 91 
+Miss: 0 
+Summary: 
+  case_number   
+ Min.   :10286  
+ 1st Qu.:10419  
+ Median :10480  
+ Mean   :10530  
+ 3rd Qu.:10655  
+ Max.   :10880  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+date 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Date taken 
+Class: POSIXct POSIXt 
+Unique: 27 
+Miss: 0 
+Summary: 
+      date                    
+ Min.   :2016-04-01 00:00:00  
+ 1st Qu.:2016-04-12 00:00:00  
+ Median :2016-04-20 00:00:00  
+ Mean   :2016-04-18 10:57:50  
+ 3rd Qu.:2016-04-26 00:00:00  
+ Max.   :2016-05-01 00:00:00  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+id 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Response ID 
+Class: numeric 
+Unique: 1390 
+Miss: 0 
+Summary: 
+       id      
+ Min.   :2957  
+ 1st Qu.:3304  
+ Median :3652  
+ Mean   :3738  
+ 3rd Qu.:3999  
+ Max.   :6280  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+happy 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel happy 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+               happy    
+ Strongly disagree: 53  
+ Disagree         :127  
+ Neutral          :386  
+ Agree            :557  
+ Strongly agree   :267  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+frustrated 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel frustrated 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+             frustrated 
+ Strongly disagree:267  
+ Disagree         :564  
+ Neutral          :299  
+ Agree            :201  
+ Strongly agree   : 59  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sad 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel sad 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+                sad     
+ Strongly disagree:286  
+ Disagree         :634  
+ Neutral          :292  
+ Agree            :129  
+ Strongly agree   : 49  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+worried 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel worried 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+              worried   
+ Strongly disagree:257  
+ Disagree         :512  
+ Neutral          :282  
+ Agree            :266  
+ Strongly agree   : 73  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+restless 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel restless 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+              restless  
+ Strongly disagree:268  
+ Disagree         :519  
+ Neutral          :327  
+ Agree            :234  
+ Strongly agree   : 42  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+excited 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel excited 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+              excited   
+ Strongly disagree: 68  
+ Disagree         :325  
+ Neutral          :532  
+ Agree            :296  
+ Strongly agree   :169  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+calm 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel calm 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+                calm    
+ Strongly disagree: 53  
+ Disagree         :171  
+ Neutral          :444  
+ Agree            :504  
+ Strongly agree   :218  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+lonely 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel lonely 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+               lonely   
+ Strongly disagree:290  
+ Disagree         :543  
+ Neutral          :281  
+ Agree            :146  
+ Strongly agree   :130  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+bored 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel bored 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+               bored    
+ Strongly disagree:296  
+ Disagree         :568  
+ Neutral          :354  
+ Agree            :142  
+ Strongly agree   : 30  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sluggish 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Mark the response that most applies to you RIGHT NOW: I feel sluggish 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+              sluggish  
+ Strongly disagree:224  
+ Disagree         :475  
+ Neutral          :279  
+ Agree            :317  
+ Strongly agree   : 95  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+bus_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Bus, train, or vehicle 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ bus_loc   
+ No :1308  
+ Yes:  82  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+church_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Church 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ church_loc
+ No :1363  
+ Yes:  27  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+home_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Home 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ home_loc  
+ No : 330  
+ Yes:1060  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+frifam_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Friend's or relative's house 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ frifam_loc
+ No :1295  
+ Yes:  95  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+store_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Store / Mall 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ store_loc 
+ No :1365  
+ Yes:  25  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+outdoors_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Outdoors 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ outdoors_loc
+ No :1276    
+ Yes: 114    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+other_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Other 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ other_loc 
+ No :1311  
+ Yes:  79  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+restaurant_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Restaurant 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ restaurant_loc
+ No :1386      
+ Yes:   4      
+
+
+-------------------------------------------------------------------------------------------------------------- 
+school_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): School / Library 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ school_loc
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+work_loc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Where are you right now? (Check all that apply): Work 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ work_loc  
+ No :1368  
+ Yes:  22  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+other_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Other 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ other_act 
+ No :1146  
+ Yes: 244  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sit_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Sitting 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ sit_act  
+ No :723  
+ Yes:667  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sleep_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Sleeping or resting 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ sleep_act 
+ No :1097  
+ Yes: 293  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+stand_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Standing 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ stand_act 
+ No :1196  
+ Yes: 194  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+walk_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Walking or exercising 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ walk_act  
+ No :1281  
+ Yes: 109  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+talk_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What were you doing right before your phone rang/vibrated? (check all that apply): Talking 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ talk_act  
+ No :1127  
+ Yes: 263  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+pre_who 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Were you interacting with anyone when the phone rang for this assessment? 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ pre_who   
+ No :1035  
+ Yes: 355  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+bike_yest 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Did you do any of these things yesterday? (check all that apply): Walk or bicycle to get somewhere 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ bike_yest
+ No :780  
+ Yes:610  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+run_yest 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Did you do any of these things yesterday? (check all that apply): Do physical activity for fitness, like running, sports or a brisk walk 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ run_yest  
+ No :1163  
+ Yes: 227  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+cleaning_yest 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Did you do any of these things yesterday? (check all that apply): Do physical activity at work or home, like cleaning, lifting or carrying things 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ cleaning_yest
+ No :710      
+ Yes:680      
+
+
+-------------------------------------------------------------------------------------------------------------- 
+none_yest 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Did you do any of these things yesterday? (check all that apply): None 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ none_yest 
+ No :1016  
+ Yes: 374  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_walk 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you walk or bicycle to get somewhere? 
+Class: factor 
+Unique: 7 
+Miss: 780 
+Summary: 
+               min_walk  
+ 10 or less minutes: 44  
+ 11-20             :112  
+ 21-30             :182  
+ 31-40             :134  
+ 41-50             : 53  
+ more than 50      : 85  
+ NA's              :780  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_walk_c 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you walk or bicycle to get somewhere? 
+Class: integer 
+Unique: 7 
+Miss: 780 
+Summary: 
+   min_walk_c   
+ Min.   : 5.00  
+ 1st Qu.:16.00  
+ Median :26.00  
+ Mean   :29.93  
+ 3rd Qu.:36.00  
+ Max.   :50.00  
+ NA's   :780    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_run 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you do physical activity for fitness, like running, sports or a brisk walk? 
+Class: factor 
+Unique: 7 
+Miss: 1163 
+Summary: 
+               min_run    
+ 10 or less minutes:  12  
+ 11-20             :  20  
+ 21-30             :  47  
+ 31-40             :  57  
+ 41-50             :  44  
+ more than 50      :  47  
+ NA's              :1163  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_run_c 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you do physical activity for fitness, like running, sports or a brisk walk? 
+Class: integer 
+Unique: 7 
+Miss: 1163 
+Summary: 
+   min_run_c    
+ Min.   : 5.00  
+ 1st Qu.:26.00  
+ Median :36.00  
+ Mean   :35.37  
+ 3rd Qu.:46.00  
+ Max.   :50.00  
+ NA's   :1163   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_act 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you do physical activity at work or home, like cleaning, lifting or carrying things? 
+Class: factor 
+Unique: 7 
+Miss: 710 
+Summary: 
+               min_act   
+ 10 or less minutes: 24  
+ 11-20             : 60  
+ 21-30             :129  
+ 31-40             :181  
+ 41-50             :114  
+ more than 50      :172  
+ NA's              :710  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_act_c 
+-------------------------------------------------------------------------------------------------------------- 
+Label: If yes, how many minutes did you do physical activity at work or home, like cleaning, lifting or carrying things? 
+Class: integer 
+Unique: 7 
+Miss: 710 
+Summary: 
+   min_act_c    
+ Min.   : 5.00  
+ 1st Qu.:26.00  
+ Median :36.00  
+ Mean   :36.46  
+ 3rd Qu.:50.00  
+ Max.   :50.00  
+ NA's   :710    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_sit 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many hours did you spend sitting yesterday? (Include sitting at work, sitting while eating, in a car, talking and watching TV. 
+Class: factor 
+Unique: 6 
+Miss: 0 
+Summary: 
+                          min_sit   
+ 4 or fewer hours             :338  
+ More than 4 hours- 6 hours   :341  
+ More than 6 hours- 8 hours   :312  
+ More than 8 hours- 10 hours  :244  
+ More than 10 hours - 12 hours:106  
+ More than 12 hours           : 49  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_sit_c 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many hours did you spend sitting yesterday? (Include sitting at work, sitting while eating, in a car, talking and watching TV. 
+Class: integer 
+Unique: 6 
+Miss: 0 
+Summary: 
+   min_sit_c     
+ Min.   : 4.000  
+ 1st Qu.: 5.000  
+ Median : 7.000  
+ Mean   : 6.612  
+ 3rd Qu.: 9.000  
+ Max.   :12.000  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+pedometer 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Are you using a pedometer to count your steps? 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ pedometer 
+ No :1330  
+ Yes:  60  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+steps 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Enter the number of steps you took yesterday 
+Class: integer 
+Unique: 41 
+Miss: 1330 
+Summary: 
+     steps      
+ Min.   :   30  
+ 1st Qu.: 2000  
+ Median : 3100  
+ Mean   : 3718  
+ 3rd Qu.: 5500  
+ Max.   :10258  
+ NA's   :1330   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+phys_act_sat 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Overall, how satisfied are you with your amount of physical activity yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+              phys_act_sat
+ Not at all         :157  
+ A little           :376  
+ Somewhat           :524  
+ Very               :215  
+ Extremely satisfied:118  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+serv_fruit 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many servings of fruit did you eat yesterday? (A serving is one piece of fruit or ¾ cup of fruit juice) 
+Class: factor 
+Unique: 6 
+Miss: 435 
+Summary: 
+     serv_fruit 
+ 1        :401  
+ 2        :375  
+ 3        :136  
+ 4        : 38  
+ 5 or more:  5  
+ NA's     :435  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+serv_veg 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many servings of vegetables did you eat yesterday? (A serving is ½ cup of vegetables or 1 cup salad) 
+Class: factor 
+Unique: 6 
+Miss: 272 
+Summary: 
+      serv_veg  
+ 1        :476  
+ 2        :423  
+ 3        :175  
+ 4        : 36  
+ 5 or more:  8  
+ NA's     :272  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+serv_ssb 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many sugar-sweetened beverages did you drink yesterday?  (12 oz. soda, juice, ice tea, or energy drink) 
+Class: factor 
+Unique: 6 
+Miss: 462 
+Summary: 
+      serv_ssb  
+ 1        :311  
+ 2        :216  
+ 3        :182  
+ 4        : 72  
+ 5 or more:147  
+ NA's     :462  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+serv_sweets 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many times did you eat desserts and other sweets yesterday? 
+Class: factor 
+Unique: 6 
+Miss: 608 
+Summary: 
+    serv_sweets 
+ 1        :459  
+ 2        :195  
+ 3        : 96  
+ 4        : 24  
+ 5 or more:  8  
+ NA's     :608  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+serv_meat 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many servings of red meat (steak, hamburger) or processed meats (cold cuts, ham) did you eat yesterday? (A serving is 2-3 oz of cooked lean meat.) 
+Class: factor 
+Unique: 6 
+Miss: 420 
+Summary: 
+     serv_meat  
+ 1        :446  
+ 2        :393  
+ 3        :114  
+ 4        : 15  
+ 5 or more:  2  
+ NA's     :420  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+food_sat 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Overall, how satisfied are you with the food choices you made yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+                food_sat  
+ Not at all         :108  
+ A little           :369  
+ Somewhat           :575  
+ Very               :221  
+ Extremely satisfied:117  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+take_meds 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Did you take all your medication as prescribed yesterday? 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ take_meds 
+ No :  94  
+ Yes:1296  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_dep 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Depression/anxiety/mood 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_dep
+ No :1334   
+ Yes:  56   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_psy 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Psychiatric 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_psy
+ No :1347   
+ Yes:  43   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_ast 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Asthma/COPD 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_ast
+ No :1375   
+ Yes:  15   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_bp 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Blood pressure 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_bp
+ No :1353  
+ Yes:  37  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_diab 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Diabetes 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_diab
+ No :1382    
+ Yes:   8    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_pain 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Pain relief 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_pain
+ No :1373    
+ Yes:  17    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_chol 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Cholesterol 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_chol
+ No :1385    
+ Yes:   5    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_anti 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Antibiotic/antiviral 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_anti
+ No :1388    
+ Yes:   2    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+medtype_other 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which medication didn’t you take? Other 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ medtype_other
+ No :1365     
+ Yes:  25     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_ran_out 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Ran out 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ meds_ran_out
+ No :1331    
+ Yes:  59    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_forgot 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Forgot 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ meds_forgot
+ No :1363   
+ Yes:  27   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_no_need 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Don't need it 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ meds_no_need
+ No :1389    
+ Yes:   1    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_side 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Side effects 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ meds_side 
+ No :1389  
+ Yes:   1  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_lost 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Got lost/stolen 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ meds_lost 
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+meds_other 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Why didn’t you take medications? (Check all that apply): Other 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ meds_other
+ No :1372  
+ Yes:  18  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+free_time 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How much free time did you have yesterday? 
+Class: factor 
+Unique: 6 
+Miss: 0 
+Summary: 
+                       free_time  
+ 2 or fewer hours           :183  
+ More than 2 hours- 4 hours :254  
+ More than 4 hours- 6 hours :279  
+ More than 6 hours- 8 hours :263  
+ More than 8 hours- 10 hours:208  
+ More than 10 hours         :203  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+none_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): None 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ none_free 
+ No :1336  
+ Yes:  54  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+tv_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Watched TV 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ tv_free   
+ No : 214  
+ Yes:1176  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+games_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Played computer games 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ games_free
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+movie_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Went to a movie 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ movie_free
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+internet_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Surfed the internet or spent time on the computer 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ internet_free
+ No :689      
+ Yes:701      
+
+
+-------------------------------------------------------------------------------------------------------------- 
+book_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Read a book, magazine, or newspaper 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ book_free 
+ No :1070  
+ Yes: 320  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+music_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Listened to music or played an instrument 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ music_free
+ No :1049  
+ Yes: 341  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+craft_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Arts, crafts, or musical instruments 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ craft_free
+ No :1232  
+ Yes: 158  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+cleaned_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Cleaned, organized, or straightened home 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ cleaned_free
+ No :782     
+ Yes:608     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+pets_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Took care of pets 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ pets_free 
+ No :1125  
+ Yes: 265  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+pray_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Prayed, meditated, or went ot a religious service 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ pray_free
+ No :997  
+ Yes:393  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sport_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Played a sport or outside game 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ sport_free
+ No :1365  
+ Yes:  25  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+walk_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Went for a walk or jog 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ walk_free 
+ No :1153  
+ Yes: 237  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+cards_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): played cards, dice, or board games 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ cards_free
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+shop_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Went shopping 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ shop_free 
+ No :1170  
+ Yes: 220  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+volunteer_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Volunteered time to help agency or person 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ volunteer_free
+ No :1259      
+ Yes: 131      
+
+
+-------------------------------------------------------------------------------------------------------------- 
+social_free 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What did you do in your free time yesterday? (check all that apply): Socialized with friends or family on phone or in person 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ social_free
+ No :899    
+ Yes:491    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+free_time_sat 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Overall, how satisfied are you with the way you used your free time yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+             free_time_sat
+ Not at all         : 61  
+ A little           :292  
+ Somewhat           :577  
+ Very               :318  
+ Extremely satisfied:142  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_talk 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many total minutes did you spend in meaningful one-on-one conversations with other people yesterday? 
+Class: factor 
+Unique: 7 
+Miss: 0 
+Summary: 
+                       min_talk  
+ 15 or less minutes        :215  
+ 16-30 minutes             :185  
+ 31 min- 1 hour            :283  
+ More than 1 hour- 2 hours :293  
+ More than 2 hours- 3 hours:213  
+ More than 3 hours- 4 hours: 95  
+ More than 4 hours         :106  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+min_group 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many total minutes did you spend in meaningful group interactions yesterday (for example, going to church, participating in an exercise class, or other social occasions?)? 
+Class: factor 
+Unique: 7 
+Miss: 0 
+Summary: 
+                      min_group  
+ 15 or less minutes        :675  
+ 16-30 minutes             :162  
+ 31 min- 1 hour            :212  
+ More than 1 hour- 2 hours :204  
+ More than 2 hours- 3 hours:118  
+ More than 3 hours- 4 hours:  4  
+ More than 4 hours         : 15  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+interaction_sat 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Overall, how satisfied are you with the way you interacted with people yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 0 
+Summary: 
+            interaction_sat
+ Not at all         : 66   
+ A little           :277   
+ Somewhat           :493   
+ Very               :363   
+ Extremely satisfied:191   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+alc_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Alcohol 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ alc_sub   
+ No :1282  
+ Yes: 108  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+cig_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Tobacco (cigarettes) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ cig_sub  
+ No :791  
+ Yes:599  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+mar_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Marijuana (pot, hash, hash oil) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ mar_sub   
+ No :1298  
+ Yes:  92  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+opi_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Opiates (heroin, oxycontin, hydrocodone, burprenorphine, methadone) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ opi_sub   
+ No :1329  
+ Yes:  61  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+stim_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Stimulants (cocaine/crack, meth, amphetamines) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ stim_sub  
+ No :1383  
+ Yes:   7  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+herb_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Herbal drugs/incense (Spice, K2) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ herb_sub  
+ No :1389  
+ Yes:   1  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+other_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): Another drug (valium, xanax, steroids, in halants) 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ other_sub 
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+none_sub 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following did you use yesterday, even once? (check all that apply): None 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ none_sub 
+ No :748  
+ Yes:642  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+num_drinks 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many standard drinks did you consume yesterday? 
+Class: factor 
+Unique: 6 
+Miss: 1283 
+Summary: 
+    num_drinks  
+ 2 drinks:  37  
+ 3 drinks:  23  
+ 1 drink :  21  
+ 5 drinks:  15  
+ 4 drinks:  11  
+ (Other) :   0  
+ NA's    :1283  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+subs_time 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What time did you have this yesterday? 
+Class: factor 
+Unique: 1 
+Miss: 1390 
+Summary: 
+        subs_time   
+ Before 9am  :   0  
+ 9-11:59am   :   0  
+ 12-2:59pm   :   0  
+ 3-5:59pm    :   0  
+ 6-8:59pm    :   0  
+ 9pm or later:   0  
+ NA's        :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+first_drink 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What time did you have your FIRST drink of alcohol yesterday? 
+Class: factor 
+Unique: 1 
+Miss: 1390 
+Summary: 
+       first_drink  
+ Before 9am  :   0  
+ 9-11:59am   :   0  
+ 12-2:59pm   :   0  
+ 3-5:59pm    :   0  
+ 6-8:59pm    :   0  
+ 9pm or later:   0  
+ NA's        :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+last_drink 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What time did you have your LAST drink of alcohol yesterday? 
+Class: factor 
+Unique: 1 
+Miss: 1390 
+Summary: 
+        last_drink  
+ Before 9am  :   0  
+ 9-11:59am   :   0  
+ 12-2:59pm   :   0  
+ 3-5:59pm    :   0  
+ 6-8:59pm    :   0  
+ 9pm or later:   0  
+ NA's        :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+num_cigs 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many cigarettes did you smoke yesterday? 
+Class: factor 
+Unique: 8 
+Miss: 791 
+Summary: 
+                    num_cigs  
+ 2-5 cigarettes         :201  
+ 6-10 cigarettes        :200  
+ 16-20 cigarettes       : 72  
+ 11-15 cigarettes       : 67  
+ More than 20 cigarettes: 30  
+ (Other)                : 29  
+ NA's                   :791  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+first_cig 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How long after waking did you smoke your FIRST cigarette yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 791 
+Summary: 
+            first_cig  
+ within 5 minutes:209  
+ 6-30 minutes    :193  
+ 31-60 minutes   : 78  
+ after 60 minutes:119  
+ NA's            :791  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+last_cig 
+-------------------------------------------------------------------------------------------------------------- 
+Label: What time did you have your LAST cigarette yesterday? 
+Class: factor 
+Unique: 1 
+Miss: 1390 
+Summary: 
+         last_cig   
+ Before 9am  :   0  
+ 9-11:59am   :   0  
+ 12-2:59pm   :   0  
+ 3-5:59pm    :   0  
+ 6-8:59pm    :   0  
+ 9pm or later:   0  
+ NA's        :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+op_heroin 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following opiates did you used yesterday? Heroin 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ op_heroin 
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+op_methadone 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following opiates did you used yesterday? Methadone 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ op_methadone
+ No :1372    
+ Yes:  18    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+op_pills 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following opiates did you used yesterday? Pills (e.g. oxycontin, hydrocodone, buprenorphine) 
+Class: factor 
+Unique: 2 
+Miss: 0 
+Summary: 
+ op_pills  
+ No :1347  
+ Yes:  43  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+op_other 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following opiates did you used yesterday? Other 
+Class: factor 
+Unique: 1 
+Miss: 0 
+Summary: 
+ op_other  
+ No :1390  
+ Yes:   0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+num_opiate 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many opiates pills did you take yesterday? 
+Class: factor 
+Unique: 5 
+Miss: 1347 
+Summary: 
+     num_opiate  
+ 1        :   2  
+ 2        :   6  
+ 3        :   2  
+ 4        :  33  
+ 5 or more:   0  
+ NA's     :1347  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+stim 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Which of the following stimulants did you use yesterday? 
+Class: numeric 
+Unique: 1 
+Miss: 1390 
+Summary: 
+      stim     
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+num_coc 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many dimes of cocaine/crack did you use yesterday? 
+Class: numeric 
+Unique: 1 
+Miss: 1390 
+Summary: 
+    num_coc    
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+num_stim 
+-------------------------------------------------------------------------------------------------------------- 
+Label: How many stimulant pills did you take yesterday? 
+Class: numeric 
+Unique: 1 
+Miss: 1390 
+Summary: 
+    num_stim   
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+alert_time 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Initial alert time 
+Class: numeric 
+Unique: 125 
+Miss: 0 
+Summary: 
+   alert_time   
+ Min.   : 0.02  
+ 1st Qu.:10.50  
+ Median :10.50  
+ Mean   :10.37  
+ 3rd Qu.:10.53  
+ Max.   :22.67  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+alert_action 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Initial alert action 
+Class: numeric 
+Unique: 1 
+Miss: 1390 
+Summary: 
+  alert_action 
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+start_time 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Assessment start time 
+Class: POSIXct POSIXt 
+Unique: 604 
+Miss: 0 
+Summary: 
+   start_time                 
+ Min.   :2016-04-01 00:01:00  
+ 1st Qu.:2016-04-12 10:31:00  
+ Median :2016-04-20 10:30:00  
+ Mean   :2016-04-18 21:20:51  
+ 3rd Qu.:2016-04-26 10:31:45  
+ Max.   :2016-05-01 21:09:00  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+completed 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Completed 
+Class: numeric 
+Unique: 1 
+Miss: 1390 
+Summary: 
+   completed   
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  </code></pre>
 <hr />
 <div id="session-info" class="section level4">
 <h4>Session Info:</h4>
 <pre><code>#&gt; R version 3.3.0 (2016-05-03)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
-#&gt; Running under: OS X 10.11.4 (El Capitan)
+#&gt; Running under: OS X 10.11.5 (El Capitan)
 #&gt; 
 #&gt; locale:
 #&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2215,9 +1856,9 @@ about_data(daily)
 #&gt; [1] dataclean_0.1.0
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] magrittr_1.5    formatR_1.4     tools_3.3.0     htmltools_0.3.5
-#&gt;  [5] yaml_2.1.13     Rcpp_0.12.5     stringi_1.0-1   rmarkdown_0.9.6
-#&gt;  [9] knitr_1.13      stringr_1.0.0   digest_0.6.9    evaluate_0.9</code></pre>
+#&gt;  [1] magrittr_1.5    formatR_1.3     tools_3.3.0     htmltools_0.3.5
+#&gt;  [5] yaml_2.1.13     Rcpp_0.12.4     stringi_1.0-1   rmarkdown_0.9.6
+#&gt;  [9] knitr_1.12.3    stringr_1.0.0   digest_0.6.9    evaluate_0.9</code></pre>
 </div>
 
 

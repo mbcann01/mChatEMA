@@ -293,11 +293,14 @@ about_data(daily)
     meds_forgot    = ifelse(grepl(&quot;Forgot&quot;, why_no_meds), 1, 0),
     meds_no_need   = ifelse(grepl(&quot;need&quot;, why_no_meds), 1, 0),
     meds_side      = ifelse(grepl(&quot;Side effects&quot;, why_no_meds), 1, 0),
+    meds_lost      = ifelse(grepl(&quot;lost&quot;, why_no_meds), 1, 0),
     meds_other     = ifelse(grepl(&quot;Other&quot;, why_no_meds), 1, 0),
     
     # What did you do in your free time yesterday?
     none_free      = ifelse(grepl(&quot;None&quot;, free_time_act), 1, 0),
     tv_free        = ifelse(grepl(&quot;Watched TV&quot;, free_time_act), 1, 0),
+    games_free     = ifelse(grepl(&quot;computer games&quot;, free_time_act), 1, 0),
+    movie_free     = ifelse(grepl(&quot;movie&quot;, free_time_act), 1, 0),
     internet_free  = ifelse(grepl(&quot;Surfed the i&quot;, free_time_act), 1, 0),
     book_free      = ifelse(grepl(&quot;Read a book&quot;, free_time_act), 1, 0),
     music_free     = ifelse(grepl(&quot;music or played&quot;, free_time_act), 1, 0),
@@ -307,6 +310,7 @@ about_data(daily)
     pray_free      = ifelse(grepl(&quot;Prayed,&quot;, free_time_act), 1, 0),
     sport_free     = ifelse(grepl(&quot;Played a sport&quot;, free_time_act), 1, 0),
     walk_free      = ifelse(grepl(&quot;or jog&quot;, free_time_act), 1, 0),
+    cards_free     = ifelse(grepl(&quot;cards&quot;, free_time_act), 1, 0),
     shop_free      = ifelse(grepl(&quot;Went shopping&quot;, free_time_act), 1, 0),
     volunteer_free = ifelse(grepl(&quot;Volunteered&quot;, free_time_act), 1, 0),
     social_free    = ifelse(grepl(&quot;Socialized with&quot;, free_time_act), 1, 0),
@@ -438,7 +442,7 @@ how_many &lt;- c(
   &quot;5 or more&quot;
 )
 
-test &lt;- daily %&gt;%
+daily &lt;- daily %&gt;%
   dplyr::mutate(
     
     # Convert to class factor
@@ -507,11 +511,14 @@ test &lt;- daily %&gt;%
     meds_forgot     = factor(meds_forgot, levels = 0:1, labels = yesno),
     meds_no_need    = factor(meds_no_need, levels = 0:1, labels = yesno),
     meds_side       = factor(meds_side, levels = 0:1, labels = yesno),
+    meds_lost       = factor(meds_lost, levels = 0:1, labels = yesno),
     meds_other      = factor(meds_other, levels = 0:1, labels = yesno),
     
     free_time       = factor(free_time, levels = hours2, labels = hours2),
     none_free       = factor(none_free, levels = 0:1, labels = yesno),
     tv_free         = factor(tv_free, levels = 0:1, labels = yesno),
+    games_free      = factor(games_free, levels = 0:1, labels = yesno),
+    movie_free      = factor(movie_free, levels = 0:1, labels = yesno),
     internet_free   = factor(internet_free, levels = 0:1, labels = yesno),
     book_free       = factor(book_free, levels = 0:1, labels = yesno),
     music_free      = factor(music_free, levels = 0:1, labels = yesno),
@@ -521,6 +528,7 @@ test &lt;- daily %&gt;%
     pray_free       = factor(pray_free, levels = 0:1, labels = yesno),
     sport_free      = factor(sport_free, levels = 0:1, labels = yesno),
     walk_free       = factor(walk_free, levels = 0:1, labels = yesno),
+    cards_free      = factor(cards_free, levels = 0:1, labels = yesno),
     shop_free       = factor(shop_free, levels = 0:1, labels = yesno),
     volunteer_free  = factor(volunteer_free, levels = 0:1, labels = yesno),
     social_free     = factor(social_free, levels = 0:1, labels = yesno),
@@ -637,9 +645,13 @@ test &lt;- daily %&gt;%
     meds_forgot,
     meds_no_need,
     meds_side,
+    meds_lost,
     meds_other,
+    free_time,
     none_free,
     tv_free,
+    games_free,
+    movie_free,
     internet_free,
     book_free,
     music_free,
@@ -649,6 +661,7 @@ test &lt;- daily %&gt;%
     pray_free,
     sport_free,
     walk_free,
+    cards_free,
     shop_free,
     volunteer_free,
     social_free,
@@ -686,54 +699,47 @@ test &lt;- daily %&gt;%
   )
 
 about_data(daily)
-#&gt; 1390 observations and 137 variables in the data
+#&gt; 1390 observations and 116 variables in the data
 names(daily)
-#&gt;   [1] &quot;case_number&quot;      &quot;date&quot;             &quot;id&quot;              
-#&gt;   [4] &quot;happy&quot;            &quot;frustrated&quot;       &quot;sad&quot;             
-#&gt;   [7] &quot;worried&quot;          &quot;restless&quot;         &quot;excited&quot;         
-#&gt;  [10] &quot;calm&quot;             &quot;lonely&quot;           &quot;bored&quot;           
-#&gt;  [13] &quot;sluggish&quot;         &quot;pre_location&quot;     &quot;pre_action&quot;      
-#&gt;  [16] &quot;pre_who1&quot;         &quot;pre_who2&quot;         &quot;pre_yesterday&quot;   
-#&gt;  [19] &quot;min_walk&quot;         &quot;min_walk_c&quot;       &quot;min_run&quot;         
-#&gt;  [22] &quot;min_run_c&quot;        &quot;min_act&quot;          &quot;min_act_c&quot;       
-#&gt;  [25] &quot;min_sit&quot;          &quot;min_sit_c&quot;        &quot;pedometer1&quot;      
-#&gt;  [28] &quot;pedometer2&quot;       &quot;steps&quot;            &quot;phys_act_sat1&quot;   
-#&gt;  [31] &quot;phys_act_sat2&quot;    &quot;serv_fruit1&quot;      &quot;serv_fruit2&quot;     
-#&gt;  [34] &quot;serv_veg&quot;         &quot;serv_ssb1&quot;        &quot;serv_ssb2&quot;       
-#&gt;  [37] &quot;serv_sweets1&quot;     &quot;serv_sweets2&quot;     &quot;serv_meat&quot;       
-#&gt;  [40] &quot;food_sat1&quot;        &quot;food_sat2&quot;        &quot;take_meds1&quot;      
-#&gt;  [43] &quot;take_meds2&quot;       &quot;which_meds1&quot;      &quot;why_no_meds&quot;     
-#&gt;  [46] &quot;free_time&quot;        &quot;free_time_act&quot;    &quot;free_time_sat1&quot;  
-#&gt;  [49] &quot;free_time_sat2&quot;   &quot;min_talk1&quot;        &quot;min_talk2&quot;       
-#&gt;  [52] &quot;min_group1&quot;       &quot;min_group2&quot;       &quot;interaction_sat1&quot;
-#&gt;  [55] &quot;interaction_sat2&quot; &quot;subs_check1&quot;      &quot;subs_check2&quot;     
-#&gt;  [58] &quot;num_drinks1&quot;      &quot;num_drinks2&quot;      &quot;subs_time&quot;       
-#&gt;  [61] &quot;first_drink&quot;      &quot;last_drink&quot;       &quot;num_cigs1&quot;       
-#&gt;  [64] &quot;num_cigs2&quot;        &quot;first_cig&quot;        &quot;last_cig&quot;        
-#&gt;  [67] &quot;opiate&quot;           &quot;num_heroin&quot;       &quot;num_opiate&quot;      
-#&gt;  [70] &quot;stim&quot;             &quot;num_coc&quot;          &quot;num_stim&quot;        
-#&gt;  [73] &quot;alert_time&quot;       &quot;alert_action&quot;     &quot;start_time&quot;      
-#&gt;  [76] &quot;completed&quot;        &quot;which_meds2&quot;      &quot;bus_loc&quot;         
-#&gt;  [79] &quot;church_loc&quot;       &quot;home_loc&quot;         &quot;frifam_loc&quot;      
-#&gt;  [82] &quot;store_loc&quot;        &quot;outdoors_loc&quot;     &quot;other_loc&quot;       
-#&gt;  [85] &quot;restaurant_loc&quot;   &quot;school_loc&quot;       &quot;work_loc&quot;        
-#&gt;  [88] &quot;other_act&quot;        &quot;sit_act&quot;          &quot;sleep_act&quot;       
-#&gt;  [91] &quot;stand_act&quot;        &quot;walk_act&quot;         &quot;talk_act&quot;        
-#&gt;  [94] &quot;bike_yest&quot;        &quot;run_yest&quot;         &quot;cleaning_yest&quot;   
-#&gt;  [97] &quot;none_yest&quot;        &quot;medtype_dep&quot;      &quot;medtype_psy&quot;     
-#&gt; [100] &quot;medtype_ast&quot;      &quot;medtype_bp&quot;       &quot;medtype_diab&quot;    
-#&gt; [103] &quot;medtype_pain&quot;     &quot;medtype_chol&quot;     &quot;medtype_anti&quot;    
-#&gt; [106] &quot;medtype_other&quot;    &quot;meds_ran_out&quot;     &quot;meds_forgot&quot;     
-#&gt; [109] &quot;meds_no_need&quot;     &quot;meds_side&quot;        &quot;meds_other&quot;      
-#&gt; [112] &quot;none_free&quot;        &quot;tv_free&quot;          &quot;internet_free&quot;   
-#&gt; [115] &quot;book_free&quot;        &quot;music_free&quot;       &quot;craft_free&quot;      
-#&gt; [118] &quot;cleaned_free&quot;     &quot;pets_free&quot;        &quot;pray_free&quot;       
-#&gt; [121] &quot;sport_free&quot;       &quot;walk_free&quot;        &quot;shop_free&quot;       
-#&gt; [124] &quot;volunteer_free&quot;   &quot;social_free&quot;      &quot;alc_sub&quot;         
-#&gt; [127] &quot;cig_sub&quot;          &quot;mar_sub&quot;          &quot;opi_sub&quot;         
-#&gt; [130] &quot;stim_sub&quot;         &quot;herb_sub&quot;         &quot;other_sub&quot;       
-#&gt; [133] &quot;none_sub&quot;         &quot;op_heroin&quot;        &quot;op_methadone&quot;    
-#&gt; [136] &quot;op_pills&quot;         &quot;op_other&quot;</code></pre>
+#&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
+#&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
+#&gt;   [7] &quot;worried&quot;         &quot;restless&quot;        &quot;excited&quot;        
+#&gt;  [10] &quot;calm&quot;            &quot;lonely&quot;          &quot;bored&quot;          
+#&gt;  [13] &quot;sluggish&quot;        &quot;bus_loc&quot;         &quot;church_loc&quot;     
+#&gt;  [16] &quot;home_loc&quot;        &quot;frifam_loc&quot;      &quot;store_loc&quot;      
+#&gt;  [19] &quot;outdoors_loc&quot;    &quot;other_loc&quot;       &quot;restaurant_loc&quot; 
+#&gt;  [22] &quot;school_loc&quot;      &quot;work_loc&quot;        &quot;other_act&quot;      
+#&gt;  [25] &quot;sit_act&quot;         &quot;sleep_act&quot;       &quot;stand_act&quot;      
+#&gt;  [28] &quot;walk_act&quot;        &quot;talk_act&quot;        &quot;pre_who&quot;        
+#&gt;  [31] &quot;bike_yest&quot;       &quot;run_yest&quot;        &quot;cleaning_yest&quot;  
+#&gt;  [34] &quot;none_yest&quot;       &quot;min_walk&quot;        &quot;min_walk_c&quot;     
+#&gt;  [37] &quot;min_run&quot;         &quot;min_run_c&quot;       &quot;min_act&quot;        
+#&gt;  [40] &quot;min_act_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
+#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;phys_act_sat&quot;   
+#&gt;  [46] &quot;serv_fruit&quot;      &quot;serv_veg&quot;        &quot;serv_ssb&quot;       
+#&gt;  [49] &quot;serv_sweets&quot;     &quot;serv_meat&quot;       &quot;food_sat&quot;       
+#&gt;  [52] &quot;take_meds&quot;       &quot;medtype_dep&quot;     &quot;medtype_psy&quot;    
+#&gt;  [55] &quot;medtype_ast&quot;     &quot;medtype_bp&quot;      &quot;medtype_diab&quot;   
+#&gt;  [58] &quot;medtype_pain&quot;    &quot;medtype_chol&quot;    &quot;medtype_anti&quot;   
+#&gt;  [61] &quot;medtype_other&quot;   &quot;meds_ran_out&quot;    &quot;meds_forgot&quot;    
+#&gt;  [64] &quot;meds_no_need&quot;    &quot;meds_side&quot;       &quot;meds_lost&quot;      
+#&gt;  [67] &quot;meds_other&quot;      &quot;free_time&quot;       &quot;none_free&quot;      
+#&gt;  [70] &quot;tv_free&quot;         &quot;games_free&quot;      &quot;movie_free&quot;     
+#&gt;  [73] &quot;internet_free&quot;   &quot;book_free&quot;       &quot;music_free&quot;     
+#&gt;  [76] &quot;craft_free&quot;      &quot;cleaned_free&quot;    &quot;pets_free&quot;      
+#&gt;  [79] &quot;pray_free&quot;       &quot;sport_free&quot;      &quot;walk_free&quot;      
+#&gt;  [82] &quot;cards_free&quot;      &quot;shop_free&quot;       &quot;volunteer_free&quot; 
+#&gt;  [85] &quot;social_free&quot;     &quot;free_time_sat&quot;   &quot;min_talk&quot;       
+#&gt;  [88] &quot;min_group&quot;       &quot;interaction_sat&quot; &quot;alc_sub&quot;        
+#&gt;  [91] &quot;cig_sub&quot;         &quot;mar_sub&quot;         &quot;opi_sub&quot;        
+#&gt;  [94] &quot;stim_sub&quot;        &quot;herb_sub&quot;        &quot;other_sub&quot;      
+#&gt;  [97] &quot;none_sub&quot;        &quot;num_drinks&quot;      &quot;subs_time&quot;      
+#&gt; [100] &quot;first_drink&quot;     &quot;last_drink&quot;      &quot;num_cigs&quot;       
+#&gt; [103] &quot;first_cig&quot;       &quot;last_cig&quot;        &quot;op_heroin&quot;      
+#&gt; [106] &quot;op_methadone&quot;    &quot;op_pills&quot;        &quot;op_other&quot;       
+#&gt; [109] &quot;num_opiate&quot;      &quot;stim&quot;            &quot;num_coc&quot;        
+#&gt; [112] &quot;num_stim&quot;        &quot;alert_time&quot;      &quot;alert_action&quot;   
+#&gt; [115] &quot;start_time&quot;      &quot;completed&quot;</code></pre>
 <hr />
 <p><strong>Save as RData</strong></p>
 <pre class="r"><code>save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
@@ -744,7 +750,7 @@ names(daily)
 <h4>Session Info:</h4>
 <pre><code>#&gt; R version 3.3.0 (2016-05-03)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
-#&gt; Running under: OS X 10.11.4 (El Capitan)
+#&gt; Running under: OS X 10.11.5 (El Capitan)
 #&gt; 
 #&gt; locale:
 #&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -757,12 +763,12 @@ names(daily)
 #&gt; [5] readxl_0.1.1   
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_0.12.5      digest_0.6.9     assertthat_0.1   plyr_1.8.3      
+#&gt;  [1] Rcpp_0.12.4      digest_0.6.9     assertthat_0.1   plyr_1.8.3      
 #&gt;  [5] grid_3.3.0       R6_2.1.2         gtable_0.2.0     DBI_0.4-1       
-#&gt;  [9] formatR_1.4      magrittr_1.5     scales_0.4.0     evaluate_0.9    
+#&gt;  [9] formatR_1.3      magrittr_1.5     scales_0.4.0     evaluate_0.9    
 #&gt; [13] stringi_1.0-1    lazyeval_0.1.10  rmarkdown_0.9.6  tools_3.3.0     
 #&gt; [17] munsell_0.4.3    yaml_2.1.13      parallel_3.3.0   colorspace_1.2-6
-#&gt; [21] htmltools_0.3.5  knitr_1.13</code></pre>
+#&gt; [21] htmltools_0.3.5  knitr_1.12.3</code></pre>
 </div>
 
 

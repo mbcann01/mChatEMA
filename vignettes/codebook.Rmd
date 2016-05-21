@@ -1,11 +1,10 @@
 ---
 title: "Codebook"
-author: "Brad Cannell"
-date: "May 19, 2016"
+date: "May 20, 2016"
 output: html_document
 ---
 
-```{r, echo = FALSE}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # Set working directory
@@ -13,13 +12,13 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
 **Load packages and functions**
-```{r message=FALSE}
+```{r load_packages, message=FALSE}
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
 ```
 
 **Load data**   
-```{r}
+```{r load_data}
 load("data/daily_april_2016.RData")
 about_data(daily)
 ```
@@ -32,13 +31,134 @@ about_data(daily)
 
 Remember, this is currently April, 2016 only.
 
-```{r highlight=FALSE}
-codebook(daily)
+```{r create_labels, echo=FALSE}
+lab <- c(
+  "Case number",
+  "Date taken",
+  "Response ID",
+  "Mark the response that most applies to you RIGHT NOW: I feel happy",
+  "Mark the response that most applies to you RIGHT NOW: I feel frustrated",
+  "Mark the response that most applies to you RIGHT NOW: I feel sad",
+  "Mark the response that most applies to you RIGHT NOW: I feel worried",
+  "Mark the response that most applies to you RIGHT NOW: I feel restless",
+  "Mark the response that most applies to you RIGHT NOW: I feel excited",
+  "Mark the response that most applies to you RIGHT NOW: I feel calm",
+  "Mark the response that most applies to you RIGHT NOW: I feel lonely",
+  "Mark the response that most applies to you RIGHT NOW: I feel bored",
+  "Mark the response that most applies to you RIGHT NOW: I feel sluggish",
+  "Where are you right now? (Check all that apply): Bus, train, or vehicle",
+  "Where are you right now? (Check all that apply): Church",
+  "Where are you right now? (Check all that apply): Home",
+  "Where are you right now? (Check all that apply): Friend's or relative's house",
+  "Where are you right now? (Check all that apply): Store / Mall",
+  "Where are you right now? (Check all that apply): Outdoors",
+  "Where are you right now? (Check all that apply): Other",
+  "Where are you right now? (Check all that apply): Restaurant",
+  "Where are you right now? (Check all that apply): School / Library",
+  "Where are you right now? (Check all that apply): Work",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Other",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Sitting",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Sleeping or resting",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Standing",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Walking or exercising",
+  "What were you doing right before your phone rang/vibrated? (check all that apply): Talking",
+  "Were you interacting with anyone when the phone rang for this assessment?",
+  "Did you do any of these things yesterday? (check all that apply): Walk or bicycle to get somewhere",
+  "Did you do any of these things yesterday? (check all that apply): Do physical activity for fitness, like running, sports or a brisk walk",
+  "Did you do any of these things yesterday? (check all that apply): Do physical activity at work or home, like cleaning, lifting or carrying things",
+  "Did you do any of these things yesterday? (check all that apply): None",
+  "If yes, how many minutes did you walk or bicycle to get somewhere?",
+  "If yes, how many minutes did you walk or bicycle to get somewhere?",
+  "If yes, how many minutes did you do physical activity for fitness, like running, sports or a brisk walk?",
+  "If yes, how many minutes did you do physical activity for fitness, like running, sports or a brisk walk?",
+  "If yes, how many minutes did you do physical activity at work or home, like cleaning, lifting or carrying things?",
+  "If yes, how many minutes did you do physical activity at work or home, like cleaning, lifting or carrying things?",
+  "How many hours did you spend sitting yesterday? (Include sitting at work, sitting while eating, in a car, talking and watching TV.",
+  "How many hours did you spend sitting yesterday? (Include sitting at work, sitting while eating, in a car, talking and watching TV.",
+  "Are you using a pedometer to count your steps?",
+  "Enter the number of steps you took yesterday",
+  "Overall, how satisfied are you with your amount of physical activity yesterday?",
+  "How many servings of fruit did you eat yesterday? (A serving is one piece of fruit or ¾ cup of fruit juice)",
+  "How many servings of vegetables did you eat yesterday? (A serving is ½ cup of vegetables or 1 cup salad)",
+  "How many sugar-sweetened beverages did you drink yesterday?  (12 oz. soda, juice, ice tea, or energy drink)",
+  "How many times did you eat desserts and other sweets yesterday?",
+  "How many servings of red meat (steak, hamburger) or processed meats (cold cuts, ham) did you eat yesterday? (A serving is 2-3 oz of cooked lean meat.)",
+  "Overall, how satisfied are you with the food choices you made yesterday?",
+  "Did you take all your medication as prescribed yesterday?",
+  "Which medication didn’t you take? Depression/anxiety/mood",
+  "Which medication didn’t you take? Psychiatric",
+  "Which medication didn’t you take? Asthma/COPD",
+  "Which medication didn’t you take? Blood pressure",
+  "Which medication didn’t you take? Diabetes",
+  "Which medication didn’t you take? Pain relief",
+  "Which medication didn’t you take? Cholesterol",
+  "Which medication didn’t you take? Antibiotic/antiviral",
+  "Which medication didn’t you take? Other",
+  "Why didn’t you take medications? (Check all that apply): Ran out",
+  "Why didn’t you take medications? (Check all that apply): Forgot",
+  "Why didn’t you take medications? (Check all that apply): Don't need it",
+  "Why didn’t you take medications? (Check all that apply): Side effects",
+  "Why didn’t you take medications? (Check all that apply): Got lost/stolen",
+  "Why didn’t you take medications? (Check all that apply): Other",
+  "How much free time did you have yesterday?",
+  "What did you do in your free time yesterday? (check all that apply): None",
+  "What did you do in your free time yesterday? (check all that apply): Watched TV",
+  "What did you do in your free time yesterday? (check all that apply): Played computer games",
+  "What did you do in your free time yesterday? (check all that apply): Went to a movie",
+  "What did you do in your free time yesterday? (check all that apply): Surfed the internet or spent time on the computer",
+  "What did you do in your free time yesterday? (check all that apply): Read a book, magazine, or newspaper",
+  "What did you do in your free time yesterday? (check all that apply): Listened to music or played an instrument",
+  "What did you do in your free time yesterday? (check all that apply): Arts, crafts, or musical instruments",
+  "What did you do in your free time yesterday? (check all that apply): Cleaned, organized, or straightened home",
+  "What did you do in your free time yesterday? (check all that apply): Took care of pets",
+  "What did you do in your free time yesterday? (check all that apply): Prayed, meditated, or went ot a religious service",
+  "What did you do in your free time yesterday? (check all that apply): Played a sport or outside game",
+  "What did you do in your free time yesterday? (check all that apply): Went for a walk or jog",
+  "What did you do in your free time yesterday? (check all that apply): played cards, dice, or board games",
+  "What did you do in your free time yesterday? (check all that apply): Went shopping",
+  "What did you do in your free time yesterday? (check all that apply): Volunteered time to help agency or person",
+  "What did you do in your free time yesterday? (check all that apply): Socialized with friends or family on phone or in person",
+  "Overall, how satisfied are you with the way you used your free time yesterday?",
+  "How many total minutes did you spend in meaningful one-on-one conversations with other people yesterday?",
+  "How many total minutes did you spend in meaningful group interactions yesterday (for example, going to church, participating in an exercise class, or other social occasions?)?",
+  "Overall, how satisfied are you with the way you interacted with people yesterday?",
+  "Which of the following did you use yesterday, even once? (check all that apply): Alcohol",
+  "Which of the following did you use yesterday, even once? (check all that apply): Tobacco (cigarettes)",
+  "Which of the following did you use yesterday, even once? (check all that apply): Marijuana (pot, hash, hash oil)",
+  "Which of the following did you use yesterday, even once? (check all that apply): Opiates (heroin, oxycontin, hydrocodone, burprenorphine, methadone)",
+  "Which of the following did you use yesterday, even once? (check all that apply): Stimulants (cocaine/crack, meth, amphetamines)",
+  "Which of the following did you use yesterday, even once? (check all that apply): Herbal drugs/incense (Spice, K2)",
+  "Which of the following did you use yesterday, even once? (check all that apply): Another drug (valium, xanax, steroids, in halants)",
+  "Which of the following did you use yesterday, even once? (check all that apply): None",
+  "How many standard drinks did you consume yesterday?",
+  "What time did you have this yesterday?",
+  "What time did you have your FIRST drink of alcohol yesterday?",
+  "What time did you have your LAST drink of alcohol yesterday?",
+  "How many cigarettes did you smoke yesterday?",
+  "How long after waking did you smoke your FIRST cigarette yesterday?",
+  "What time did you have your LAST cigarette yesterday?",
+  "Which of the following opiates did you used yesterday? Heroin",
+  "Which of the following opiates did you used yesterday? Methadone",
+  "Which of the following opiates did you used yesterday? Pills (e.g. oxycontin, hydrocodone, buprenorphine)",
+  "Which of the following opiates did you used yesterday? Other",
+  "How many opiates pills did you take yesterday?",
+  "Which of the following stimulants did you use yesterday?",
+  "How many dimes of cocaine/crack did you use yesterday?",
+  "How many stimulant pills did you take yesterday?",
+  "Initial alert time",
+  "Initial alert action",
+  "Assessment start time",
+  "Completed"
+)
+```
+
+```{r create_codebook, highlight=FALSE, comment="", echo=FALSE}
+codebook(daily, label = lab)
 ```
 
 -------------------------------------------------------------------------------
 
 #### Session Info:
-```{r echo=FALSE}
+```{r session_info, echo=FALSE}
 sessionInfo()
 ```
