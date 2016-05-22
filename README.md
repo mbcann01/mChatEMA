@@ -22,4 +22,4 @@ Vignettes
 
 Under Construction: [Exploratory analysis]()
 
-Under Construction: [Plot - Cicumplex Model of Affect]()
+Under Construction: [Plot - Cicumplex Model of Affect](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/plot_circumplex_model_of_affect.html)

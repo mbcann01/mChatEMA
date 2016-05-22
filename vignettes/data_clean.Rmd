@@ -13,7 +13,7 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 
 **Load packages and functions**
 ```{r message=FALSE}
-# Packages
+# CRAN packages
 library(readxl)
 library(dplyr)
 library(stringr)

@@ -33,9 +33,9 @@ Remember, this is currently April, 2016 only.
 
 ```{r create_labels, echo=FALSE}
 lab <- c(
-  "Case number",
-  "Date taken",
-  "Response ID",
+  "Case number (Identifies unique participants)",
+  "Date assessment taken",
+  "Response ID (Identifies unique assessments within participants)",
   "Mark the response that most applies to you RIGHT NOW: I feel happy",
   "Mark the response that most applies to you RIGHT NOW: I feel frustrated",
   "Mark the response that most applies to you RIGHT NOW: I feel sad",
