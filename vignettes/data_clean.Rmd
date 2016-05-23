@@ -4,7 +4,7 @@ date: "May 20, 2016"
 output: html_document
 ---
 
-```{r, echo = FALSE}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # Set working directory
@@ -12,7 +12,7 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
 **Load packages and functions**
-```{r message=FALSE}
+```{r load_packages, message=FALSE}
 # CRAN packages
 library(readxl)
 library(dplyr)
@@ -24,7 +24,7 @@ library(dataclean) # Use this instead of str() to prevent showing raw data value
 ```
 
 **Import Data**   
-```{r}
+```{r import_data}
 daily <- readxl::read_excel("data/raw data/daily_2016_05_02.xls")
 
 # Create character vector to rename variables upon import
@@ -119,7 +119,7 @@ about_data(daily)
 &nbsp; 
 
 **Convert date / time variables**
-```{r}
+```{r convert_date}
 daily <- daily %>%
   dplyr::mutate(
     # Create new POSIX class variable by combining date and start time
@@ -132,7 +132,7 @@ daily <- daily %>%
 &nbsp;  
 
 **Create dummy variables for multiple answer questions**
-```{r}
+```{r dummy_coding}
 daily <- daily %>%
   dplyr::mutate(
     
@@ -220,7 +220,6 @@ daily <- daily %>%
 # View(daily[c("why_no_meds", "meds_ran_out", "meds_forgot", "meds_no_need", "meds_side", "meds_other")])
 ```
 
-
 -------------------------------------------------------------------------------   
 
 &nbsp;  
@@ -230,7 +229,7 @@ Covert categorical variables to class factor
 Coerce some variables from character to numeric   
 Rename variables   
 Drop unneeded variables   
-```{r}
+```{r factorizing}
 likert <- c(
   "Strongly disagree",
   "Disagree",
@@ -594,10 +593,67 @@ about_data(daily)
 names(daily)
 ```
 
+-------------------------------------------------------------------------------   
+
+&nbsp; 
+
+**Creating lag variables**
+
+* The data is currently set up such that emotion today is paired with activity / substance use yesterday. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (March 31st) on April 1.
+
+* If our goal is to use emotional state today to predict activity / substance use _today_, then we need to create leading emotion variables or a lagged outcome variables.
+
+* Further, participants don't respond (data isn't observed) everyday. So, we can't uniformly lag (or lead) by one day. We need to create a more intelligent lagged variable.
+
+    + Create a variable (date_yest) that is equal to yesterday's date.
+    
+    + Create a variable (date_lag) that is equal to the date value for the preceding row, within person.
+    
+    + Create a dummy variable (date_match) that is equal to 1 when date_yest and date_lag are equal.
+    
+    + When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.
+    
+```{r lagged_time}
+# Create date variables
+daily <- daily %>%
+  group_by(case_number) %>%
+  mutate(
+    date_yest = as.Date(as.character(date - 1)),
+    date_lag  = as.Date(as.character(lag(date)))
+  )
+
+# Create date match variable
+daily <- daily %>% 
+  ungroup %>%
+  mutate(
+    date_match = ifelse(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
+  )
+
+# Create lagged emotion variables
+daily <- daily %>%
+  group_by(case_number) %>%
+  mutate(
+    happy_lag      = lag(happy),
+    frustrated_lag = lag(frustrated),
+    sad_lag        = lag(sad),
+    worried_lag    = lag(worried),
+    restless_lag   = lag(restless),
+    excited_lag    = lag(excited),
+    calm_lag       = lag(calm),
+    lonely_lag     = lag(lonely),
+    bored_lag      = lag(bored),
+    sluggish_lag   = lag(sluggish)
+  )
+
+# Data checking:
+# View(test[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag")])
+```
+
 -------------------------------------------------------------------------------
 
 **Save as RData**
 ```{r}
+about_data(daily)
 save(daily, file = "data/daily_april_2016.RData")
 ```
 

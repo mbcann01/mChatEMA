@@ -742,8 +742,57 @@ names(daily)
 #&gt; [112] &quot;num_stim&quot;        &quot;alert_time&quot;      &quot;alert_action&quot;   
 #&gt; [115] &quot;start_time&quot;      &quot;completed&quot;</code></pre>
 <hr />
+<p> </p>
+<p><strong>Creating lag variables</strong></p>
+<ul>
+<li><p>The data is currently set up such that emotion today is paired with activity / substance use yesterday. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (March 31st) on April 1.</p></li>
+<li><p>If our goal is to use emotional state today to predict activity / substance use <em>today</em>, then we need to create leading emotion variables or a lagged outcome variables.</p></li>
+<li><p>Further, participants don’t respond (data isn’t observed) everyday. So, we can’t uniformly lag (or lead) by one day. We need to create a more intelligent lagged variable.</p>
+<ul>
+<li><p>Create a variable (date_yest) that is equal to yesterday’s date.</p></li>
+<li><p>Create a variable (date_lag) that is equal to the date value for the preceding row, within person.</p></li>
+<li><p>Create a dummy variable (date_match) that is equal to 1 when date_yest and date_lag are equal.</p></li>
+<li><p>When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.</p></li>
+</ul></li>
+</ul>
+<pre class="r"><code># Create date variables
+daily &lt;- daily %&gt;%
+  group_by(case_number) %&gt;%
+  mutate(
+    date_yest = as.Date(as.character(date - 1)),
+    date_lag  = as.Date(as.character(lag(date)))
+  )
+
+# Create date match variable
+daily &lt;- daily %&gt;% 
+  ungroup %&gt;%
+  mutate(
+    date_match = ifelse(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
+  )
+
+# Create lagged emotion variables
+daily &lt;- daily %&gt;%
+  group_by(case_number) %&gt;%
+  mutate(
+    happy_lag      = lag(happy),
+    frustrated_lag = lag(frustrated),
+    sad_lag        = lag(sad),
+    worried_lag    = lag(worried),
+    restless_lag   = lag(restless),
+    excited_lag    = lag(excited),
+    calm_lag       = lag(calm),
+    lonely_lag     = lag(lonely),
+    bored_lag      = lag(bored),
+    sluggish_lag   = lag(sluggish)
+  )
+
+# Data checking:
+# View(test[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;alc_sub&quot;, &quot;happy_lag&quot;)])</code></pre>
+<hr />
 <p><strong>Save as RData</strong></p>
-<pre class="r"><code>save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
+<pre class="r"><code>about_data(daily)
+#&gt; 1390 observations and 129 variables in the data
+save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 <p><strong>Clean up environment</strong></p>
 <pre class="r"><code>rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <hr />
