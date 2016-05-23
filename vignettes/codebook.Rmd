@@ -148,7 +148,20 @@ lab <- c(
   "Initial alert time",
   "Initial alert action",
   "Assessment start time",
-  "Completed"
+  "Completed",
+  "Current observation's date minus one day",
+  "Date value of previous observation (within person)",
+  "Equals 1 when date_yest and date_lag are equal",
+  "Value for happy in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for frustrated in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for sad in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for worried in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for restless in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for excited in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for calm in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for lonely in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for bored in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for sluggish in previous observation (within person) - use with date_match == 1 for lagged analysis"
 )
 ```
 

@@ -127,7 +127,7 @@ library(dataclean)</code></pre>
 <p><strong>Load data</strong></p>
 <pre class="r"><code>load(&quot;data/daily_april_2016.RData&quot;)
 about_data(daily)
-#&gt; 1390 observations and 116 variables in the data</code></pre>
+#&gt; 1390 observations and 129 variables in the data</code></pre>
 <hr />
 <p> </p>
 <p><strong>Create Codebook</strong></p>
@@ -1605,7 +1605,187 @@ Unique: 1
 Miss: 1390 
 Summary: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 </code></pre>
+     NA      NA      NA     NaN      NA      NA    1390 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+date_yest 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Current observation's date minus one day 
+Class: Date 
+Unique: 27 
+Miss: 0 
+Summary: 
+        Min.      1st Qu.       Median         Mean      3rd Qu. 
+&quot;2016-03-31&quot; &quot;2016-04-11&quot; &quot;2016-04-19&quot; &quot;2016-04-17&quot; &quot;2016-04-25&quot; 
+        Max. 
+&quot;2016-04-30&quot; 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+date_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Date value of previous observation (within person) 
+Class: Date 
+Unique: 26 
+Miss: 91 
+Summary: 
+        Min.      1st Qu.       Median         Mean      3rd Qu. 
+&quot;2016-04-02&quot; &quot;2016-04-13&quot; &quot;2016-04-20&quot; &quot;2016-04-19&quot; &quot;2016-04-27&quot; 
+        Max.         NA's 
+&quot;2016-05-01&quot;         &quot;91&quot; 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+date_match 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Equals 1 when date_yest and date_lag are equal 
+Class: numeric 
+Unique: 2 
+Miss: 91 
+Summary: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+      0       0       0       0       0       0      91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+happy_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for happy in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+               50               119               365               517 
+   Strongly agree              NA's 
+              248                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+frustrated_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for frustrated in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              249               523               281               192 
+   Strongly agree              NA's 
+               54                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sad_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for sad in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              261               592               278               122 
+   Strongly agree              NA's 
+               46                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+worried_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for worried in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              237               478               267               248 
+   Strongly agree              NA's 
+               69                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+restless_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for restless in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              253               483               303               220 
+   Strongly agree              NA's 
+               40                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+excited_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for excited in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+               62               308               494               283 
+   Strongly agree              NA's 
+              152                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+calm_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for calm in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+               49               162               416               469 
+   Strongly agree              NA's 
+              203                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+lonely_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for lonely in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              271               511               263               130 
+   Strongly agree              NA's 
+              124                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+bored_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for bored in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              276               530               329               134 
+   Strongly agree              NA's 
+               30                91 
+
+
+-------------------------------------------------------------------------------------------------------------- 
+sluggish_lag 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Value for sluggish in previous observation (within person) - use with date_match == 1 for lagged analysis 
+Class: factor 
+Unique: 6 
+Miss: 91 
+Summary: 
+Strongly disagree          Disagree           Neutral             Agree 
+              208               441               260               298 
+   Strongly agree              NA's 
+               92                91 </code></pre>
 <hr />
 <div id="session-info" class="section level4">
 <h4>Session Info:</h4>
