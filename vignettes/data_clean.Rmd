@@ -646,7 +646,8 @@ daily <- daily %>%
     lonely_lag     = lag(lonely),
     bored_lag      = lag(bored),
     sluggish_lag   = lag(sluggish)
-  )
+  ) %>%
+  ungroup
 
 # Data checking:
 # View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag")])

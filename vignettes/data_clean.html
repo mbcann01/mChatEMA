@@ -787,7 +787,8 @@ daily &lt;- daily %&gt;%
     lonely_lag     = lag(lonely),
     bored_lag      = lag(bored),
     sluggish_lag   = lag(sluggish)
-  )
+  ) %&gt;%
+  ungroup
 
 # Data checking:
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;alc_sub&quot;, &quot;happy_lag&quot;)])</code></pre>
