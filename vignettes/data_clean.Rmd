@@ -290,6 +290,7 @@ meaningful_time <- c(
 )
 
 drinks <- c(
+  "0 drinks",
   "1 drink",
   "2 drinks",
   "3 drinks",
@@ -300,12 +301,12 @@ drinks <- c(
 )
 
 time <- c(
-  "Before 9am",
-  "9-11:59am", 
-  "12-2:59pm", 
-  "3-5:59pm",
-  "6-8:59pm", 
-  "9pm or later"
+  "Before 9 AM",
+  "9:00 AM-11:59 AM", 
+  "12:00-2:59 PM", 
+  "3:00-5:59 PM",
+  "6:00-8:59 PM", 
+  "9 PM or later"
 )
 
 cig_count <- c(
