@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2016-05-20" />
+<meta name="date" content="2016-05-23" />
 
 <title>Data Clean</title>
 
@@ -116,7 +116,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Data Clean</h1>
-<h4 class="date"><em>May 20, 2016</em></h4>
+<h4 class="date"><em>May 23, 2016</em></h4>
 
 </div>
 
@@ -755,7 +755,10 @@ names(daily)
 <li><p>When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.</p></li>
 </ul></li>
 </ul>
-<pre class="r"><code># Create date variables
+<pre class="r"><code># Sort by case_number and date
+daily &lt;- dplyr::arrange(daily, case_number, date)
+
+# Create date variables
 daily &lt;- daily %&gt;%
   group_by(case_number) %&gt;%
   mutate(
@@ -787,7 +790,7 @@ daily &lt;- daily %&gt;%
   )
 
 # Data checking:
-# View(test[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;alc_sub&quot;, &quot;happy_lag&quot;)])</code></pre>
+# View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;alc_sub&quot;, &quot;happy_lag&quot;)])</code></pre>
 <hr />
 <p><strong>Save as RData</strong></p>
 <pre class="r"><code>about_data(daily)

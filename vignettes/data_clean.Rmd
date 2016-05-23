@@ -1,6 +1,6 @@
 ---
 title: "Data Clean"
-date: "May 20, 2016"
+date: "May 23, 2016"
 output: html_document
 ---
 
@@ -614,6 +614,9 @@ names(daily)
     + When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.
     
 ```{r lagged_time}
+# Sort by case_number and date
+daily <- dplyr::arrange(daily, case_number, date)
+
 # Create date variables
 daily <- daily %>%
   group_by(case_number) %>%
@@ -646,7 +649,7 @@ daily <- daily %>%
   )
 
 # Data checking:
-# View(test[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag")])
+# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag")])
 ```
 
 -------------------------------------------------------------------------------
