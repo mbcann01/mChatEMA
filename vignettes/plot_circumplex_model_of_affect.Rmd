@@ -1,7 +1,7 @@
 ---
 title: "Circumplex Model of Affect"
 author: "Brad Cannell"
-date: "May 21, 2016"
+date: "May 23, 2016"
 output: html_document
 ---
 
@@ -17,7 +17,6 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 # CRAN packages
 library(dplyr)
 library(ggplot2)
-library(shiny)
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
@@ -31,6 +30,7 @@ load("data/daily_april_2016.RData")
 daily <- dplyr::arrange(daily, case_number, date)
 about_data(daily)
 ```
+
 -------------------------------------------------------------------------------   
 
 &nbsp;
@@ -51,16 +51,10 @@ Source: [BIOPAC Systems, Inc.](http://blog.biopac.com/circumplex-model-affect-mo
 
 &nbsp;
 
-**Explore the emotion data**
-
-```{r explore_emotions, echo=FALSE}
-# Subset the data to include just the emotional responses
-emotions <- dplyr::select(daily, 4:13)
-```
+**Column plots of aggregate emotional responses**
 
 ```{r plot_emotions}
-# Column plots of aggregate emotional responses
-x <- names(emotions)
+x <- names(select(daily, 4:13))
 for (var in x) {
   plot <- ggplot2::ggplot(daily, ggplot2::aes_string(x = var)) +
     ggplot2::geom_bar() +
@@ -71,13 +65,21 @@ for (var in x) {
 }
 ```
 
-**Methods**
+**Methods**     
 
 1. Give each emotion an x and y value that relates to its quadrant on the CMOA chart, and the strength with which the participant felt that emotion. For example:
 
     + Happy is in quadrant 1, so its X value is positive and its Y value is positive when experienced. If the participant Strongly agrees, then the values are positive 2. If the particpant is Neutral, then the values are 0. If the participant Strongly disagrees, then the values are negative 2.
     
     + Frustrated is in quadrant 2, so its X value is negative and its Y value is positive when experienced. If the participant Strongly agrees, then X is negative 2 and Y is positive 2.
+    
+2. Plot the relationship between emotion and behaviors and emotion and substance use:
+
+    + What they were doing right before they took the assessment: other_act, sit_act, sleep_act, stand_act, walk_act, talk_act
+    
+    + What they did yesterday: bike_yest, run_yest, cleaning_yest, non_yest, min_walk_c, min_run_c, min_act_c, min_sit_c, 
+    
+    + Substance use yesterday: alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub
     
 ```{r cmoa_data}
 # For emotions in quadrant 1
@@ -147,26 +149,26 @@ quad4y <- function(x) {
 # Create x and y coordinates for each row
 daily <- daily %>%
   mutate(
-    x_happy      = quad1(happy),
-    y_happy      = quad1(happy),
-    x_frustrated = quad2x(frustrated),
-    y_frustrated = quad2y(frustrated),
-    x_sad        = quad3(sad),
-    y_sad        = quad3(sad),
-    x_worried    = quad2x(worried),
-    y_worried    = quad2y(worried),
-    x_restless   = quad2x(restless),
-    y_restless   = quad2y(restless),
-    x_excited    = quad1(excited),
-    y_excited    = quad1(excited),
-    x_calm       = quad4x(calm),
-    y_calm       = quad4y(calm),
-    x_lonely     = quad3(lonely),
-    y_lonely     = quad3(lonely),
-    x_bored      = quad3(bored),
-    y_bored      = quad3(bored),
-    x_sluggish   = quad3(sluggish),
-    y_sluggish   = quad3(sluggish)
+    x_happy      = ifelse(date_match == 1, quad1(happy_lag), NA),
+    y_happy      = ifelse(date_match == 1, quad1(happy_lag), NA),
+    x_frustrated = ifelse(date_match == 1, quad2x(frustrated_lag), NA),
+    y_frustrated = ifelse(date_match == 1, quad2y(frustrated_lag), NA),
+    x_sad        = ifelse(date_match == 1, quad3(sad_lag), NA),
+    y_sad        = ifelse(date_match == 1, quad3(sad_lag), NA),
+    x_worried    = ifelse(date_match == 1, quad2x(worried_lag), NA),
+    y_worried    = ifelse(date_match == 1, quad2y(worried_lag), NA),
+    x_restless   = ifelse(date_match == 1, quad2x(restless_lag), NA),
+    y_restless   = ifelse(date_match == 1, quad2y(restless_lag), NA),
+    x_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
+    y_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
+    x_calm       = ifelse(date_match == 1, quad4x(calm_lag), NA),
+    y_calm       = ifelse(date_match == 1, quad4y(calm_lag), NA),
+    x_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
+    y_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
+    x_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
+    y_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
+    x_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA),
+    y_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA)
   )
 
 # Aggregate across all X values
@@ -176,34 +178,60 @@ daily <- daily %>%
     y = y_happy + y_frustrated + y_sad + y_worried + y_restless + y_excited + y_calm + y_lonely + y_bored + y_sluggish
   )
 
-# We'll see how this works. Seems like it could be somewhat flawed by the fact that it treats all areas WITHIN each quadrant as equivelent.
-
-# We also don't have an equivalent number of emotions from each quadrant.
-
-# Also, it's emotion today paired with behavior yesterday.
-# Within case_number, either lag alcohol by 1 or lead x by 1?
-daily <- daily %>%
-  group_by(case_number) %>%
-  mutate(
-    x2 = lead(x),
-    y2 = lead(y)
-  )
-
-# View(daily[c("x", "x2")])
+# Data check:
+# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag", "x_happy", "y_happy", "x")])
 ```
+
+**Plot the relationship between emotion and substance use as a CMOA plot**
 
 ```{r cmoa_plot}
-ggplot(daily, aes(x = x, y = y, col = cig_sub)) +
-  geom_jitter(alpha = 0.6) +
-  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
-  scale_y_continuous("Arousal") +
-  scale_x_continuous("Valence") +
-  ggplot2::scale_color_manual("Substance", values = c("#377EB8", "#E41A1C")) +
-  ggtitle("Circumplex Model of Affect") +
-  theme_bw()
+# Aggregate emotions and any substance use
+subs <- select(daily, 90:97)                  # Grab emotion variables
+sub_name <- names(select(daily, 90:97))       # Just names for legend title
+i <- 1
+for (sub in subs) {
+  p <- ggplot(daily, aes(x = x, y = y, col = sub)) +
+    geom_jitter(alpha = 0.6) +
+    geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    scale_y_continuous("Arousal") +
+    scale_x_continuous("Valence") +
+    scale_color_manual(sub_name[i], values = c("#377EB8", "#E41A1C")) +
+    ggtitle(paste("Emotions Overall and", sub_name[i])) +
+    theme_bw()
+  print(p)
+  i <- i + 1
+}
+
+# For each emotion
+subs <- select(daily, 90:97)                  # Grab emotion variables
+sub_name <- names(select(daily, 90:97))       # Just names for legend title
+x_var <- select(daily, seq(130, 148, by = 2)) # all the x_ variables
+y_var <- select(daily, seq(131, 149, by = 2)) # all the y_ variables
+title <- c("Happy", "Frustrated", "Sad", "Worried", "Restless", "Excited", "Calm", "Lonely", "Bored", "Sluggish")
+i <- 1
+for (sub in subs) {                           # Substances
+  for (j in 1:length(x_var)){                 # Emotions
+    p <- ggplot(daily, aes(x = x_var[j], y = y_var[j], col = sub)) +
+      geom_jitter(alpha = 0.6) +
+      geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+      scale_y_continuous("Arousal") +
+      scale_x_continuous("Valence") +
+      scale_color_manual(sub_name[i], values = c("#377EB8", "#E41A1C")) +
+      ggtitle(paste(title[j], "and", sub_name[i])) +
+      theme_bw()
+    print(p)
+  }
+  i <- i + 1
+}
 ```
 
+**Issues**
 
+1. It could be somewhat flawed by the fact that it treats all areas WITHIN each quadrant as equivalent.
+
+2. We also don't have an equivalent number of emotions from each quadrant.
+
+3. May be more informative to limit to "users". Some people will not use at all; however, among those that do use, XYZ is a predictor.
 
 
 &nbsp;
