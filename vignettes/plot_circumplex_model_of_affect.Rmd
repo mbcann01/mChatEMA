@@ -69,7 +69,7 @@ for (var in x) {
 
 1. Give each emotion an x and y value that relates to its quadrant on the CMOA chart, and the strength with which the participant felt that emotion. For example:
 
-    + Happy is in quadrant 1, so its X value is positive and its Y value is positive when experienced. If the participant Strongly agrees, then the values are positive 2. If the particpant is Neutral, then the values are 0. If the participant Strongly disagrees, then the values are negative 2.
+    + Happy is in quadrant 1, so its X value is positive and its Y value is positive when experienced. If the participant Strongly agrees, then the values are positive 2. If the participant is Neutral, then the values are 0. If the participant Strongly disagrees, then the values are negative 2.
     
     + Frustrated is in quadrant 2, so its X value is negative and its Y value is positive when experienced. If the participant Strongly agrees, then X is negative 2 and Y is positive 2.
     
@@ -227,11 +227,13 @@ for (sub in subs) {                           # Substances
 
 **Issues**
 
-1. It could be somewhat flawed by the fact that it treats all areas WITHIN each quadrant as equivalent.
+1. The plots treat all emotions WITHIN each quadrant as equivalent. For example, Happy and Excited are both in quadrant 1. The plots don’t currently differentiate between the two.
 
-2. We also don't have an equivalent number of emotions from each quadrant.
 
-3. May be more informative to limit to "users". Some people will not use at all; however, among those that do use, XYZ is a predictor.
+2. We don’t currently have an equivalent number of emotions from each quadrant.
+
+3. It may be more informative to limit to substance users. Some people will not use at all; however, among those that do use, XYZ may be a predictor.
+
 
 
 &nbsp;
