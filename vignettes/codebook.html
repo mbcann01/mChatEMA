@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2016-05-23" />
+<meta name="date" content="2016-05-30" />
 
 <title>Codebook</title>
 
@@ -116,7 +116,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Codebook</h1>
-<h4 class="date"><em>May 23, 2016</em></h4>
+<h4 class="date"><em>May 30, 2016</em></h4>
 
 </div>
 
@@ -127,7 +127,7 @@ library(dataclean)</code></pre>
 <p><strong>Load data</strong></p>
 <pre class="r"><code>load(&quot;data/daily_april_2016.RData&quot;)
 about_data(daily)
-#&gt; 1390 observations and 129 variables in the data</code></pre>
+#&gt; 1390 observations and 151 variables in the data</code></pre>
 <hr />
 <p> </p>
 <p><strong>Create Codebook</strong></p>
@@ -140,8 +140,13 @@ Class: integer
 Unique: 91 
 Miss: 0 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  10290   10420   10480   10530   10660   10880 
+  case_number   
+ Min.   :10286  
+ 1st Qu.:10419  
+ Median :10480  
+ Mean   :10530  
+ 3rd Qu.:10655  
+ Max.   :10880  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -152,10 +157,13 @@ Class: POSIXct POSIXt
 Unique: 27 
 Miss: 0 
 Summary: 
-                 Min.               1st Qu.                Median 
-&quot;2016-04-01 00:00:00&quot; &quot;2016-04-12 00:00:00&quot; &quot;2016-04-20 00:00:00&quot; 
-                 Mean               3rd Qu.                  Max. 
-&quot;2016-04-18 10:57:50&quot; &quot;2016-04-26 00:00:00&quot; &quot;2016-05-01 00:00:00&quot; 
+      date                    
+ Min.   :2016-04-01 00:00:00  
+ 1st Qu.:2016-04-12 00:00:00  
+ Median :2016-04-20 00:00:00  
+ Mean   :2016-04-18 10:57:50  
+ 3rd Qu.:2016-04-26 00:00:00  
+ Max.   :2016-05-01 00:00:00  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -166,8 +174,13 @@ Class: numeric
 Unique: 1390 
 Miss: 0 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2957    3304    3652    3738    3999    6280 
+       id      
+ Min.   :2957  
+ 1st Qu.:3304  
+ Median :3652  
+ Mean   :3738  
+ 3rd Qu.:3999  
+ Max.   :6280  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -178,10 +191,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               53               127               386               557 
-   Strongly agree 
-              267 
+               happy    
+ Strongly disagree: 53  
+ Disagree         :127  
+ Neutral          :386  
+ Agree            :557  
+ Strongly agree   :267  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -192,10 +207,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              267               564               299               201 
-   Strongly agree 
-               59 
+             frustrated 
+ Strongly disagree:267  
+ Disagree         :564  
+ Neutral          :299  
+ Agree            :201  
+ Strongly agree   : 59  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -206,10 +223,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              286               634               292               129 
-   Strongly agree 
-               49 
+                sad     
+ Strongly disagree:286  
+ Disagree         :634  
+ Neutral          :292  
+ Agree            :129  
+ Strongly agree   : 49  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -220,10 +239,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              257               512               282               266 
-   Strongly agree 
-               73 
+              worried   
+ Strongly disagree:257  
+ Disagree         :512  
+ Neutral          :282  
+ Agree            :266  
+ Strongly agree   : 73  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -234,10 +255,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              268               519               327               234 
-   Strongly agree 
-               42 
+              restless  
+ Strongly disagree:268  
+ Disagree         :519  
+ Neutral          :327  
+ Agree            :234  
+ Strongly agree   : 42  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -248,10 +271,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               68               325               532               296 
-   Strongly agree 
-              169 
+              excited   
+ Strongly disagree: 68  
+ Disagree         :325  
+ Neutral          :532  
+ Agree            :296  
+ Strongly agree   :169  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -262,10 +287,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               53               171               444               504 
-   Strongly agree 
-              218 
+                calm    
+ Strongly disagree: 53  
+ Disagree         :171  
+ Neutral          :444  
+ Agree            :504  
+ Strongly agree   :218  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -276,10 +303,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              290               543               281               146 
-   Strongly agree 
-              130 
+               lonely   
+ Strongly disagree:290  
+ Disagree         :543  
+ Neutral          :281  
+ Agree            :146  
+ Strongly agree   :130  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -290,10 +319,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              296               568               354               142 
-   Strongly agree 
-               30 
+               bored    
+ Strongly disagree:296  
+ Disagree         :568  
+ Neutral          :354  
+ Agree            :142  
+ Strongly agree   : 30  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -304,10 +335,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              224               475               279               317 
-   Strongly agree 
-               95 
+              sluggish  
+ Strongly disagree:224  
+ Disagree         :475  
+ Neutral          :279  
+ Agree            :317  
+ Strongly agree   : 95  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -318,8 +351,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1308   82 
+ bus_loc   
+ No :1308  
+ Yes:  82  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -330,8 +364,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1363   27 
+ church_loc
+ No :1363  
+ Yes:  27  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -342,8 +377,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
- 330 1060 
+ home_loc  
+ No : 330  
+ Yes:1060  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -354,8 +390,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1295   95 
+ frifam_loc
+ No :1295  
+ Yes:  95  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -366,8 +403,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1365   25 
+ store_loc 
+ No :1365  
+ Yes:  25  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -378,8 +416,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1276  114 
+ outdoors_loc
+ No :1276    
+ Yes: 114    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -390,8 +429,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1311   79 
+ other_loc 
+ No :1311  
+ Yes:  79  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -402,8 +442,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1386    4 
+ restaurant_loc
+ No :1386      
+ Yes:   4      
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -414,8 +455,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ school_loc
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -426,8 +468,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1368   22 
+ work_loc  
+ No :1368  
+ Yes:  22  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -438,8 +481,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1146  244 
+ other_act 
+ No :1146  
+ Yes: 244  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -450,8 +494,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-723 667 
+ sit_act  
+ No :723  
+ Yes:667  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -462,8 +507,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1097  293 
+ sleep_act 
+ No :1097  
+ Yes: 293  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -474,8 +520,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1196  194 
+ stand_act 
+ No :1196  
+ Yes: 194  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -486,8 +533,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1281  109 
+ walk_act  
+ No :1281  
+ Yes: 109  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -498,8 +546,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1127  263 
+ talk_act  
+ No :1127  
+ Yes: 263  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -510,8 +559,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1035  355 
+ pre_who   
+ No :1035  
+ Yes: 355  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -522,8 +572,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-780 610 
+ bike_yest
+ No :780  
+ Yes:610  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -534,8 +585,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1163  227 
+ run_yest  
+ No :1163  
+ Yes: 227  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -546,8 +598,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-710 680 
+ cleaning_yest
+ No :710      
+ Yes:680      
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -558,8 +611,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1016  374 
+ none_yest 
+ No :1016  
+ Yes: 374  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -570,12 +624,14 @@ Class: factor
 Unique: 7 
 Miss: 780 
 Summary: 
-10 or less minutes              11-20              21-30 
-                44                112                182 
-             31-40              41-50       more than 50 
-               134                 53                 85 
-              NA's 
-               780 
+               min_walk  
+ 10 or less minutes: 44  
+ 11-20             :112  
+ 21-30             :182  
+ 31-40             :134  
+ 41-50             : 53  
+ more than 50      : 85  
+ NA's              :780  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -586,8 +642,14 @@ Class: integer
 Unique: 7 
 Miss: 780 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   5.00   16.00   26.00   29.93   36.00   50.00     780 
+   min_walk_c   
+ Min.   : 5.00  
+ 1st Qu.:16.00  
+ Median :26.00  
+ Mean   :29.93  
+ 3rd Qu.:36.00  
+ Max.   :50.00  
+ NA's   :780    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -598,12 +660,14 @@ Class: factor
 Unique: 7 
 Miss: 1163 
 Summary: 
-10 or less minutes              11-20              21-30 
-                12                 20                 47 
-             31-40              41-50       more than 50 
-                57                 44                 47 
-              NA's 
-              1163 
+               min_run    
+ 10 or less minutes:  12  
+ 11-20             :  20  
+ 21-30             :  47  
+ 31-40             :  57  
+ 41-50             :  44  
+ more than 50      :  47  
+ NA's              :1163  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -614,8 +678,14 @@ Class: integer
 Unique: 7 
 Miss: 1163 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   5.00   26.00   36.00   35.37   46.00   50.00    1163 
+   min_run_c    
+ Min.   : 5.00  
+ 1st Qu.:26.00  
+ Median :36.00  
+ Mean   :35.37  
+ 3rd Qu.:46.00  
+ Max.   :50.00  
+ NA's   :1163   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -626,12 +696,14 @@ Class: factor
 Unique: 7 
 Miss: 710 
 Summary: 
-10 or less minutes              11-20              21-30 
-                24                 60                129 
-             31-40              41-50       more than 50 
-               181                114                172 
-              NA's 
-               710 
+               min_act   
+ 10 or less minutes: 24  
+ 11-20             : 60  
+ 21-30             :129  
+ 31-40             :181  
+ 41-50             :114  
+ more than 50      :172  
+ NA's              :710  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -642,8 +714,14 @@ Class: integer
 Unique: 7 
 Miss: 710 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   5.00   26.00   36.00   36.46   50.00   50.00     710 
+   min_act_c    
+ Min.   : 5.00  
+ 1st Qu.:26.00  
+ Median :36.00  
+ Mean   :36.46  
+ 3rd Qu.:50.00  
+ Max.   :50.00  
+ NA's   :710    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -654,12 +732,13 @@ Class: factor
 Unique: 6 
 Miss: 0 
 Summary: 
-             4 or fewer hours    More than 4 hours- 6 hours 
-                          338                           341 
-   More than 6 hours- 8 hours   More than 8 hours- 10 hours 
-                          312                           244 
-More than 10 hours - 12 hours            More than 12 hours 
-                          106                            49 
+                          min_sit   
+ 4 or fewer hours             :338  
+ More than 4 hours- 6 hours   :341  
+ More than 6 hours- 8 hours   :312  
+ More than 8 hours- 10 hours  :244  
+ More than 10 hours - 12 hours:106  
+ More than 12 hours           : 49  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -670,8 +749,13 @@ Class: integer
 Unique: 6 
 Miss: 0 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  4.000   5.000   7.000   6.612   9.000  12.000 
+   min_sit_c     
+ Min.   : 4.000  
+ 1st Qu.: 5.000  
+ Median : 7.000  
+ Mean   : 6.612  
+ 3rd Qu.: 9.000  
+ Max.   :12.000  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -682,8 +766,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1330   60 
+ pedometer 
+ No :1330  
+ Yes:  60  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -694,8 +779,14 @@ Class: integer
 Unique: 41 
 Miss: 1330 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     30    2000    3100    3718    5500   10260    1330 
+     steps      
+ Min.   :   30  
+ 1st Qu.: 2000  
+ Median : 3100  
+ Mean   : 3718  
+ 3rd Qu.: 5500  
+ Max.   :10258  
+ NA's   :1330   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -706,10 +797,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-         Not at all            A little            Somewhat 
-                157                 376                 524 
-               Very Extremely satisfied 
-                215                 118 
+              phys_act_sat
+ Not at all         :157  
+ A little           :376  
+ Somewhat           :524  
+ Very               :215  
+ Extremely satisfied:118  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -720,8 +813,13 @@ Class: factor
 Unique: 6 
 Miss: 435 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-      401       375       136        38         5       435 
+     serv_fruit 
+ 1        :401  
+ 2        :375  
+ 3        :136  
+ 4        : 38  
+ 5 or more:  5  
+ NA's     :435  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -732,8 +830,13 @@ Class: factor
 Unique: 6 
 Miss: 272 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-      476       423       175        36         8       272 
+      serv_veg  
+ 1        :476  
+ 2        :423  
+ 3        :175  
+ 4        : 36  
+ 5 or more:  8  
+ NA's     :272  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -744,8 +847,13 @@ Class: factor
 Unique: 6 
 Miss: 462 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-      311       216       182        72       147       462 
+      serv_ssb  
+ 1        :311  
+ 2        :216  
+ 3        :182  
+ 4        : 72  
+ 5 or more:147  
+ NA's     :462  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -756,8 +864,13 @@ Class: factor
 Unique: 6 
 Miss: 608 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-      459       195        96        24         8       608 
+    serv_sweets 
+ 1        :459  
+ 2        :195  
+ 3        : 96  
+ 4        : 24  
+ 5 or more:  8  
+ NA's     :608  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -768,8 +881,13 @@ Class: factor
 Unique: 6 
 Miss: 420 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-      446       393       114        15         2       420 
+     serv_meat  
+ 1        :446  
+ 2        :393  
+ 3        :114  
+ 4        : 15  
+ 5 or more:  2  
+ NA's     :420  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -780,10 +898,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-         Not at all            A little            Somewhat 
-                108                 369                 575 
-               Very Extremely satisfied 
-                221                 117 
+                food_sat  
+ Not at all         :108  
+ A little           :369  
+ Somewhat           :575  
+ Very               :221  
+ Extremely satisfied:117  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -794,8 +914,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-  94 1296 
+ take_meds 
+ No :  94  
+ Yes:1296  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -806,8 +927,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1334   56 
+ medtype_dep
+ No :1334   
+ Yes:  56   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -818,8 +940,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1347   43 
+ medtype_psy
+ No :1347   
+ Yes:  43   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -830,8 +953,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1375   15 
+ medtype_ast
+ No :1375   
+ Yes:  15   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -842,8 +966,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1353   37 
+ medtype_bp
+ No :1353  
+ Yes:  37  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -854,8 +979,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1382    8 
+ medtype_diab
+ No :1382    
+ Yes:   8    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -866,8 +992,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1373   17 
+ medtype_pain
+ No :1373    
+ Yes:  17    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -878,8 +1005,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1385    5 
+ medtype_chol
+ No :1385    
+ Yes:   5    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -890,8 +1018,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1388    2 
+ medtype_anti
+ No :1388    
+ Yes:   2    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -902,8 +1031,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1365   25 
+ medtype_other
+ No :1365     
+ Yes:  25     
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -914,8 +1044,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1331   59 
+ meds_ran_out
+ No :1331    
+ Yes:  59    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -926,8 +1057,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1363   27 
+ meds_forgot
+ No :1363   
+ Yes:  27   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -938,8 +1070,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1389    1 
+ meds_no_need
+ No :1389    
+ Yes:   1    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -950,8 +1083,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1389    1 
+ meds_side 
+ No :1389  
+ Yes:   1  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -962,8 +1096,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ meds_lost 
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -974,8 +1109,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1372   18 
+ meds_other
+ No :1372  
+ Yes:  18  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -986,12 +1122,13 @@ Class: factor
 Unique: 6 
 Miss: 0 
 Summary: 
-           2 or fewer hours  More than 2 hours- 4 hours 
-                        183                         254 
- More than 4 hours- 6 hours  More than 6 hours- 8 hours 
-                        279                         263 
-More than 8 hours- 10 hours          More than 10 hours 
-                        208                         203 
+                       free_time  
+ 2 or fewer hours           :183  
+ More than 2 hours- 4 hours :254  
+ More than 4 hours- 6 hours :279  
+ More than 6 hours- 8 hours :263  
+ More than 8 hours- 10 hours:208  
+ More than 10 hours         :203  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1002,8 +1139,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1336   54 
+ none_free 
+ No :1336  
+ Yes:  54  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1014,8 +1152,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
- 214 1176 
+ tv_free   
+ No : 214  
+ Yes:1176  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1026,8 +1165,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ games_free
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1038,8 +1178,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ movie_free
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1050,8 +1191,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-689 701 
+ internet_free
+ No :689      
+ Yes:701      
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1062,8 +1204,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1070  320 
+ book_free 
+ No :1070  
+ Yes: 320  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1074,8 +1217,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1049  341 
+ music_free
+ No :1049  
+ Yes: 341  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1086,8 +1230,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1232  158 
+ craft_free
+ No :1232  
+ Yes: 158  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1098,8 +1243,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-782 608 
+ cleaned_free
+ No :782     
+ Yes:608     
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1110,8 +1256,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1125  265 
+ pets_free 
+ No :1125  
+ Yes: 265  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1122,8 +1269,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-997 393 
+ pray_free
+ No :997  
+ Yes:393  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1134,8 +1282,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1365   25 
+ sport_free
+ No :1365  
+ Yes:  25  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1146,8 +1295,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1153  237 
+ walk_free 
+ No :1153  
+ Yes: 237  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1158,8 +1308,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ cards_free
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1170,8 +1321,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1170  220 
+ shop_free 
+ No :1170  
+ Yes: 220  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1182,8 +1334,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1259  131 
+ volunteer_free
+ No :1259      
+ Yes: 131      
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1194,8 +1347,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-899 491 
+ social_free
+ No :899    
+ Yes:491    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1206,10 +1360,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-         Not at all            A little            Somewhat 
-                 61                 292                 577 
-               Very Extremely satisfied 
-                318                 142 
+             free_time_sat
+ Not at all         : 61  
+ A little           :292  
+ Somewhat           :577  
+ Very               :318  
+ Extremely satisfied:142  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1220,14 +1376,14 @@ Class: factor
 Unique: 7 
 Miss: 0 
 Summary: 
-        15 or less minutes              16-30 minutes 
-                       215                        185 
-            31 min- 1 hour  More than 1 hour- 2 hours 
-                       283                        293 
-More than 2 hours- 3 hours More than 3 hours- 4 hours 
-                       213                         95 
-         More than 4 hours 
-                       106 
+                       min_talk  
+ 15 or less minutes        :215  
+ 16-30 minutes             :185  
+ 31 min- 1 hour            :283  
+ More than 1 hour- 2 hours :293  
+ More than 2 hours- 3 hours:213  
+ More than 3 hours- 4 hours: 95  
+ More than 4 hours         :106  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1238,14 +1394,14 @@ Class: factor
 Unique: 7 
 Miss: 0 
 Summary: 
-        15 or less minutes              16-30 minutes 
-                       675                        162 
-            31 min- 1 hour  More than 1 hour- 2 hours 
-                       212                        204 
-More than 2 hours- 3 hours More than 3 hours- 4 hours 
-                       118                          4 
-         More than 4 hours 
-                        15 
+                      min_group  
+ 15 or less minutes        :675  
+ 16-30 minutes             :162  
+ 31 min- 1 hour            :212  
+ More than 1 hour- 2 hours :204  
+ More than 2 hours- 3 hours:118  
+ More than 3 hours- 4 hours:  4  
+ More than 4 hours         : 15  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1256,10 +1412,12 @@ Class: factor
 Unique: 5 
 Miss: 0 
 Summary: 
-         Not at all            A little            Somewhat 
-                 66                 277                 493 
-               Very Extremely satisfied 
-                363                 191 
+            interaction_sat
+ Not at all         : 66   
+ A little           :277   
+ Somewhat           :493   
+ Very               :363   
+ Extremely satisfied:191   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1270,8 +1428,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1282  108 
+ alc_sub   
+ No :1282  
+ Yes: 108  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1282,8 +1441,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-791 599 
+ cig_sub  
+ No :791  
+ Yes:599  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1294,8 +1454,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1298   92 
+ mar_sub   
+ No :1298  
+ Yes:  92  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1306,8 +1467,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1329   61 
+ opi_sub   
+ No :1329  
+ Yes:  61  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1318,8 +1480,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1383    7 
+ stim_sub  
+ No :1383  
+ Yes:   7  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1330,8 +1493,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1389    1 
+ herb_sub  
+ No :1389  
+ Yes:   1  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1342,8 +1506,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ other_sub 
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1354,8 +1519,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
- No Yes 
-748 642 
+ none_sub 
+ No :748  
+ Yes:642  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1366,12 +1532,14 @@ Class: factor
 Unique: 7 
 Miss: 1281 
 Summary: 
-        0 drinks          1 drink         2 drinks         3 drinks 
-               2               21               37               23 
-        4 drinks         5 drinks         6 drinks 7 or more drinks 
-              11               15                0                0 
-            NA's 
-            1281 
+    num_drinks  
+ 2 drinks:  37  
+ 3 drinks:  23  
+ 1 drink :  21  
+ 5 drinks:  15  
+ 4 drinks:  11  
+ (Other) :   2  
+ NA's    :1281  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1382,10 +1550,14 @@ Class: factor
 Unique: 6 
 Miss: 1369 
 Summary: 
-     Before 9 AM 9:00 AM-11:59 AM    12:00-2:59 PM     3:00-5:59 PM 
-               0                2                3               10 
-    6:00-8:59 PM    9 PM or later             NA's 
-               5                1             1369 
+            subs_time   
+ Before 9 AM     :   0  
+ 9:00 AM-11:59 AM:   2  
+ 12:00-2:59 PM   :   3  
+ 3:00-5:59 PM    :  10  
+ 6:00-8:59 PM    :   5  
+ 9 PM or later   :   1  
+ NA's            :1369  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1396,10 +1568,14 @@ Class: factor
 Unique: 6 
 Miss: 1311 
 Summary: 
-     Before 9 AM 9:00 AM-11:59 AM    12:00-2:59 PM     3:00-5:59 PM 
-               0                6               18               40 
-    6:00-8:59 PM    9 PM or later             NA's 
-              11                4             1311 
+           first_drink  
+ Before 9 AM     :   0  
+ 9:00 AM-11:59 AM:   6  
+ 12:00-2:59 PM   :  18  
+ 3:00-5:59 PM    :  40  
+ 6:00-8:59 PM    :  11  
+ 9 PM or later   :   4  
+ NA's            :1311  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1410,10 +1586,14 @@ Class: factor
 Unique: 5 
 Miss: 1309 
 Summary: 
-     Before 9 AM 9:00 AM-11:59 AM    12:00-2:59 PM     3:00-5:59 PM 
-               0                3                0                7 
-    6:00-8:59 PM    9 PM or later             NA's 
-              23               48             1309 
+            last_drink  
+ Before 9 AM     :   0  
+ 9:00 AM-11:59 AM:   3  
+ 12:00-2:59 PM   :   0  
+ 3:00-5:59 PM    :   7  
+ 6:00-8:59 PM    :  23  
+ 9 PM or later   :  48  
+ NA's            :1309  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1424,14 +1604,14 @@ Class: factor
 Unique: 8 
 Miss: 791 
 Summary: 
-             0 cigarettes One puff to one cigarette 
-                        6                        23 
-           2-5 cigarettes           6-10 cigarettes 
-                      201                       200 
-         11-15 cigarettes          16-20 cigarettes 
-                       67                        72 
-  More than 20 cigarettes                      NA's 
-                       30                       791 
+                    num_cigs  
+ 2-5 cigarettes         :201  
+ 6-10 cigarettes        :200  
+ 16-20 cigarettes       : 72  
+ 11-15 cigarettes       : 67  
+ More than 20 cigarettes: 30  
+ (Other)                : 29  
+ NA's                   :791  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1442,10 +1622,12 @@ Class: factor
 Unique: 5 
 Miss: 791 
 Summary: 
-within 5 minutes     6-30 minutes    31-60 minutes after 60 minutes 
-             209              193               78              119 
-            NA's 
-             791 
+            first_cig  
+ within 5 minutes:209  
+ 6-30 minutes    :193  
+ 31-60 minutes   : 78  
+ after 60 minutes:119  
+ NA's            :791  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1456,10 +1638,14 @@ Class: factor
 Unique: 6 
 Miss: 839 
 Summary: 
-     Before 9 AM 9:00 AM-11:59 AM    12:00-2:59 PM     3:00-5:59 PM 
-               0               14                9               21 
-    6:00-8:59 PM    9 PM or later             NA's 
-             125              382              839 
+             last_cig  
+ Before 9 AM     :  0  
+ 9:00 AM-11:59 AM: 14  
+ 12:00-2:59 PM   :  9  
+ 3:00-5:59 PM    : 21  
+ 6:00-8:59 PM    :125  
+ 9 PM or later   :382  
+ NA's            :839  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1470,8 +1656,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ op_heroin 
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1482,8 +1669,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1372   18 
+ op_methadone
+ No :1372    
+ Yes:  18    
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1494,8 +1682,9 @@ Class: factor
 Unique: 2 
 Miss: 0 
 Summary: 
-  No  Yes 
-1347   43 
+ op_pills  
+ No :1347  
+ Yes:  43  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1506,8 +1695,9 @@ Class: factor
 Unique: 1 
 Miss: 0 
 Summary: 
-  No  Yes 
-1390    0 
+ op_other  
+ No :1390  
+ Yes:   0  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1518,8 +1708,13 @@ Class: factor
 Unique: 5 
 Miss: 1347 
 Summary: 
-        1         2         3         4 5 or more      NA's 
-        2         6         2        33         0      1347 
+     num_opiate  
+ 1        :   2  
+ 2        :   6  
+ 3        :   2  
+ 4        :  33  
+ 5 or more:   0  
+ NA's     :1347  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1530,8 +1725,14 @@ Class: numeric
 Unique: 1 
 Miss: 1390 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 
+      stim     
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1542,8 +1743,14 @@ Class: numeric
 Unique: 1 
 Miss: 1390 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 
+    num_coc    
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1554,8 +1761,14 @@ Class: numeric
 Unique: 1 
 Miss: 1390 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 
+    num_stim   
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1566,8 +1779,13 @@ Class: numeric
 Unique: 125 
 Miss: 0 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.02   10.50   10.50   10.37   10.53   22.67 
+   alert_time   
+ Min.   : 0.02  
+ 1st Qu.:10.50  
+ Median :10.50  
+ Mean   :10.37  
+ 3rd Qu.:10.53  
+ Max.   :22.67  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1578,8 +1796,14 @@ Class: numeric
 Unique: 1 
 Miss: 1390 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 
+  alert_action 
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1590,10 +1814,13 @@ Class: POSIXct POSIXt
 Unique: 604 
 Miss: 0 
 Summary: 
-                 Min.               1st Qu.                Median 
-&quot;2016-04-01 00:01:00&quot; &quot;2016-04-12 10:31:00&quot; &quot;2016-04-20 10:30:00&quot; 
-                 Mean               3rd Qu.                  Max. 
-&quot;2016-04-18 21:20:51&quot; &quot;2016-04-26 10:31:45&quot; &quot;2016-05-01 21:09:00&quot; 
+   start_time                 
+ Min.   :2016-04-01 00:01:00  
+ 1st Qu.:2016-04-12 10:31:00  
+ Median :2016-04-20 10:30:00  
+ Mean   :2016-04-18 21:20:51  
+ 3rd Qu.:2016-04-26 10:31:45  
+ Max.   :2016-05-01 21:09:00  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1604,8 +1831,14 @@ Class: numeric
 Unique: 1 
 Miss: 1390 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     NA      NA      NA     NaN      NA      NA    1390 
+   completed   
+ Min.   : NA   
+ 1st Qu.: NA   
+ Median : NA   
+ Mean   :NaN   
+ 3rd Qu.: NA   
+ Max.   : NA   
+ NA's   :1390  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1616,10 +1849,13 @@ Class: Date
 Unique: 27 
 Miss: 0 
 Summary: 
-        Min.      1st Qu.       Median         Mean      3rd Qu. 
-&quot;2016-03-31&quot; &quot;2016-04-11&quot; &quot;2016-04-19&quot; &quot;2016-04-17&quot; &quot;2016-04-25&quot; 
-        Max. 
-&quot;2016-04-30&quot; 
+   date_yest         
+ Min.   :2016-03-31  
+ 1st Qu.:2016-04-11  
+ Median :2016-04-19  
+ Mean   :2016-04-17  
+ 3rd Qu.:2016-04-25  
+ Max.   :2016-04-30  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1630,10 +1866,14 @@ Class: Date
 Unique: 28 
 Miss: 91 
 Summary: 
-        Min.      1st Qu.       Median         Mean      3rd Qu. 
-&quot;2016-04-01&quot; &quot;2016-04-12&quot; &quot;2016-04-19&quot; &quot;2016-04-17&quot; &quot;2016-04-24&quot; 
-        Max.         NA's 
-&quot;2016-05-01&quot;         &quot;91&quot; 
+    date_lag         
+ Min.   :2016-04-01  
+ 1st Qu.:2016-04-12  
+ Median :2016-04-19  
+ Mean   :2016-04-17  
+ 3rd Qu.:2016-04-24  
+ Max.   :2016-05-01  
+ NA's   :91          
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1644,8 +1884,14 @@ Class: numeric
 Unique: 3 
 Miss: 91 
 Summary: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  0.000   0.000   1.000   0.709   1.000   1.000      91 
+   date_match   
+ Min.   :0.000  
+ 1st Qu.:0.000  
+ Median :1.000  
+ Mean   :0.709  
+ 3rd Qu.:1.000  
+ Max.   :1.000  
+ NA's   :91     
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1656,10 +1902,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               47               124               360               520 
-   Strongly agree              NA's 
-              248                91 
+             happy_lag  
+ Strongly disagree: 47  
+ Disagree         :124  
+ Neutral          :360  
+ Agree            :520  
+ Strongly agree   :248  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1670,10 +1919,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              248               530               273               193 
-   Strongly agree              NA's 
-               55                91 
+           frustrated_lag
+ Strongly disagree:248   
+ Disagree         :530   
+ Neutral          :273   
+ Agree            :193   
+ Strongly agree   : 55   
+ NA's             : 91   
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1684,10 +1936,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              264               599               269               122 
-   Strongly agree              NA's 
-               45                91 
+              sad_lag   
+ Strongly disagree:264  
+ Disagree         :599  
+ Neutral          :269  
+ Agree            :122  
+ Strongly agree   : 45  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1698,10 +1953,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              235               485               265               245 
-   Strongly agree              NA's 
-               69                91 
+            worried_lag 
+ Strongly disagree:235  
+ Disagree         :485  
+ Neutral          :265  
+ Agree            :245  
+ Strongly agree   : 69  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1712,10 +1970,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              249               487               305               219 
-   Strongly agree              NA's 
-               39                91 
+            restless_lag
+ Strongly disagree:249  
+ Disagree         :487  
+ Neutral          :305  
+ Agree            :219  
+ Strongly agree   : 39  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1726,10 +1987,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               65               309               496               274 
-   Strongly agree              NA's 
-              155                91 
+            excited_lag 
+ Strongly disagree: 65  
+ Disagree         :309  
+ Neutral          :496  
+ Agree            :274  
+ Strongly agree   :155  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1740,10 +2004,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-               51               161               411               474 
-   Strongly agree              NA's 
-              202                91 
+              calm_lag  
+ Strongly disagree: 51  
+ Disagree         :161  
+ Neutral          :411  
+ Agree            :474  
+ Strongly agree   :202  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1754,10 +2021,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              266               514               258               140 
-   Strongly agree              NA's 
-              121                91 
+             lonely_lag 
+ Strongly disagree:266  
+ Disagree         :514  
+ Neutral          :258  
+ Agree            :140  
+ Strongly agree   :121  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1768,10 +2038,13 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              272               532               331               137 
-   Strongly agree              NA's 
-               27                91 
+             bored_lag  
+ Strongly disagree:272  
+ Disagree         :532  
+ Neutral          :331  
+ Agree            :137  
+ Strongly agree   : 27  
+ NA's             : 91  
 
 
 -------------------------------------------------------------------------------------------------------------- 
@@ -1782,16 +2055,413 @@ Class: factor
 Unique: 6 
 Miss: 91 
 Summary: 
-Strongly disagree          Disagree           Neutral             Agree 
-              205               452               253               300 
-   Strongly agree              NA's 
-               89                91 </code></pre>
+            sluggish_lag
+ Strongly disagree:205  
+ Disagree         :452  
+ Neutral          :253  
+ Agree            :300  
+ Strongly agree   : 89  
+ NA's             : 91  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_happy 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Happy X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+    x_happy     
+ Min.   :0.000  
+ 1st Qu.:2.000  
+ Median :3.000  
+ Mean   :2.614  
+ 3rd Qu.:3.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_happy 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Happy Y value for CMOA plot 
+Class: numeric 
+Unique: 1 
+Miss: 0 
+Summary: 
+    y_happy 
+ Min.   :0  
+ 1st Qu.:0  
+ Median :0  
+ Mean   :0  
+ 3rd Qu.:0  
+ Max.   :0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_frustrated 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Frustrated X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+  x_frustrated   
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.416  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_frustrated 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Frustrated Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+  y_frustrated  
+ Min.   :0.000  
+ 1st Qu.:1.000  
+ Median :1.000  
+ Mean   :1.416  
+ 3rd Qu.:2.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_sad 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Sad X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+     x_sad       
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.268  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_sad 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Sad Y value for CMOA plot 
+Class: numeric 
+Unique: 1 
+Miss: 0 
+Summary: 
+     y_sad  
+ Min.   :0  
+ 1st Qu.:0  
+ Median :0  
+ Mean   :0  
+ 3rd Qu.:0  
+ Max.   :0  
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_worried 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Worried X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   x_worried    
+ Min.   :-4.00  
+ 1st Qu.:-2.00  
+ Median :-1.00  
+ Mean   :-1.54  
+ 3rd Qu.:-1.00  
+ Max.   : 0.00  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_worried 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Worried Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   y_worried   
+ Min.   :0.00  
+ 1st Qu.:1.00  
+ Median :1.00  
+ Mean   :1.54  
+ 3rd Qu.:2.00  
+ Max.   :4.00  
+ NA's   :469   
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_restless 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Restless X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   x_restless    
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.479  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_restless 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Restless Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   y_restless   
+ Min.   :0.000  
+ 1st Qu.:1.000  
+ Median :1.000  
+ Mean   :1.479  
+ 3rd Qu.:2.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_excited 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Excited X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   x_excited    
+ Min.   :0.000  
+ 1st Qu.:1.000  
+ Median :2.000  
+ Mean   :2.104  
+ 3rd Qu.:3.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_excited 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Excited Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   y_excited    
+ Min.   :0.000  
+ 1st Qu.:1.000  
+ Median :2.000  
+ Mean   :2.104  
+ 3rd Qu.:3.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_calm 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Calm X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+     x_calm     
+ Min.   :0.000  
+ 1st Qu.:2.000  
+ Median :3.000  
+ Mean   :2.468  
+ 3rd Qu.:3.000  
+ Max.   :4.000  
+ NA's   :469    
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_calm 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Calm Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+     y_calm      
+ Min.   :-4.000  
+ 1st Qu.:-3.000  
+ Median :-3.000  
+ Mean   :-2.468  
+ 3rd Qu.:-2.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_lonely 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Lonely X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+    x_lonely     
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.481  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_lonely 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Lonely Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+    y_lonely     
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.481  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_bored 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Bored X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+    x_bored      
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.299  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_bored 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Bored Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+    y_bored      
+ Min.   :-4.000  
+ 1st Qu.:-2.000  
+ Median :-1.000  
+ Mean   :-1.299  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x_sluggish 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Sluggish X value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   x_sluggish    
+ Min.   :-4.000  
+ 1st Qu.:-3.000  
+ Median :-1.000  
+ Mean   :-1.688  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y_sluggish 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Sluggish Y value for CMOA plot 
+Class: numeric 
+Unique: 6 
+Miss: 469 
+Summary: 
+   y_sluggish    
+ Min.   :-4.000  
+ 1st Qu.:-3.000  
+ Median :-1.000  
+ Mean   :-1.688  
+ 3rd Qu.:-1.000  
+ Max.   : 0.000  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+x 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Composite X value for CMOA plot 
+Class: numeric 
+Unique: 23 
+Miss: 469 
+Summary: 
+       x         
+ Min.   :-10.00  
+ 1st Qu.:  0.00  
+ Median :  3.00  
+ Mean   :  3.14  
+ 3rd Qu.:  6.00  
+ Max.   : 12.00  
+ NA's   :469     
+
+
+-------------------------------------------------------------------------------------------------------------- 
+y 
+-------------------------------------------------------------------------------------------------------------- 
+Label: Composite Y value for CMOA plot 
+Class: numeric 
+Unique: 14 
+Miss: 469 
+Summary: 
+       y          
+ Min.   :-7.0000  
+ 1st Qu.:-1.0000  
+ Median : 0.0000  
+ Mean   :-0.1835  
+ 3rd Qu.: 1.0000  
+ Max.   : 8.0000  
+ NA's   :469      </code></pre>
 <hr />
 <div id="session-info" class="section level4">
 <h4>Session Info:</h4>
 <pre><code>#&gt; R version 3.3.0 (2016-05-03)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
-#&gt; Running under: OS X 10.11.4 (El Capitan)
+#&gt; Running under: OS X 10.11.5 (El Capitan)
 #&gt; 
 #&gt; locale:
 #&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1803,9 +2473,9 @@ Strongly disagree          Disagree           Neutral             Agree
 #&gt; [1] dataclean_0.1.0
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] magrittr_1.5    formatR_1.4     tools_3.3.0     htmltools_0.3.5
-#&gt;  [5] yaml_2.1.13     Rcpp_0.12.5     stringi_1.0-1   rmarkdown_0.9.6
-#&gt;  [9] knitr_1.13      stringr_1.0.0   digest_0.6.9    evaluate_0.9</code></pre>
+#&gt;  [1] magrittr_1.5    formatR_1.3     tools_3.3.0     htmltools_0.3.5
+#&gt;  [5] yaml_2.1.13     Rcpp_0.12.4     stringi_1.0-1   rmarkdown_0.9.6
+#&gt;  [9] knitr_1.12.3    stringr_1.0.0   digest_0.6.9    evaluate_0.9</code></pre>
 </div>
 
 

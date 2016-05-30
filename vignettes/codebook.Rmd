@@ -1,6 +1,6 @@
 ---
 title: "Codebook"
-date: "May 23, 2016"
+date: "May 30, 2016"
 output: html_document
 ---
 
@@ -161,7 +161,29 @@ lab <- c(
   "Value for calm in previous observation (within person) - use with date_match == 1 for lagged analysis",
   "Value for lonely in previous observation (within person) - use with date_match == 1 for lagged analysis",
   "Value for bored in previous observation (within person) - use with date_match == 1 for lagged analysis",
-  "Value for sluggish in previous observation (within person) - use with date_match == 1 for lagged analysis"
+  "Value for sluggish in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Happy X value for CMOA plot",
+  "Happy Y value for CMOA plot",
+  "Frustrated X value for CMOA plot",
+  "Frustrated Y value for CMOA plot",
+  "Sad X value for CMOA plot",
+  "Sad Y value for CMOA plot",
+  "Worried X value for CMOA plot",
+  "Worried Y value for CMOA plot",
+  "Restless X value for CMOA plot",
+  "Restless Y value for CMOA plot",
+  "Excited X value for CMOA plot",
+  "Excited Y value for CMOA plot",
+  "Calm X value for CMOA plot",
+  "Calm Y value for CMOA plot",
+  "Lonely X value for CMOA plot",
+  "Lonely Y value for CMOA plot",
+  "Bored X value for CMOA plot",
+  "Bored Y value for CMOA plot",
+  "Sluggish X value for CMOA plot",
+  "Sluggish Y value for CMOA plot",
+  "Composite X value for CMOA plot",
+  "Composite Y value for CMOA plot"
 )
 ```
 
