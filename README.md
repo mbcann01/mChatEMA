@@ -18,6 +18,8 @@ Vignettes
 
 [Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
 
+[Exploratory Plots](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/exploratory_analysis.html)
+
 [Individual substance trajectories](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood.html)
 
 [Plot - Cicumplex Model of Affect](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/plot_circumplex_model_of_affect.html)
