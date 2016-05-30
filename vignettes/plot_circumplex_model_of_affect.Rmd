@@ -1,8 +1,10 @@
 ---
 title: "Circumplex Model of Affect"
-author: "Brad Cannell"
-date: "May 23, 2016"
-output: html_document
+date: "May 30, 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, echo = FALSE}
@@ -12,17 +14,20 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
+-------------------------------------------------------------------------------
+
 **Load packages**
 ```{r message=FALSE}
 # CRAN packages
 library(dplyr)
 library(ggplot2)
+library(RColorBrewer)
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
 ```
 
-**Load data**   
+**Load data**  
 ```{r}
 load("data/daily_april_2016.RData")
 
@@ -35,9 +40,11 @@ about_data(daily)
 
 &nbsp;
 
+## Introduction
+
 **The goal of this analysis is to plot participant responses on a circumplex model of affect.**
 
-> "The circumplex model of emotion was developed by James Russell. This model suggests that emotions are distributed in a two-dimensional circular space, containing arousal and valence dimensions. Arousal represents the vertical axis and valence represents the horizontal axis, while the center of the circle represents a neutral valence and a medium level of arousal."   
+> "The circumplex model of emotion was developed by James Russell. This model suggests that emotions are distributed in a two-dimensional circular space, containing arousal and valence dimensions. Arousal represents the vertical axis and valence represents the horizontal axis, while the center of the circle represents a neutral valence and a medium level of arousal."  
 
 [(Wikipedia, 2016)](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model)
 
@@ -51,163 +58,270 @@ Source: [BIOPAC Systems, Inc.](http://blog.biopac.com/circumplex-model-affect-mo
 
 &nbsp;
 
-**Column plots of aggregate emotional responses**
+## Methods     
 
-```{r plot_emotions}
-x <- names(select(daily, 4:13))
-for (var in x) {
-  plot <- ggplot2::ggplot(daily, ggplot2::aes_string(x = var)) +
-    ggplot2::geom_bar() +
-    ggplot2::scale_x_discrete("") +
-    ggplot2::ggtitle(paste("I Feel", tools::toTitleCase(var), "Right Now")) +
-    ggplot2::theme_bw()
-  print(plot)
-}
-```
+1. We plot each observation on a coordinate plane that represents the circumplex model of affect. In order to do so, we Give each emotional response an x and y value that relates to its quadrant on the CMOA chart.
 
-**Methods**     
-
-1. Give each emotion an x and y value that relates to its quadrant on the CMOA chart, and the strength with which the participant felt that emotion. For example:
-
-    + Happy is in quadrant 1, so its X value is positive and its Y value is positive when experienced. If the participant Strongly agrees, then the values are positive 2. If the participant is Neutral, then the values are 0. If the participant Strongly disagrees, then the values are negative 2.
+    + Happy: Sits directly on the positive x-axis
     
-    + Frustrated is in quadrant 2, so its X value is negative and its Y value is positive when experienced. If the participant Strongly agrees, then X is negative 2 and Y is positive 2.
+    + Sad: Sits directly on the negative x-axis
     
-2. Plot the relationship between emotion and behaviors and emotion and substance use:
+    + Excited: Quadrant 1 (upper right)
+    
+    + Restless: Quadrant 2 (upper left)
+    
+    + Bored: Quadrant 3 (lower left)
+    
+    + Calm: Quadrant 4 (lower right)   
+    
+2. The CMOA plots also account for the strength with which the participant felt that emotion.
+
+    + Strongly Agree = (-)4
+    
+    + Agree = (-)3
+    
+    + Neutral = (-)2
+    
+    + Disagree = (-)1
+    
+    + Strongly Disagree = 0
+    
+3. Examples
+
+    + Happy is directly on the x-axis between quadrants 1 and 4. Its y value is fixed at zero, and its x value is allowed to fall between 0 and positive 4. If the participant Strongly agrees that they feel happy then their coordinates are (4, 0) for that observation. If the participant is neutral about feeling happy then their coordinates are (2, 0) for that observation. If the participant Strongly disagrees that they feel happy then their coordinates are (0, 0) for that observation.
+    
+    + Restless is in quadrant 2. Its x value is allowed to fall between 0 and negative 4, and its y value is allowed to range between 0 and positive 4. If the participant Strongly agrees that they feel restless then their coordinates are (-4, 4) for that observation. If the participant is neutral about feeling restless then their coordinates are (-2, 2) for that observation. If the participant Strongly disagrees that they feel restless then their coordinates are (0, 0) for that observation.
+    
+4. We create emotional summary scores by summing the x values for all emotions listed under bullet 2 above into a composite x value, and by summing the y values for all emotions listed under bullet 2 above into a composite y value. For example, consider the values for a hypothetical participant in a given observation: 
+
+* X values:
+    + Happy = 3
+    + Sad = 0
+    + Restless = 0
+    + Excited = 0
+    + Calm = 3
+    + Bored = 0
+    
+* Y values:
+    + Happy = 0 
+    + Sad = 0
+    + Restless = 0
+    + Excited = 0
+    + Calm = -3
+    + Bored = 0
+    
+* The composite emotion coordinates for this observation are (6, -3).
+    
+5. Below we plot the relationship between immediate emotion and behaviors in the same day. Specifically we plot the relationship between emotion and:
 
     + What they were doing right before they took the assessment: other_act, sit_act, sleep_act, stand_act, walk_act, talk_act
     
-    + What they did yesterday: bike_yest, run_yest, cleaning_yest, non_yest, min_walk_c, min_run_c, min_act_c, min_sit_c, 
+    + Physical activity: bike_yest, run_yest, cleaning_yest, non_yest, min_walk_c, min_run_c, min_act_c, min_sit_c, 
     
-    + Substance use yesterday: alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub
+    + Substance use: alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub
     
-```{r cmoa_data}
-# For emotions in quadrant 1
-quad1 <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- -2
-  new[x == "Disagree"] <- -1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- 1
-  new[x == "Strongly agree"] <- 2
-  return(new)
+[Click here to view the code used to create the variables discussed above ](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
+    
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Composite emotion score and activity at assessement
+
+```{r plot_comp_aaa}
+acts <- select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who)
+act_name <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
+i <- 1
+for (act in acts) {
+  p <- ggplot(daily, aes(x = x, y = y, col = act)) +
+    geom_jitter(alpha = 0.6) +
+    geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    scale_y_continuous("Arousal") +
+    scale_x_continuous("Happiness") +
+    scale_color_manual(act_name[i], values = c("#377EB8", "#E41A1C")) +
+    ggtitle(paste("Composite Emotion Score and", act_name[i])) +
+    theme_bw()
+  print(p)
+  i <- i + 1
 }
-
-# For emotions in quadrant 2
-quad2x <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- 2
-  new[x == "Disagree"] <- 1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- -1
-  new[x == "Strongly agree"] <- -2
-  return(new)
-}
-
-quad2y <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- -2
-  new[x == "Disagree"] <- -1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- 1
-  new[x == "Strongly agree"] <- 2
-  return(new)
-}
-
-# For emotions in quadrant 3
-quad3 <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- 2
-  new[x == "Disagree"] <- 1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- -1
-  new[x == "Strongly agree"] <- -2
-  return(new)
-}
-
-# For emotions in quadrant 4
-quad4x <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- -2
-  new[x == "Disagree"] <- -1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- 1
-  new[x == "Strongly agree"] <- 2
-  return(new)
-}
-
-quad4y <- function(x) {
-  new <- NA
-  new[x == "Strongly disagree"] <- 2
-  new[x == "Disagree"] <- 1
-  new[x == "Neutral"] <- 0
-  new[x == "Agree"] <- -1
-  new[x == "Strongly agree"] <- -2
-  return(new)
-}
-
-# Create x and y coordinates for each row
-daily <- daily %>%
-  mutate(
-    x_happy      = ifelse(date_match == 1, quad1(happy_lag), NA),
-    y_happy      = ifelse(date_match == 1, quad1(happy_lag), NA),
-    x_frustrated = ifelse(date_match == 1, quad2x(frustrated_lag), NA),
-    y_frustrated = ifelse(date_match == 1, quad2y(frustrated_lag), NA),
-    x_sad        = ifelse(date_match == 1, quad3(sad_lag), NA),
-    y_sad        = ifelse(date_match == 1, quad3(sad_lag), NA),
-    x_worried    = ifelse(date_match == 1, quad2x(worried_lag), NA),
-    y_worried    = ifelse(date_match == 1, quad2y(worried_lag), NA),
-    x_restless   = ifelse(date_match == 1, quad2x(restless_lag), NA),
-    y_restless   = ifelse(date_match == 1, quad2y(restless_lag), NA),
-    x_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    y_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    x_calm       = ifelse(date_match == 1, quad4x(calm_lag), NA),
-    y_calm       = ifelse(date_match == 1, quad4y(calm_lag), NA),
-    x_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    y_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    x_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    y_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    x_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA),
-    y_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA)
-  )
-
-# Aggregate across all X values
-daily <- daily %>%
-  mutate(
-    x = x_happy + x_frustrated + x_sad + x_worried + x_restless + x_excited + x_calm + x_lonely + x_bored + x_sluggish,
-    y = y_happy + y_frustrated + y_sad + y_worried + y_restless + y_excited + y_calm + y_lonely + y_bored + y_sluggish
-  )
-
-# Data check:
-# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag", "x_happy", "y_happy", "x")])
 ```
 
-**Plot the relationship between emotion and substance use as a CMOA plot**
+&nbsp;
 
-```{r cmoa_plot}
-# Aggregate emotions and any substance use
-subs <- select(daily, 90:97)                  # Grab emotion variables
-sub_name <- names(select(daily, 90:97))       # Just names for legend title
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Composite emotion score and physical activity
+
+```{r plot_comp_physact}
+# Dichotomous variables
+acts <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest)
+act_name <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These")
+i <- 1
+for (act in acts) {
+  p <- ggplot(daily, aes(x = x, y = y, col = act)) +
+    geom_jitter(alpha = 0.6) +
+    geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    scale_y_continuous("Arousal") +
+    scale_x_continuous("Happiness") +
+    scale_color_manual(act_name[i], values = c("#377EB8", "#E41A1C")) +
+    ggtitle(paste("Composite Emotion Score and", act_name[i])) +
+    theme_bw()
+  print(p)
+  i <- i + 1
+}
+
+# Ordinal variables
+blues <- brewer.pal(6, "Blues")
+acts <- select(daily, min_walk, min_run, min_act, min_sit)
+act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
+i <- 1
+for (act in acts) {
+  p <- ggplot(daily, aes(x = x, y = y, col = act)) + 
+    geom_jitter() +
+    geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    scale_y_continuous("Arousal") +
+    scale_x_continuous("Happiness") +
+    scale_color_manual(act_name[i], values = blues) +
+    ggtitle(paste("Composite Emotion Score and", act_name[i])) +
+    theme_bw()
+  print(p)
+  i <- i + 1
+}
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Composite emotion score and substance use
+
+```{r plot_comp_sub}
+subs <- select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub, heavy_drink)
+sub_name <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances", "Alcohol (5+ Drinks)")
 i <- 1
 for (sub in subs) {
   p <- ggplot(daily, aes(x = x, y = y, col = sub)) +
     geom_jitter(alpha = 0.6) +
     geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
     scale_y_continuous("Arousal") +
-    scale_x_continuous("Valence") +
+    scale_x_continuous("Happiness") +
     scale_color_manual(sub_name[i], values = c("#377EB8", "#E41A1C")) +
-    ggtitle(paste("Emotions Overall and", sub_name[i])) +
+    ggtitle(paste("Composite Emotion Score and", sub_name[i], "Use")) +
     theme_bw()
   print(p)
   i <- i + 1
 }
+```
 
+## Individual emotions and activity at assessement
+
+NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
+
+```{r plot_emotions_aaa}
+acts <- select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who)
+act_name <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
+x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
+y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
+title <- c("Happy", "Sad", "Restless", "Excited", "Calm", "Bored")
+i <- 1
+for (act in acts) {                           # Substances
+  for (j in 1:length(x_var)){                 # Emotions
+    p <- ggplot(daily, aes(x = x_var[j], y = y_var[j], col = act)) +
+      geom_jitter(alpha = 0.6) +
+      geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+      scale_y_continuous("Arousal") +
+      scale_x_continuous("Happiness") +
+      scale_color_manual(act_name[i], values = c("#377EB8", "#E41A1C")) +
+      ggtitle(paste(title[j], "and", act_name[i])) +
+      theme_bw()
+    print(p)
+  }
+  i <- i + 1
+}
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Individual emotions and physical activity
+
+NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
+
+```{r plot_emotions_physact}
+# Dichotomous variables
+acts <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest)
+act_name <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These")
+x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
+y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
+title <- c("Happy", "Sad", "Restless", "Excited", "Calm", "Bored")
+
+i <- 1
+for (act in acts) {                           # Substances
+  for (j in 1:length(x_var)){                 # Emotions
+    p <- ggplot(daily, aes(x = x_var[j], y = y_var[j], col = act)) +
+      geom_jitter(alpha = 0.6) +
+      geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+      scale_y_continuous("Arousal") +
+      scale_x_continuous("Happiness") +
+      scale_color_manual(act_name[i], values = c("#377EB8", "#E41A1C")) +
+      ggtitle(paste(title[j], "and", act_name[i])) +
+      theme_bw()
+    print(p)
+  }
+  i <- i + 1
+}
+
+# Ordinal variables
+blues <- brewer.pal(6, "Blues")
+acts <- select(daily, min_walk, min_run, min_act, min_sit)
+act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
+x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
+y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
+title <- c("Happy", "Sad", "Restless", "Excited", "Calm", "Bored")
+
+i <- 1
+for (act in acts) {                           # Substances
+  for (j in 1:length(x_var)){                 # Emotions
+    p <- ggplot(daily, aes(x = x_var[j], y = y_var[j], col = act)) +
+      geom_jitter(alpha = 0.6) +
+      geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+      scale_y_continuous("Arousal") +
+      scale_x_continuous("Happiness") +
+      scale_color_manual(act_name[i], values = blues) +
+      ggtitle(paste(title[j], "and", act_name[i])) +
+      theme_bw()
+    print(p)
+  }
+  i <- i + 1
+}
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Individual emotions and substance use
+
+NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
+
+```{r plot_emotions_sub}
 # For each emotion
-subs <- select(daily, 90:97)                  # Grab emotion variables
-sub_name <- names(select(daily, 90:97))       # Just names for legend title
-x_var <- select(daily, seq(130, 148, by = 2)) # all the x_ variables
-y_var <- select(daily, seq(131, 149, by = 2)) # all the y_ variables
-title <- c("Happy", "Frustrated", "Sad", "Worried", "Restless", "Excited", "Calm", "Lonely", "Bored", "Sluggish")
+subs <- select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub, heavy_drink)
+sub_name <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances", "Alcohol (5+ Drinks)")
+x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
+y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
+title <- c("Happy", "Sad", "Restless", "Excited", "Calm", "Bored")
 i <- 1
 for (sub in subs) {                           # Substances
   for (j in 1:length(x_var)){                 # Emotions
@@ -215,7 +329,7 @@ for (sub in subs) {                           # Substances
       geom_jitter(alpha = 0.6) +
       geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
       scale_y_continuous("Arousal") +
-      scale_x_continuous("Valence") +
+      scale_x_continuous("Happiness") +
       scale_color_manual(sub_name[i], values = c("#377EB8", "#E41A1C")) +
       ggtitle(paste(title[j], "and", sub_name[i])) +
       theme_bw()
@@ -224,17 +338,6 @@ for (sub in subs) {                           # Substances
   i <- i + 1
 }
 ```
-
-**Issues**
-
-1. The plots treat all emotions WITHIN each quadrant as equivalent. For example, Happy and Excited are both in quadrant 1. The plots don’t currently differentiate between the two.
-
-
-2. We don’t currently have an equivalent number of emotions from each quadrant.
-
-3. It may be more informative to limit to substance users. Some people will not use at all; however, among those that do use, XYZ may be a predictor.
-
-
 
 &nbsp;
 
@@ -246,8 +349,6 @@ for (sub in subs) {                           # Substances
 ```{r}
 rm(x, var, plot)
 ```
-
-
 
 #### Session Info:
 ```{r echo=FALSE}
