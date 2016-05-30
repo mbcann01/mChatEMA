@@ -264,7 +264,7 @@ for (var in x) {
 </div>
 <div id="location-at-time-of-assessment" class="section level2">
 <h2>Location at time of assessment</h2>
-<pre class="r"><code>x &lt;- names(select(daily, 14:23))
+<pre class="r"><code>x &lt;- names(select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoors_loc, other_loc, restaurant_loc, school_loc, work_loc))
 loc &lt;- c(&quot;Bus, Train, or Vehicle&quot;, &quot;Church&quot;, &quot;Home&quot;, &quot;Friend's or Relative's House&quot;, &quot;Store / Mall&quot;, &quot;Outdoors&quot;, &quot;Other&quot;, &quot;Restaurant&quot;, &quot;School / Library&quot;, &quot;Work&quot;)
 i &lt;- 1
 for (var in x) {
@@ -280,7 +280,7 @@ for (var in x) {
 </div>
 <div id="activity-at-time-of-assessment" class="section level2">
 <h2>Activity at time of assessment</h2>
-<pre class="r"><code>x &lt;- names(select(daily, 24:30))
+<pre class="r"><code>x &lt;- names(select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who))
 act &lt;- c(&quot;Other&quot;, &quot;Sitting&quot;, &quot;Sleeping&quot;, &quot;Standing&quot;, &quot;Walking / Excercising&quot;, &quot;Talking&quot;, &quot;Interacting With Someone&quot;)
 i &lt;- 1
 for (var in x) {
@@ -296,7 +296,7 @@ for (var in x) {
 </div>
 <div id="physical-activity-yesterday" class="section level2">
 <h2>Physical activity yesterday</h2>
-<pre class="r"><code>x &lt;- names(select(daily, 31:35, 37, 39, 41))
+<pre class="r"><code>x &lt;- names(select(daily, bike_yest, run_yest, cleaning_yest, none_yest, min_walk, min_run, min_act, min_sit))
 act &lt;- c(&quot;Walked or Biked to Get Somewhere&quot;, &quot;Engaged in Physical Fitness&quot;, &quot;Engaged in Physical Activity at Work or Home&quot;, &quot;Did None of These&quot;, &quot;Walked or Biked to Get Somewhere&quot;, &quot;Engaged in Physical Fitness&quot;, &quot;Engaged in Physical Activity at Work or Home&quot;, &quot;Sat&quot;)
 i &lt;- 1
 for (var in x) {
@@ -313,7 +313,7 @@ for (var in x) {
 </div>
 <div id="substance-use-yesterday" class="section level2">
 <h2>Substance use yesterday</h2>
-<pre class="r"><code>x &lt;- names(select(daily, 90:97))
+<pre class="r"><code>x &lt;- names(select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub))
 sub &lt;- c(&quot;Alcohol&quot;, &quot;Tobacco&quot;, &quot;Marijuana&quot;, &quot;Opiates&quot;, &quot;Stimulants&quot;, &quot;Herbal Drugs&quot;, &quot;Another drug&quot;, &quot;No Substances&quot;)
 i &lt;- 1
 for (var in x) {

@@ -78,7 +78,7 @@ for (var in x) {
 ## Location at time of assessment
 
 ```{r plot_location}
-x <- names(select(daily, 14:23))
+x <- names(select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoors_loc, other_loc, restaurant_loc, school_loc, work_loc))
 loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
 i <- 1
 for (var in x) {
@@ -95,7 +95,7 @@ for (var in x) {
 ## Activity at time of assessment
 
 ```{r plot_act}
-x <- names(select(daily, 24:30))
+x <- names(select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who))
 act <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
 i <- 1
 for (var in x) {
@@ -112,7 +112,7 @@ for (var in x) {
 ## Physical activity yesterday
 
 ```{r plot_act_yest}
-x <- names(select(daily, 31:35, 37, 39, 41))
+x <- names(select(daily, bike_yest, run_yest, cleaning_yest, none_yest, min_walk, min_run, min_act, min_sit))
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
 i <- 1
 for (var in x) {
@@ -130,7 +130,7 @@ for (var in x) {
 ## Substance use yesterday
 
 ```{r plot_sub_yest}
-x <- names(select(daily, 90:97))
+x <- names(select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub))
 sub <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances")
 i <- 1
 for (var in x) {
