@@ -131,6 +131,7 @@ lab <- c(
   "Which of the following did you use yesterday, even once? (check all that apply): Another drug (valium, xanax, steroids, in halants)",
   "Which of the following did you use yesterday, even once? (check all that apply): None",
   "How many standard drinks did you consume yesterday?",
+  "How many standard drinks did you consume yesterday? 5 or more",
   "What time did you have this yesterday?",
   "What time did you have your FIRST drink of alcohol yesterday?",
   "What time did you have your LAST drink of alcohol yesterday?",

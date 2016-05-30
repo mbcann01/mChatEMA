@@ -554,6 +554,8 @@ how_many &lt;- c(
 daily &lt;- daily %&gt;%
   dplyr::mutate(
     
+    heavy_drink     = ifelse(num_drinks2 &gt;= 5, 1, 0),
+    
     # Convert to class factor
     happy           = factor(happy, levels = likert, labels = likert),
     frustrated      = factor(frustrated, levels = likert, labels = likert),
@@ -648,6 +650,7 @@ daily &lt;- daily %&gt;%
     interaction_sat = factor(interaction_sat1, levels = satisfy, labels = satisfy),
     
     alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
+    heavy_drink     = factor(heavy_drink, levels = 0:1, labels = yesno),
     cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
     mar_sub         = factor(mar_sub, levels = 0:1, labels = yesno),
     opi_sub         = factor(opi_sub, levels = 0:1, labels = yesno),
@@ -787,6 +790,7 @@ daily &lt;- daily %&gt;%
     other_sub,
     none_sub,
     num_drinks,
+    heavy_drink,
     subs_time,
     first_drink,
     last_drink,
@@ -808,7 +812,7 @@ daily &lt;- daily %&gt;%
   )
 
 about_data(daily)
-#&gt; 1390 observations and 116 variables in the data
+#&gt; 1390 observations and 117 variables in the data
 names(daily)
 #&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
 #&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
@@ -842,13 +846,13 @@ names(daily)
 #&gt;  [88] &quot;min_group&quot;       &quot;interaction_sat&quot; &quot;alc_sub&quot;        
 #&gt;  [91] &quot;cig_sub&quot;         &quot;mar_sub&quot;         &quot;opi_sub&quot;        
 #&gt;  [94] &quot;stim_sub&quot;        &quot;herb_sub&quot;        &quot;other_sub&quot;      
-#&gt;  [97] &quot;none_sub&quot;        &quot;num_drinks&quot;      &quot;subs_time&quot;      
-#&gt; [100] &quot;first_drink&quot;     &quot;last_drink&quot;      &quot;num_cigs&quot;       
-#&gt; [103] &quot;first_cig&quot;       &quot;last_cig&quot;        &quot;op_heroin&quot;      
-#&gt; [106] &quot;op_methadone&quot;    &quot;op_pills&quot;        &quot;op_other&quot;       
-#&gt; [109] &quot;num_opiate&quot;      &quot;stim&quot;            &quot;num_coc&quot;        
-#&gt; [112] &quot;num_stim&quot;        &quot;alert_time&quot;      &quot;alert_action&quot;   
-#&gt; [115] &quot;start_time&quot;      &quot;completed&quot;</code></pre>
+#&gt;  [97] &quot;none_sub&quot;        &quot;num_drinks&quot;      &quot;heavy_drink&quot;    
+#&gt; [100] &quot;subs_time&quot;       &quot;first_drink&quot;     &quot;last_drink&quot;     
+#&gt; [103] &quot;num_cigs&quot;        &quot;first_cig&quot;       &quot;last_cig&quot;       
+#&gt; [106] &quot;op_heroin&quot;       &quot;op_methadone&quot;    &quot;op_pills&quot;       
+#&gt; [109] &quot;op_other&quot;        &quot;num_opiate&quot;      &quot;stim&quot;           
+#&gt; [112] &quot;num_coc&quot;         &quot;num_stim&quot;        &quot;alert_time&quot;     
+#&gt; [115] &quot;alert_action&quot;    &quot;start_time&quot;      &quot;completed&quot;</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -1046,7 +1050,7 @@ daily &lt;- daily %&gt;%
 <div id="save-as-rdata" class="section level2">
 <h2>Save as RData</h2>
 <pre class="r"><code>about_data(daily)
-#&gt; 1390 observations and 151 variables in the data
+#&gt; 1390 observations and 152 variables in the data
 save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 <p><strong>Save a .csv</strong></p>
 <pre class="r"><code>write_csv(daily, path = &quot;data/daily_april_2016.csv&quot;)</code></pre>

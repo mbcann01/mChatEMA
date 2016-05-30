@@ -350,6 +350,8 @@ how_many <- c(
 daily <- daily %>%
   dplyr::mutate(
     
+    heavy_drink     = ifelse(num_drinks2 >= 5, 1, 0),
+    
     # Convert to class factor
     happy           = factor(happy, levels = likert, labels = likert),
     frustrated      = factor(frustrated, levels = likert, labels = likert),
@@ -444,6 +446,7 @@ daily <- daily %>%
     interaction_sat = factor(interaction_sat1, levels = satisfy, labels = satisfy),
     
     alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
+    heavy_drink     = factor(heavy_drink, levels = 0:1, labels = yesno),
     cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
     mar_sub         = factor(mar_sub, levels = 0:1, labels = yesno),
     opi_sub         = factor(opi_sub, levels = 0:1, labels = yesno),
@@ -583,6 +586,7 @@ daily <- daily %>%
     other_sub,
     none_sub,
     num_drinks,
+    heavy_drink,
     subs_time,
     first_drink,
     last_drink,
