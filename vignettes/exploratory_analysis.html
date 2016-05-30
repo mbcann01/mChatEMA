@@ -251,7 +251,7 @@ about_data(daily)
 <div id="feelings-at-time-of-assessment" class="section level2">
 <h2>Feelings at time of assessment</h2>
 <p>Column plots graphically depict aggregate emotional responses.</p>
-<pre class="r"><code>x &lt;- names(select(daily, 4:13))
+<pre class="r"><code>x &lt;- names(select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish))
 for (var in x) {
   plot &lt;- ggplot(daily, aes_string(x = var)) +
     geom_bar() +

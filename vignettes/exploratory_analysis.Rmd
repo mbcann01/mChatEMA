@@ -64,7 +64,7 @@ Here we plot the aggregate unconditional distribution of responses to each of th
 Column plots graphically depict aggregate emotional responses.
 
 ```{r plot_emotions}
-x <- names(select(daily, 4:13))
+x <- names(select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish))
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
     geom_bar() +
