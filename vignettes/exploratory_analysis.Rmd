@@ -1,48 +1,154 @@
 ---
 title: "Exploratory Analysis"
-author: "Brad Cannell"
-date: "May 18, 2016"
-output: html_document
+date: "May 30, 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
-```{r, echo = FALSE}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # Set working directory
 knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
-**Load packages and functions**
+-------------------------------------------------------------------------------
+
+**Load packages**
 ```{r message=FALSE}
-# Packages
-library(readr)
+# CRAN packages
 library(dplyr)
 library(ggplot2)
 
-# Functions
-source("functions/about_data.R") # Use this instead of str() to prevent showing raw data values
+# devtools::install_github("mbcann01/dataclean")
+library(dataclean)
 ```
 
-**Import Data**   
+**Load data**  
 ```{r}
-ema <- read_csv("data/Cleaned Daily EMA April 2016.csv")
+load("data/daily_april_2016.RData")
 
-about_data(ema)
-names(ema)
+# Sort by case number and date
+daily <- dplyr::arrange(daily, case_number, date)
+about_data(daily)
 ```
 
 -------------------------------------------------------------------------------   
 
 &nbsp;
 
-**Summarize numeric variables**
-```{r}
-ema_num <- ema %>%
-  dplyr::select()
+## Introduction
 
+Here we plot the aggregate unconditional distribution of responses to each of the following variables:
+
+1. Feelings at time of assessment
+
+2. Location at time of assessment
+
+3. Activity at time of assessment
+
+4. Physical activity yesterday
+
+5. Substance use yesterday
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Feelings at time of assessment 
+
+Column plots graphically depict aggregate emotional responses.
+
+```{r plot_emotions}
+x <- names(select(daily, 4:13))
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("I Feel", tools::toTitleCase(var), "Right Now")) +
+    theme_bw()
+  print(plot)
+}
 ```
 
+## Location at time of assessment
 
+```{r plot_location}
+x <- names(select(daily, 14:23))
+loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Location at Time of Assessment: ", loc[i])) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+```
+
+## Activity at time of assessment
+
+```{r plot_act}
+x <- names(select(daily, 24:30))
+act <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste(act[i], " Right Before the Phone Rang")) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+```
+
+## Physical activity yesterday
+
+```{r plot_act_yest}
+x <- names(select(daily, 31:35, 37, 39, 41))
+act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Participant ", act[i], "Yesterday")) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+  print(plot)
+  i <- i + 1
+}
+```
+
+## Substance use yesterday
+
+```{r plot_sub_yest}
+x <- names(select(daily, 90:97))
+sub <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances")
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Participant used ", sub[i], "Yesterday")) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
 
 #### Session Info:
 ```{r echo=FALSE}
