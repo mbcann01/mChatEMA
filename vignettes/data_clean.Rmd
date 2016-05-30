@@ -1,7 +1,10 @@
 ---
 title: "Data Clean"
-date: "May 23, 2016"
-output: html_document
+date: "May 30, 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, echo = FALSE}
@@ -11,19 +14,23 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 ```
 
-**Load packages and functions**
+-------------------------------------------------------------------------------
+
+## Load packages and functions
+
 ```{r load_packages, message=FALSE}
 # CRAN packages
 library(readxl)
 library(dplyr)
 library(stringr)
-library(ggplot2)
+library(readr)
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean) # Use this instead of str() to prevent showing raw data values
 ```
 
-**Import Data**   
+## Import data  
+
 ```{r import_data}
 daily <- readxl::read_excel("data/raw data/daily_2016_05_02.xls")
 
@@ -118,7 +125,8 @@ about_data(daily)
 
 &nbsp; 
 
-**Convert date / time variables**
+## Convert date / time variables
+
 ```{r convert_date}
 daily <- daily %>%
   dplyr::mutate(
@@ -131,7 +139,8 @@ daily <- daily %>%
 
 &nbsp;  
 
-**Create dummy variables for multiple answer questions**
+## Create dummy variables for multiple answer questions
+
 ```{r dummy_coding}
 daily <- daily %>%
   dplyr::mutate(
@@ -224,11 +233,16 @@ daily <- daily %>%
 
 &nbsp;  
 
-**Variable manipulation**   
-Covert categorical variables to class factor   
-Coerce some variables from character to numeric   
-Rename variables   
-Drop unneeded variables   
+## Other variable manipulation
+
+* Covert categorical variables to class factor  
+
+* Coerce some variables from character to numeric   
+
+* Rename variables   
+
+* Drop unneeded variables   
+
 ```{r factorizing}
 likert <- c(
   "Strongly disagree",
@@ -597,7 +611,7 @@ names(daily)
 
 &nbsp; 
 
-**Creating lag variables**
+## Create lag variables
 
 * The data is currently set up such that emotion today is paired with activity / substance use yesterday. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (March 31st) on April 1.
 
@@ -650,25 +664,177 @@ daily <- daily %>%
   ungroup
 
 # Data checking:
-# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "alc_sub", "happy_lag")])
+# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "alc_sub")])
+
+# View(test[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "bike_yest", "min_walk_c")])
+```
+
+-------------------------------------------------------------------------------   
+
+&nbsp; 
+
+## Coding for CMOA plot
+
+```{r cmoa_data}
+# Happy
+# X ranges from 0 to 4
+# Y is fixed at 0
+happy_axis <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- 1
+  new[x == "Neutral"] <- 2
+  new[x == "Agree"] <- 3
+  new[x == "Strongly agree"] <- 4
+  return(new)
+}
+
+# Sad
+# X ranges from 0 to -4
+# Y is fixed at 0
+sad_axis <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- -1
+  new[x == "Neutral"] <- -2
+  new[x == "Agree"] <- -3
+  new[x == "Strongly agree"] <- -4
+  return(new)
+}
+
+# For emotions in quadrant 1
+# X and Y range from 0 to 4
+quad1 <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- 1
+  new[x == "Neutral"] <- 2
+  new[x == "Agree"] <- 3
+  new[x == "Strongly agree"] <- 4
+  return(new)
+}
+
+# For emotions in quadrant 2
+# X ranges from 0 to -4
+# Y ranges from 0 to 4
+quad2x <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- -1
+  new[x == "Neutral"] <- -2
+  new[x == "Agree"] <- -3
+  new[x == "Strongly agree"] <- -4
+  return(new)
+}
+
+quad2y <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- 1
+  new[x == "Neutral"] <- 2
+  new[x == "Agree"] <- 3
+  new[x == "Strongly agree"] <- 4
+  return(new)
+}
+
+# For emotions in quadrant 3
+# X and Y range from 0 to -4
+quad3 <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- -1
+  new[x == "Neutral"] <- -2
+  new[x == "Agree"] <- -3
+  new[x == "Strongly agree"] <- -4
+  return(new)
+}
+
+# For emotions in quadrant 4
+# X ranges from 0 to 4
+# Y ranges from 0 to -4
+quad4x <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- 1
+  new[x == "Neutral"] <- 2
+  new[x == "Agree"] <- 3
+  new[x == "Strongly agree"] <- 4
+  return(new)
+}
+
+quad4y <- function(x) {
+  new <- NA
+  new[x == "Strongly disagree"] <- 0
+  new[x == "Disagree"] <- -1
+  new[x == "Neutral"] <- -2
+  new[x == "Agree"] <- -3
+  new[x == "Strongly agree"] <- -4
+  return(new)
+}
+
+# Create x and y coordinates for each row
+daily <- daily %>%
+  mutate(
+    x_happy      = ifelse(date_match == 1, happy_axis(happy_lag), NA),
+    y_happy      = 0,
+    x_frustrated = ifelse(date_match == 1, quad2x(frustrated_lag), NA),
+    y_frustrated = ifelse(date_match == 1, quad2y(frustrated_lag), NA),
+    x_sad        = ifelse(date_match == 1, sad_axis(sad_lag), NA),
+    y_sad        = 0,
+    x_worried    = ifelse(date_match == 1, quad2x(worried_lag), NA),
+    y_worried    = ifelse(date_match == 1, quad2y(worried_lag), NA),
+    x_restless   = ifelse(date_match == 1, quad2x(restless_lag), NA),
+    y_restless   = ifelse(date_match == 1, quad2y(restless_lag), NA),
+    x_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
+    y_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
+    x_calm       = ifelse(date_match == 1, quad4x(calm_lag), NA),
+    y_calm       = ifelse(date_match == 1, quad4y(calm_lag), NA),
+    x_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
+    y_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
+    x_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
+    y_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
+    x_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA),
+    y_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA)
+  )
+
+# Aggregate across all X values
+# Not currently using frustrated, worried, lonely, or sluggish
+daily <- daily %>%
+  mutate(
+    x = x_happy + x_sad + x_restless + x_excited + x_calm + x_bored,
+    y = y_happy + y_sad + y_restless + y_excited + y_calm + y_bored
+  )
+
+# Data check:
+# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "alc_sub", "happy", "happy_lag", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 ```
 
 -------------------------------------------------------------------------------
 
-**Save as RData**
-```{r}
+&nbsp;
+
+## Save as RData
+```{r save_rdata}
 about_data(daily)
 save(daily, file = "data/daily_april_2016.RData")
 ```
 
+**Save a .csv**
+```{r save_csv}
+write_csv(daily, path = "data/daily_april_2016.csv")
+```
+
+
 **Clean up environment**
-```{r}
+```{r cleanup}
 rm(list = setdiff(ls(), "daily"))
 ```
 
 -------------------------------------------------------------------------------
 
+&nbsp;
+
 #### Session Info:
-```{r echo=FALSE}
+```{r session info, echo=FALSE}
 sessionInfo()
 ```
