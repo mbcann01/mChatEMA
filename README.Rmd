@@ -26,12 +26,12 @@ This repository currently contains analyses related to the mChat EMA data. The d
 
 ## Vignettes
 
-[Codebook](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html)
+[Codebook - daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook_daily.html)
 
-[Data clean Daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean_daily.html)
+[Data clean - daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean_daily.html)
 
-[Exploratory Plots](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/exploratory_analysis.html)
+[Exploratory analysis - daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/exploratory_analysis_daily.html)
 
-[Individual substance trajectories](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood.html)
+[Individual substance trajectories -  daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood_daily.html)
 
 [Plot - Cicumplex Model of Affect](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/plot_circumplex_model_of_affect.html)
