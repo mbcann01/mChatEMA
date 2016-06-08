@@ -1,47 +1,36 @@
 ---
-title: "Exploratory Analysis"
-date: "May 30, 2016"
+title: "Exploratory Analysis of Daily EMA Data"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+    source: embed
 ---
 
-```{r setup, echo = FALSE}
+```{r setup, include=FALSE}
+# Setup options
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
-# Set working directory
-knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
-```
-
--------------------------------------------------------------------------------
-
-**Load packages**
-```{r message=FALSE}
 # CRAN packages
+library(flexdashboard)
 library(dplyr)
+library(knitr)
 library(ggplot2)
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
-```
 
-**Load data**  
-```{r}
-load("data/daily_april_2016.RData")
+# Load data
+load("/Users/bradcannell/Dropbox/Research/mChat/data/daily_april_2016.RData")
 
 # Sort by case number and date
 daily <- dplyr::arrange(daily, case_number, date)
-about_data(daily)
 ```
 
--------------------------------------------------------------------------------   
+Overview {.sidebar}
+===============================================================================
 
-&nbsp;
-
-## Introduction
-
-Here we plot the aggregate unconditional distribution of responses to each of the following variables:
+Here we plot the aggregate unconditional distribution of responses for each of the following variables:
 
 1. Feelings at time of assessment
 
@@ -51,35 +40,115 @@ Here we plot the aggregate unconditional distribution of responses to each of th
 
 4. Physical activity yesterday
 
-5. Substance use yesterday
+5. Diet yesterday
 
-&nbsp;
+6. Medication use yesterday
 
--------------------------------------------------------------------------------   
+7. Freetime activities yesterday
 
-&nbsp;
+8. Meaningful Interaction yesterday
 
-## Feelings at time of assessment 
+9. Substance use yesterday
 
-Column plots graphically depict aggregate emotional responses.
+
+
+
+Feeling
+===============================================================================
+
+Feelings Table
+-------------------------------------------------------------------------------
+
+### Feelings at time of assessment
+
+```{r feeling_table}
+x <- select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish)
+
+vars = tools::toTitleCase(names(x)) # Title case labels
+
+df <- data.frame(
+  x1 = vars,
+  x2 = NA,
+  x3 = NA,
+  x4 = NA,
+  x5 = NA,
+  x6 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  df$x4[i] <- resp[3]
+  df$x5[i] <- resp[4]
+  df$x6[i] <- resp[5]
+  i <- i + 1
+}
+
+names(df) <- c("Feeling", "Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree")
+
+kable(df)
+```
+
+Feelings Charts
+-------------------------------------------------------------------------------
 
 ```{r plot_emotions}
-x <- names(select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish))
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
+for (var in vars) {
+  plot <- ggplot(daily, aes_string(x = tolower(var))) +
     geom_bar() +
     scale_x_discrete("") +
-    ggtitle(paste("I Feel", tools::toTitleCase(var), "Right Now")) +
+    ggtitle(paste("I Feel", var, "Right Now")) +
     theme_bw()
   print(plot)
 }
 ```
 
-## Location at time of assessment
+
+
+
+Location
+===============================================================================
+
+Location Table
+-------------------------------------------------------------------------------
+
+### Location at time of assessment
+
+```{r location_table}
+x <- select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoors_loc, other_loc, restaurant_loc, school_loc, work_loc)
+
+loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
+
+df <- data.frame(
+  x1 = loc,
+  x2 = NA,
+  x3 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  i <- i + 1
+}
+
+names(df) <- c("Location", "No", "Yes")
+
+kable(df)
+```
+
+Location Charts
+-------------------------------------------------------------------------------
 
 ```{r plot_location}
-x <- names(select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoors_loc, other_loc, restaurant_loc, school_loc, work_loc))
-loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
+x <- names(x)
 i <- 1
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
@@ -92,11 +161,48 @@ for (var in x) {
 }
 ```
 
-## Activity at time of assessment
+
+
+
+Activity
+===============================================================================
+
+Activity Table
+-------------------------------------------------------------------------------
+
+### Activity at time of assessment
+
+```{r activity_table}
+x <- select(daily, pre_who, sit_act, sleep_act, stand_act, talk_act, walk_act, other_act)
+
+act <- c("Interacting With Someone", "Sitting", "Sleeping", "Standing", "Talking", "Walking / Excercising", "Other")
+
+df <- data.frame(
+  x1 = act,
+  x2 = NA,
+  x3 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  i <- i + 1
+}
+
+names(df) <- c("Activity", "No", "Yes")
+
+kable(df)
+```
+
+Activity Charts
+-------------------------------------------------------------------------------
 
 ```{r plot_act}
-x <- names(select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who))
-act <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
+x <- names(x)
 i <- 1
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
@@ -109,25 +215,256 @@ for (var in x) {
 }
 ```
 
-## Physical activity yesterday
+
+
+
+Physical Activity
+===============================================================================
+
+Table Row {.tabset .tabset-fade}
+-------------------------------------------------------------------------------
+
+### Physical activity yesterday (Yes / No)
+
+```{r physact_table_1}
+x <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest, pedometer)
+
+act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer")
+
+df <- data.frame(
+  x1 = act,
+  x2 = NA,
+  x3 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  i <- i + 1
+}
+
+names(df) <- c("Activity", "No", "Yes")
+
+kable(df)
+```
+
+### Physical activity yesterday (Minutes)
+
+```{r physact_table_2}
+x <- select(daily, min_walk, min_run, min_act)
+
+act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home")
+
+df <- data.frame(
+  x1 = act,
+  x2 = NA,
+  x3 = NA,
+  x4 = NA,
+  x5 = NA,
+  x6 = NA,
+  x7 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  df$x4[i] <- resp[3]
+  df$x5[i] <- resp[4]
+  df$x6[i] <- resp[5]
+  df$x7[i] <- resp[6]
+  i <- i + 1
+}
+
+names(df) <- c("Activity", "10 Minutes or Less", "11-20 Minutes", "21-30 Minutes", "31-40 Minutes", "41-50 Minutes", "More than 50 Minutes")
+
+kable(df)
+```
+
+### Sitting time yesterday
+
+```{r sitting_table}
+df <- data.frame(
+  x1 = NA,
+  x2 = NA,
+  x3 = NA,
+  x4 = NA,
+  x5 = NA,
+  x6 = NA,
+  stringsAsFactors = FALSE
+)
+
+resp_table <- table(daily$min_sit)
+resp <- as.vector(resp_table)
+df$x1 <- resp[1]
+df$x2 <- resp[2]
+df$x3 <- resp[3]
+df$x4 <- resp[4]
+df$x5 <- resp[5]
+df$x6 <- resp[6]
+
+names(df) <- c("4 or fewer hours", "More than 4 hours- 6 hours", "More than 6 hours- 8 hours", "More than 8 hours- 10 hours", "More than 10 hours - 12 hours", "More than 12 hours")
+
+kable(df)
+```
+
+Physical Activity Charts
+-------------------------------------------------------------------------------
 
 ```{r plot_act_yest}
-x <- names(select(daily, bike_yest, run_yest, cleaning_yest, none_yest, min_walk, min_run, min_act, min_sit))
-act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
+x <- names(select(daily, bike_yest, run_yest, cleaning_yest, none_yest, pedometer, min_walk, min_run, min_act, min_sit))
+act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
 i <- 1
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
     geom_bar() +
     scale_x_discrete("") +
-    ggtitle(paste("Participant", act[i], "Yesterday")) +
+    ggtitle(paste(act[i], "Yesterday")) +
     theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+    if (i > 5) {
+      theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+    } else {
+      theme()
+    }
+  print(plot)
+  i <- i + 1
+}
+
+# Plot steps
+ggplot(daily, aes(x = steps)) +
+  geom_histogram(binwidth = 1000) +
+  scale_x_continuous("") +
+  ggtitle("Steps Yesterday") +
+  theme_bw()
+```
+
+
+
+
+Diet
+===============================================================================
+
+Table Row {.tabset .tabset-fade}
+-------------------------------------------------------------------------------
+
+### Ate any yesterday (Yes / No)
+
+```{r diet_table_1}
+x <- select(daily, any_fruit, any_veg, any_ssb, any_sweets, any_meat)
+
+food <- c("Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat")
+
+df <- data.frame(
+  x1 = food,
+  x2 = NA,
+  x3 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  i <- i + 1
+}
+
+names(df) <- c("Food", "No", "Yes")
+
+kable(df)
+```
+
+### Servings ate yesterday
+
+```{r diet_table_2}
+x <- select(daily, serv_fruit, serv_veg, serv_ssb, serv_sweets, serv_meat)
+
+food <- c("Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat")
+
+df <- data.frame(
+  x1 = food,
+  x2 = NA,
+  x3 = NA,
+  x4 = NA,
+  x5 = NA,
+  x6 = NA,
+  x7 = NA,
+  stringsAsFactors = FALSE
+)
+
+i <- 1
+for (var in x) {
+  resp_table <- table(var)
+  resp <- as.vector(resp_table)
+  df$x2[i] <- resp[1]
+  df$x3[i] <- resp[2]
+  df$x4[i] <- resp[3]
+  df$x5[i] <- resp[4]
+  df$x6[i] <- resp[5]
+  df$x7[i] <- resp[6]
+  i <- i + 1
+}
+
+names(df) <- c("Food", "0 Servings", "1 Serving", "2 Servings", "3 Servings", "4 Servings", "5 or More Servings")
+
+kable(df)
+```
+
+Diet Charts
+-------------------------------------------------------------------------------
+
+```{r diet_yest}
+x <- names(select(daily, any_fruit, any_veg, any_ssb, any_sweets, any_meat, serv_fruit, serv_veg, serv_ssb, serv_sweets, serv_meat))
+
+food <- c("Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat", "Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Ate", food[i], "Yesterday")) +
+    theme_bw() +
+    theme()
   print(plot)
   i <- i + 1
 }
 ```
 
-## Substance use yesterday
+
+
+
+Medication
+===============================================================================
+
+
+
+
+Freetime
+===============================================================================
+
+
+
+
+Interaction
+===============================================================================
+
+
+
+
+Substances
+===============================================================================
+
+Substances Plot
+-------------------------------------------------------------------------------
 
 ```{r plot_sub_yest}
 x <- names(select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub))
@@ -144,13 +481,11 @@ for (var in x) {
 }
 ```
 
-&nbsp;
 
--------------------------------------------------------------------------------   
 
-&nbsp;
 
-#### Session Info:
-```{r echo=FALSE}
+Session Info
+===============================================================================
+```{r session_info, echo=FALSE}
 sessionInfo()
 ```
