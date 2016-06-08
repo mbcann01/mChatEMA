@@ -117,6 +117,7 @@ new_names <- c(
 
 # Rename variables
 names(daily) <- new_names
+rm(new_names)
 
 about_data(daily)
 ```
@@ -226,6 +227,7 @@ daily <- daily %>%
     op_other       = ifelse(grepl("Other", opiate), 1, 0)
   )
 
+# Data Check
 # View(daily[c("why_no_meds", "meds_ran_out", "meds_forgot", "meds_no_need", "meds_side", "meds_other")])
 ```
 
@@ -233,17 +235,37 @@ daily <- daily %>%
 
 &nbsp;  
 
-## Other variable manipulation
+## Dichotomize selected categorical variables
 
-* Covert categorical variables to class factor  
+```{r dichotomize}
+daily <- daily %>%
+  mutate(
+    
+    heavy_drink = ifelse(num_drinks2 >= 5, 1, 0),
+    
+    any_fruit   = ifelse(serv_fruit1 > 0, 1, 0),
+    any_veg     = ifelse(serv_veg > 0, 1, 0),
+    any_ssb     = ifelse(serv_ssb1 > 0, 1, 0),
+    any_sweets  = ifelse(serv_sweets1 > 0, 1, 0),
+    any_meat    = ifelse(serv_meat > 0, 1, 0),
+    
+    any_talk    = ifelse(min_talk1 > "15 or less minutes", 1, 0),
+    any_group   = ifelse(min_group1 > "15 or less minutes", 1, 0)
+  )
 
-* Coerce some variables from character to numeric   
+# Data check
+# View(test[c("min_group1", "any_group")])
+```
 
-* Rename variables   
 
-* Drop unneeded variables   
+-------------------------------------------------------------------------------   
 
-```{r factorizing}
+&nbsp;
+
+## Covert categorical variables to class factor  
+
+```{r to_factor}
+# Create factor labels
 likert <- c(
   "Strongly disagree",
   "Disagree",
@@ -340,6 +362,7 @@ cigs_time <- c(
 )
 
 how_many <- c(
+  "0",
   "1", 
   "2", 
   "3", 
@@ -348,11 +371,8 @@ how_many <- c(
 )
 
 daily <- daily %>%
-  dplyr::mutate(
-    
-    heavy_drink     = ifelse(num_drinks2 >= 5, 1, 0),
-    
-    # Convert to class factor
+  mutate(
+     
     happy           = factor(happy, levels = likert, labels = likert),
     frustrated      = factor(frustrated, levels = likert, labels = likert),
     sad             = factor(sad, levels = likert, labels = likert),
@@ -388,19 +408,25 @@ daily <- daily %>%
     run_yest        = factor(run_yest, levels = 0:1, labels = yesno),
     cleaning_yest   = factor(cleaning_yest, levels = 0:1, labels = yesno),
     none_yest       = factor(none_yest, levels = 0:1, labels = yesno),
-    
     min_walk        = factor(min_walk, levels = minutes, labels = minutes),
     min_run         = factor(min_run, levels = minutes, labels = minutes),
     min_act         = factor(min_act, levels = minutes, labels = minutes),
     min_sit         = factor(min_sit, levels = hours, labels = hours),
     pedometer       = factor(pedometer2, levels = 0:1, labels = yesno),
     phys_act_sat    = factor(phys_act_sat1, levels = satisfy, labels = satisfy),
+    
     serv_fruit      = factor(serv_fruit1, levels = how_many, labels = how_many),
     serv_veg        = factor(serv_veg, levels = how_many, labels = how_many),
     serv_ssb        = factor(serv_ssb1, levels = how_many, labels = how_many),
     serv_sweets     = factor(serv_sweets1, levels = how_many, labels = how_many),
     serv_meat       = factor(serv_meat, levels = how_many, labels = how_many),
     food_sat        = factor(food_sat1, levels = satisfy, labels = satisfy),
+    
+    any_fruit       = factor(any_fruit, levels = 0:1, labels = yesno),
+    any_veg         = factor(any_veg, levels = 0:1, labels = yesno),
+    any_ssb         = factor(any_ssb, levels = 0:1, labels = yesno),
+    any_sweets      = factor(any_sweets, levels = 0:1, labels = yesno),
+    any_meat        = factor(any_meat, levels = 0:1, labels = yesno),
     
     take_meds       = factor(take_meds2, levels = 0:1, labels = yesno),
     
@@ -445,6 +471,9 @@ daily <- daily %>%
     min_group       = factor(min_group1, levels = meaningful_time, labels = meaningful_time),
     interaction_sat = factor(interaction_sat1, levels = satisfy, labels = satisfy),
     
+    any_talk        = factor(any_talk, levels = 0:1, labels = yesno),
+    any_group       = factor(any_group, levels = 0:1, labels = yesno),
+    
     alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
     heavy_drink     = factor(heavy_drink, levels = 0:1, labels = yesno),
     cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
@@ -467,26 +496,58 @@ daily <- daily %>%
     op_methadone    = factor(op_methadone, levels = 0:1, labels = yesno),
     op_pills        = factor(op_pills, levels = 0:1, labels = yesno),
     op_other        = factor(op_other, levels = 0:1, labels = yesno),
-    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many),
-    
-    # Coerce variable type
-    case_number     = as.integer(case_number),
-    min_walk_c      = as.integer(min_walk_c),
-    min_run_c       = as.integer(min_run_c),
-    min_act_c       = as.integer(min_act_c),
-    min_sit_c       = as.integer(min_sit_c),
-    steps           = as.integer(steps),
-    alert_time      = as.numeric(alert_time)
-  ) %>%
+    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many)
+  )
 
-  # Rename variables
+# Clean environment
+rm(list = setdiff(ls(), "daily"))
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Coerce selected variables from character to numeric
+
+```{r coerce}
+daily <- daily %>%
+  mutate(
+    case_number = as.integer(case_number),
+    min_walk_c  = as.integer(min_walk_c),
+    min_run_c   = as.integer(min_run_c),
+    min_act_c   = as.integer(min_act_c),
+    min_sit_c   = as.integer(min_sit_c),
+    steps       = as.integer(steps),
+    alert_time  = as.numeric(alert_time)
+  )
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Rename selected variables
+
+```{r rename}
+daily <- daily %>%
   rename(
-    min_talk_c      = min_talk2,
-    min_group_c     = min_group2,
-    num_cigs_c      = num_cigs2
-  ) %>%
-  
-  # Reorder variables and keep only variables of interest
+    min_talk_c  = min_talk2,
+    min_group_c = min_group2,
+    num_cigs_c  = num_cigs2
+  )
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Select variables for analysis data
+
+```{r select_vars}
+daily <- daily %>%
   select(
     case_number,
     date,
@@ -534,10 +595,15 @@ daily <- daily %>%
     steps,
     phys_act_sat,
     serv_fruit,
+    any_fruit,
     serv_veg,
+    any_veg,
     serv_ssb,
+    any_ssb,
     serv_sweets,
+    any_sweets,
     serv_meat,
+    any_meat,
     food_sat,
     take_meds,
     medtype_dep,
@@ -575,7 +641,9 @@ daily <- daily %>%
     social_free,
     free_time_sat,
     min_talk,
+    any_talk,
     min_group,
+    any_group,
     interaction_sat,
     alc_sub,
     cig_sub,
@@ -606,10 +674,8 @@ daily <- daily %>%
     start_time,
     completed
   )
-
-about_data(daily)
-names(daily)
 ```
+
 
 -------------------------------------------------------------------------------   
 

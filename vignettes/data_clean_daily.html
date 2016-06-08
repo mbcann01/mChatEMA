@@ -334,6 +334,7 @@ new_names &lt;- c(
 
 # Rename variables
 names(daily) &lt;- new_names
+rm(new_names)
 
 about_data(daily)
 #&gt; 1390 observations and 77 variables in the data</code></pre>
@@ -436,19 +437,37 @@ about_data(daily)
     op_other       = ifelse(grepl(&quot;Other&quot;, opiate), 1, 0)
   )
 
+# Data Check
 # View(daily[c(&quot;why_no_meds&quot;, &quot;meds_ran_out&quot;, &quot;meds_forgot&quot;, &quot;meds_no_need&quot;, &quot;meds_side&quot;, &quot;meds_other&quot;)])</code></pre>
 <hr />
 <p> </p>
 </div>
-<div id="other-variable-manipulation" class="section level2">
-<h2>Other variable manipulation</h2>
-<ul>
-<li><p>Covert categorical variables to class factor</p></li>
-<li><p>Coerce some variables from character to numeric</p></li>
-<li><p>Rename variables</p></li>
-<li><p>Drop unneeded variables</p></li>
-</ul>
-<pre class="r"><code>likert &lt;- c(
+<div id="dichotomize-selected-categorical-variables" class="section level2">
+<h2>Dichotomize selected categorical variables</h2>
+<pre class="r"><code>daily &lt;- daily %&gt;%
+  mutate(
+    
+    heavy_drink = ifelse(num_drinks2 &gt;= 5, 1, 0),
+    
+    any_fruit   = ifelse(serv_fruit1 &gt; 0, 1, 0),
+    any_veg     = ifelse(serv_veg &gt; 0, 1, 0),
+    any_ssb     = ifelse(serv_ssb1 &gt; 0, 1, 0),
+    any_sweets  = ifelse(serv_sweets1 &gt; 0, 1, 0),
+    any_meat    = ifelse(serv_meat &gt; 0, 1, 0),
+    
+    any_talk    = ifelse(min_talk1 &gt; &quot;15 or less minutes&quot;, 1, 0),
+    any_group   = ifelse(min_group1 &gt; &quot;15 or less minutes&quot;, 1, 0)
+  )
+
+# Data check
+# View(test[c(&quot;min_group1&quot;, &quot;any_group&quot;)])</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="covert-categorical-variables-to-class-factor" class="section level2">
+<h2>Covert categorical variables to class factor</h2>
+<pre class="r"><code># Create factor labels
+likert &lt;- c(
   &quot;Strongly disagree&quot;,
   &quot;Disagree&quot;,
   &quot;Neutral&quot;,
@@ -544,6 +563,7 @@ cigs_time &lt;- c(
 )
 
 how_many &lt;- c(
+  &quot;0&quot;,
   &quot;1&quot;, 
   &quot;2&quot;, 
   &quot;3&quot;, 
@@ -552,11 +572,8 @@ how_many &lt;- c(
 )
 
 daily &lt;- daily %&gt;%
-  dplyr::mutate(
-    
-    heavy_drink     = ifelse(num_drinks2 &gt;= 5, 1, 0),
-    
-    # Convert to class factor
+  mutate(
+     
     happy           = factor(happy, levels = likert, labels = likert),
     frustrated      = factor(frustrated, levels = likert, labels = likert),
     sad             = factor(sad, levels = likert, labels = likert),
@@ -592,19 +609,25 @@ daily &lt;- daily %&gt;%
     run_yest        = factor(run_yest, levels = 0:1, labels = yesno),
     cleaning_yest   = factor(cleaning_yest, levels = 0:1, labels = yesno),
     none_yest       = factor(none_yest, levels = 0:1, labels = yesno),
-    
     min_walk        = factor(min_walk, levels = minutes, labels = minutes),
     min_run         = factor(min_run, levels = minutes, labels = minutes),
     min_act         = factor(min_act, levels = minutes, labels = minutes),
     min_sit         = factor(min_sit, levels = hours, labels = hours),
     pedometer       = factor(pedometer2, levels = 0:1, labels = yesno),
     phys_act_sat    = factor(phys_act_sat1, levels = satisfy, labels = satisfy),
+    
     serv_fruit      = factor(serv_fruit1, levels = how_many, labels = how_many),
     serv_veg        = factor(serv_veg, levels = how_many, labels = how_many),
     serv_ssb        = factor(serv_ssb1, levels = how_many, labels = how_many),
     serv_sweets     = factor(serv_sweets1, levels = how_many, labels = how_many),
     serv_meat       = factor(serv_meat, levels = how_many, labels = how_many),
     food_sat        = factor(food_sat1, levels = satisfy, labels = satisfy),
+    
+    any_fruit       = factor(any_fruit, levels = 0:1, labels = yesno),
+    any_veg         = factor(any_veg, levels = 0:1, labels = yesno),
+    any_ssb         = factor(any_ssb, levels = 0:1, labels = yesno),
+    any_sweets      = factor(any_sweets, levels = 0:1, labels = yesno),
+    any_meat        = factor(any_meat, levels = 0:1, labels = yesno),
     
     take_meds       = factor(take_meds2, levels = 0:1, labels = yesno),
     
@@ -649,6 +672,9 @@ daily &lt;- daily %&gt;%
     min_group       = factor(min_group1, levels = meaningful_time, labels = meaningful_time),
     interaction_sat = factor(interaction_sat1, levels = satisfy, labels = satisfy),
     
+    any_talk        = factor(any_talk, levels = 0:1, labels = yesno),
+    any_group       = factor(any_group, levels = 0:1, labels = yesno),
+    
     alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
     heavy_drink     = factor(heavy_drink, levels = 0:1, labels = yesno),
     cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
@@ -671,26 +697,43 @@ daily &lt;- daily %&gt;%
     op_methadone    = factor(op_methadone, levels = 0:1, labels = yesno),
     op_pills        = factor(op_pills, levels = 0:1, labels = yesno),
     op_other        = factor(op_other, levels = 0:1, labels = yesno),
-    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many),
-    
-    # Coerce variable type
-    case_number     = as.integer(case_number),
-    min_walk_c      = as.integer(min_walk_c),
-    min_run_c       = as.integer(min_run_c),
-    min_act_c       = as.integer(min_act_c),
-    min_sit_c       = as.integer(min_sit_c),
-    steps           = as.integer(steps),
-    alert_time      = as.numeric(alert_time)
-  ) %&gt;%
+    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many)
+  )
 
-  # Rename variables
+# Clean environment
+rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="coerce-selected-variables-from-character-to-numeric" class="section level2">
+<h2>Coerce selected variables from character to numeric</h2>
+<pre class="r"><code>daily &lt;- daily %&gt;%
+  mutate(
+    case_number = as.integer(case_number),
+    min_walk_c  = as.integer(min_walk_c),
+    min_run_c   = as.integer(min_run_c),
+    min_act_c   = as.integer(min_act_c),
+    min_sit_c   = as.integer(min_sit_c),
+    steps       = as.integer(steps),
+    alert_time  = as.numeric(alert_time)
+  )</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="rename-selected-variables" class="section level2">
+<h2>Rename selected variables</h2>
+<pre class="r"><code>daily &lt;- daily %&gt;%
   rename(
-    min_talk_c      = min_talk2,
-    min_group_c     = min_group2,
-    num_cigs_c      = num_cigs2
-  ) %&gt;%
-  
-  # Reorder variables and keep only variables of interest
+    min_talk_c  = min_talk2,
+    min_group_c = min_group2,
+    num_cigs_c  = num_cigs2
+  )</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="select-variables-for-analysis-data" class="section level2">
+<h2>Select variables for analysis data</h2>
+<pre class="r"><code>daily &lt;- daily %&gt;%
   select(
     case_number,
     date,
@@ -738,10 +781,15 @@ daily &lt;- daily %&gt;%
     steps,
     phys_act_sat,
     serv_fruit,
+    any_fruit,
     serv_veg,
+    any_veg,
     serv_ssb,
+    any_ssb,
     serv_sweets,
+    any_sweets,
     serv_meat,
+    any_meat,
     food_sat,
     take_meds,
     medtype_dep,
@@ -779,7 +827,9 @@ daily &lt;- daily %&gt;%
     social_free,
     free_time_sat,
     min_talk,
+    any_talk,
     min_group,
+    any_group,
     interaction_sat,
     alc_sub,
     cig_sub,
@@ -809,50 +859,7 @@ daily &lt;- daily %&gt;%
     alert_action,
     start_time,
     completed
-  )
-
-about_data(daily)
-#&gt; 1390 observations and 117 variables in the data
-names(daily)
-#&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
-#&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
-#&gt;   [7] &quot;worried&quot;         &quot;restless&quot;        &quot;excited&quot;        
-#&gt;  [10] &quot;calm&quot;            &quot;lonely&quot;          &quot;bored&quot;          
-#&gt;  [13] &quot;sluggish&quot;        &quot;bus_loc&quot;         &quot;church_loc&quot;     
-#&gt;  [16] &quot;home_loc&quot;        &quot;frifam_loc&quot;      &quot;store_loc&quot;      
-#&gt;  [19] &quot;outdoors_loc&quot;    &quot;other_loc&quot;       &quot;restaurant_loc&quot; 
-#&gt;  [22] &quot;school_loc&quot;      &quot;work_loc&quot;        &quot;other_act&quot;      
-#&gt;  [25] &quot;sit_act&quot;         &quot;sleep_act&quot;       &quot;stand_act&quot;      
-#&gt;  [28] &quot;walk_act&quot;        &quot;talk_act&quot;        &quot;pre_who&quot;        
-#&gt;  [31] &quot;bike_yest&quot;       &quot;run_yest&quot;        &quot;cleaning_yest&quot;  
-#&gt;  [34] &quot;none_yest&quot;       &quot;min_walk&quot;        &quot;min_walk_c&quot;     
-#&gt;  [37] &quot;min_run&quot;         &quot;min_run_c&quot;       &quot;min_act&quot;        
-#&gt;  [40] &quot;min_act_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
-#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;phys_act_sat&quot;   
-#&gt;  [46] &quot;serv_fruit&quot;      &quot;serv_veg&quot;        &quot;serv_ssb&quot;       
-#&gt;  [49] &quot;serv_sweets&quot;     &quot;serv_meat&quot;       &quot;food_sat&quot;       
-#&gt;  [52] &quot;take_meds&quot;       &quot;medtype_dep&quot;     &quot;medtype_psy&quot;    
-#&gt;  [55] &quot;medtype_ast&quot;     &quot;medtype_bp&quot;      &quot;medtype_diab&quot;   
-#&gt;  [58] &quot;medtype_pain&quot;    &quot;medtype_chol&quot;    &quot;medtype_anti&quot;   
-#&gt;  [61] &quot;medtype_other&quot;   &quot;meds_ran_out&quot;    &quot;meds_forgot&quot;    
-#&gt;  [64] &quot;meds_no_need&quot;    &quot;meds_side&quot;       &quot;meds_lost&quot;      
-#&gt;  [67] &quot;meds_other&quot;      &quot;free_time&quot;       &quot;none_free&quot;      
-#&gt;  [70] &quot;tv_free&quot;         &quot;games_free&quot;      &quot;movie_free&quot;     
-#&gt;  [73] &quot;internet_free&quot;   &quot;book_free&quot;       &quot;music_free&quot;     
-#&gt;  [76] &quot;craft_free&quot;      &quot;cleaned_free&quot;    &quot;pets_free&quot;      
-#&gt;  [79] &quot;pray_free&quot;       &quot;sport_free&quot;      &quot;walk_free&quot;      
-#&gt;  [82] &quot;cards_free&quot;      &quot;shop_free&quot;       &quot;volunteer_free&quot; 
-#&gt;  [85] &quot;social_free&quot;     &quot;free_time_sat&quot;   &quot;min_talk&quot;       
-#&gt;  [88] &quot;min_group&quot;       &quot;interaction_sat&quot; &quot;alc_sub&quot;        
-#&gt;  [91] &quot;cig_sub&quot;         &quot;mar_sub&quot;         &quot;opi_sub&quot;        
-#&gt;  [94] &quot;stim_sub&quot;        &quot;herb_sub&quot;        &quot;other_sub&quot;      
-#&gt;  [97] &quot;none_sub&quot;        &quot;num_drinks&quot;      &quot;heavy_drink&quot;    
-#&gt; [100] &quot;subs_time&quot;       &quot;first_drink&quot;     &quot;last_drink&quot;     
-#&gt; [103] &quot;num_cigs&quot;        &quot;first_cig&quot;       &quot;last_cig&quot;       
-#&gt; [106] &quot;op_heroin&quot;       &quot;op_methadone&quot;    &quot;op_pills&quot;       
-#&gt; [109] &quot;op_other&quot;        &quot;num_opiate&quot;      &quot;stim&quot;           
-#&gt; [112] &quot;num_coc&quot;         &quot;num_stim&quot;        &quot;alert_time&quot;     
-#&gt; [115] &quot;alert_action&quot;    &quot;start_time&quot;      &quot;completed&quot;</code></pre>
+  )</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -1050,7 +1057,7 @@ daily &lt;- daily %&gt;%
 <div id="save-as-rdata" class="section level2">
 <h2>Save as RData</h2>
 <pre class="r"><code>about_data(daily)
-#&gt; 1390 observations and 152 variables in the data
+#&gt; 1390 observations and 159 variables in the data
 save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 <p><strong>Save a .csv</strong></p>
 <pre class="r"><code>write_csv(daily, path = &quot;data/daily_april_2016.csv&quot;)</code></pre>
