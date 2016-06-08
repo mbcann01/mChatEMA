@@ -1,6 +1,6 @@
 ---
-title: "Data Clean"
-date: "May 30, 2016"
+title: "Data Clean Daily"
+date: "June 08, 2016"
 output: 
   html_document:
     toc: true
@@ -32,7 +32,7 @@ library(dataclean) # Use this instead of str() to prevent showing raw data value
 ## Import data  
 
 ```{r import_data}
-daily <- readxl::read_excel("data/raw data/daily_2016_05_02.xls")
+daily <- read_excel("data/raw data/daily_2016_05_02.xls")
 
 # Create character vector to rename variables upon import
 new_names <- c(

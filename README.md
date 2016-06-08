@@ -16,7 +16,7 @@ Vignettes
 
 [Codebook](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/codebook.html)
 
-[Data clean](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean.html)
+[Data clean Daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/data_clean_daily.html)
 
 [Exploratory Plots](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/exploratory_analysis.html)
 
