@@ -1,0 +1,57 @@
+---
+title: "Exploratory Analysis of Daily EMA Data"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+# CRAN packages
+library(flexdashboard)
+library(dplyr)
+library(ggplot2)
+
+# devtools::install_github("mbcann01/dataclean")
+library(dataclean)
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
+```
+
+**Load packages**
+```{r message=FALSE}
+# CRAN packages
+library(dplyr)
+library(ggplot2)
+
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
