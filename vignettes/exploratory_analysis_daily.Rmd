@@ -182,18 +182,19 @@ ea_kable(
 Activity Charts
 -------------------------------------------------------------------------------
 
-```{r plot_act}
-# Plot all of these on a single column chart
-i <- 1
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
-    geom_bar() +
-    scale_x_discrete("") +
-    ggtitle(paste(act[i], "Right Before the Phone Rang")) +
-    theme_bw()
-  print(plot)
-  i <- i + 1
-}
+```{r plot_act, fig.width=12}
+x <- data.frame(sapply(x, table))
+x <- gather(x)
+x <- x[c(FALSE, TRUE), ]
+x$key <- act
+
+# Plot the data
+ggplot(x, aes(x = key, y = value)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete("") +
+  scale_y_continuous("Number of Responses") +
+  ggtitle("Activity Immediately Prior to Assessment") +
+  theme_bw()
 ```
 
 
@@ -404,40 +405,48 @@ ea_kable(
 
 Medication Charts
 -------------------------------------------------------------------------------
-```{r med_chart}
-# Take (Yes / No)
-# Would be much more informative if each were a single column on the same chart
-x <- select(daily, take_meds, medtype_dep, medtype_psy, medtype_ast, medtype_bp, medtype_diab, medtype_pain, medtype_chol, medtype_anti, medtype_other)
-
-xlab <- c("Take Medications", "Didn't Take Depression / Anxiety / Mood Medication", "Didn't Take Psychiatric Medication", "Didn't Take Asthma / COPD Medication", "Didn't Take Blood Pressure Medication", "Didn't Take Diabetes Medication", "Didn't Take Pain Medication", "Didn't Take Cholesterol Medication", "Didn't Take Antibiotic / Antiviral Medication", "Didn't Take Other Medication")
-
-i <- 1
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
+```{r med_chart, fig.width=12}
+# Take Meds (Yes / No)
+x <- select(daily, take_meds)
+ggplot(x, aes(x = take_meds)) +
     geom_bar() +
     scale_x_discrete("") +
-    ggtitle(paste(xlab[i], "Yesterday")) +
+    ggtitle("Take All Medications as Prescribed Yesterday") +
     theme_bw()
-  print(plot)
-  i <- i + 1
-}
 
-# Why not?
-# Would be much more informative if each were a single column on the same chart
+# Which medications not taken
+x <- select(daily, medtype_dep, medtype_psy, medtype_ast, medtype_bp, medtype_diab, medtype_pain, medtype_chol, medtype_anti, medtype_other)
+
+xlab <- c("Depression / Anxiety / Mood", "Psychiatric", "Asthma / COPD", "Blood Pressure", "Diabetes", "Pain", "Cholesterol", "Antibiotic / Antiviral", "Other")
+
+x <- data.frame(sapply(x, table))
+x <- gather(x)
+x <- x[c(FALSE, TRUE), ]
+x$key <- xlab
+
+ggplot(x, aes(x = key, y = value)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete("") +
+  scale_y_continuous("Number of Responses") +
+  ggtitle("Medication Not Taken Yesterday") +
+  theme_bw()
+
+# Why medication not taken
 x <- select(daily, meds_ran_out, meds_forgot, meds_no_need, meds_side, meds_lost, meds_other)
 
 xlab <- c("Ran out", "Forgot", "Don't Need It", "Side Effects", "Got Lost / Stolen", "Other")
 
-i <- 1
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
-    geom_bar() +
-    scale_x_discrete("") +
-    ggtitle(paste("Didn't take because:", xlab[i])) +
-    theme_bw()
-  print(plot)
-  i <- i + 1
-}
+x <- data.frame(sapply(x, table))
+x <- gather(x)
+x <- x[c(FALSE, TRUE), ]
+x$key <- xlab
+
+ggplot(x, aes(x = key, y = value)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete("") +
+  scale_y_continuous("Number of Responses") +
+  ggtitle("Reason Medication Not Taken Yesterday") +
+  theme_bw()
 ```
 
 
@@ -508,22 +517,23 @@ for (var in x) {
   i <- i + 1
 }
 
-# What they did
-# Would be much more informative if each were a single column on the same chart
+# What they did during free time
 x <- select(daily, tv_free, games_free, movie_free, internet_free, book_free, music_free, craft_free, cleaned_free, pets_free, pray_free, sport_free, walk_free, cards_free, shop_free, volunteer_free, social_free, none_free)
 
 xlab <- c("Watched TV", "Played Computer Games", "Went to a Movie", "Surfed the Internet", "Read", "Listened to Music or Played Instrument", "Arts and Crafts", "Cleaned", "Took Care of Pets", "Prayed, Meditated, or Went to Religious Service", "Played a Sport", "Walk or Jog", "Played Cards, Dice, or Board Games", "Went Shopping", "Volunteered", "Socialized", "None of These")
 
-i <- 1
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
-    geom_bar() +
-    scale_x_discrete("") +
-    ggtitle(paste("Did in Free Time Yesterday:", xlab[i])) +
-    theme_bw()
-  print(plot)
-  i <- i + 1
-}
+x <- data.frame(sapply(x, table))
+x <- gather(x)
+x <- x[c(FALSE, TRUE), ]
+x$key <- xlab
+
+ggplot(x, aes(x = key, y = value)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete("") +
+  scale_y_continuous("Number of Responses") +
+  ggtitle("Free Time Activity Yesterday") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
 ```
 
 
