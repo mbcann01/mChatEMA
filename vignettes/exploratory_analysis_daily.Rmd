@@ -499,7 +499,7 @@ ea_kable(
 
 Freetime Charts
 -------------------------------------------------------------------------------
-```{r freetime_chart}
+```{r freetime_chart, fig.width=12}
 # How much
 x <- select(daily, free_time)
 
