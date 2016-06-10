@@ -20,6 +20,9 @@ library(ggplot2)
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
 
+# Load ea_kable
+source("/Users/bradcannell/Dropbox/Research/mChat/R scripts/ea_kable.R")
+
 # Load data
 load("/Users/bradcannell/Dropbox/Research/mChat/data/daily_april_2016.RData")
 
@@ -62,35 +65,18 @@ Feelings Table
 ### Feelings at time of assessment
 
 ```{r feeling_table}
-x <- select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish)
+feelings <- select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish)
 
-vars = tools::toTitleCase(names(x)) # Title case labels
+vars <- tools::toTitleCase(names(feelings))
 
-df <- data.frame(
-  x1 = vars,
-  x2 = NA,
-  x3 = NA,
-  x4 = NA,
-  x5 = NA,
-  x6 = NA,
-  stringsAsFactors = FALSE
-)
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  df$x4[i] <- resp[3]
-  df$x5[i] <- resp[4]
-  df$x6[i] <- resp[5]
-  i <- i + 1
-}
-
-names(df) <- c("Feeling", "Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree")
-
-kable(df)
+ea_kable(
+  x = feelings, 
+  xlab = vars, 
+  nrows = 10, 
+  ncols = 6, 
+  colnames = c("Feeling", "Strongly Disagree", "Disagree", "Neutral", "Agree", 
+    "Strongly Agree")
+) 
 ```
 
 Feelings Charts
@@ -110,6 +96,11 @@ for (var in vars) {
 
 
 
+
+
+
+
+
 Location
 ===============================================================================
 
@@ -123,32 +114,19 @@ x <- select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoor
 
 loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
 
-df <- data.frame(
-  x1 = loc,
-  x2 = NA,
-  x3 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = loc, 
+  nrows = 10, 
+  ncols = 3, 
+  colnames = c("Location", "No", "Yes")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  i <- i + 1
-}
-
-names(df) <- c("Location", "No", "Yes")
-
-kable(df)
 ```
 
 Location Charts
 -------------------------------------------------------------------------------
 
 ```{r plot_location}
-x <- names(x)
 i <- 1
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
@@ -160,6 +138,11 @@ for (var in x) {
   i <- i + 1
 }
 ```
+
+
+
+
+
 
 
 
@@ -177,32 +160,20 @@ x <- select(daily, pre_who, sit_act, sleep_act, stand_act, talk_act, walk_act, o
 
 act <- c("Interacting With Someone", "Sitting", "Sleeping", "Standing", "Talking", "Walking / Excercising", "Other")
 
-df <- data.frame(
-  x1 = act,
-  x2 = NA,
-  x3 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = act, 
+  nrows = 7, 
+  ncols = 3, 
+  colnames = c("Activity", "No", "Yes")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  i <- i + 1
-}
-
-names(df) <- c("Activity", "No", "Yes")
-
-kable(df)
 ```
 
 Activity Charts
 -------------------------------------------------------------------------------
 
 ```{r plot_act}
-x <- names(x)
+# Plot all of these on a single column chart
 i <- 1
 for (var in x) {
   plot <- ggplot(daily, aes_string(x = var)) +
@@ -214,6 +185,11 @@ for (var in x) {
   i <- i + 1
 }
 ```
+
+
+
+
+
 
 
 
@@ -231,25 +207,13 @@ x <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest, pedometer)
 
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer")
 
-df <- data.frame(
-  x1 = act,
-  x2 = NA,
-  x3 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = act, 
+  nrows = 5, 
+  ncols = 3, 
+  colnames = c("Activity", "No", "Yes")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  i <- i + 1
-}
-
-names(df) <- c("Activity", "No", "Yes")
-
-kable(df)
 ```
 
 ### Physical activity yesterday (Minutes)
@@ -259,60 +223,30 @@ x <- select(daily, min_walk, min_run, min_act)
 
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home")
 
-df <- data.frame(
-  x1 = act,
-  x2 = NA,
-  x3 = NA,
-  x4 = NA,
-  x5 = NA,
-  x6 = NA,
-  x7 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = act, 
+  nrows = 3, 
+  ncols = 7, 
+  colnames = c("Activity", "10 Minutes or Less", "11-20 Minutes", "21-30 Minutes", 
+    "31-40 Minutes", "41-50 Minutes", "More than 50 Minutes")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  df$x4[i] <- resp[3]
-  df$x5[i] <- resp[4]
-  df$x6[i] <- resp[5]
-  df$x7[i] <- resp[6]
-  i <- i + 1
-}
-
-names(df) <- c("Activity", "10 Minutes or Less", "11-20 Minutes", "21-30 Minutes", "31-40 Minutes", "41-50 Minutes", "More than 50 Minutes")
-
-kable(df)
 ```
 
 ### Sitting time yesterday
 
 ```{r sitting_table}
-df <- data.frame(
-  x1 = NA,
-  x2 = NA,
-  x3 = NA,
-  x4 = NA,
-  x5 = NA,
-  x6 = NA,
-  stringsAsFactors = FALSE
+x <- select(daily, min_sit)
+
+ea_kable(
+  x = x, 
+  xlab = "Sitting Time Yesterday", 
+  nrows = 1, 
+  ncols = 7, 
+  colnames = c("Variable", "4 or Fewer Hours", "More than 4 Hours- 6 Hours", 
+    "More than 6 Hours- 8 Hours", "More than 8 Hours- 10 Hours", 
+    "More than 10 Hours - 12 Hours", "More than 12 Hours")
 )
-
-resp_table <- table(daily$min_sit)
-resp <- as.vector(resp_table)
-df$x1 <- resp[1]
-df$x2 <- resp[2]
-df$x3 <- resp[3]
-df$x4 <- resp[4]
-df$x5 <- resp[5]
-df$x6 <- resp[6]
-
-names(df) <- c("4 or fewer hours", "More than 4 hours- 6 hours", "More than 6 hours- 8 hours", "More than 8 hours- 10 hours", "More than 10 hours - 12 hours", "More than 12 hours")
-
-kable(df)
 ```
 
 Physical Activity Charts
@@ -348,6 +282,11 @@ ggplot(daily, aes(x = steps)) +
 
 
 
+
+
+
+
+
 Diet
 ===============================================================================
 
@@ -361,25 +300,13 @@ x <- select(daily, any_fruit, any_veg, any_ssb, any_sweets, any_meat)
 
 food <- c("Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat")
 
-df <- data.frame(
-  x1 = food,
-  x2 = NA,
-  x3 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = food, 
+  nrows = 5, 
+  ncols = 3, 
+  colnames = c("Food", "No", "Yes")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  i <- i + 1
-}
-
-names(df) <- c("Food", "No", "Yes")
-
-kable(df)
 ```
 
 ### Servings ate yesterday
@@ -389,33 +316,14 @@ x <- select(daily, serv_fruit, serv_veg, serv_ssb, serv_sweets, serv_meat)
 
 food <- c("Fruit", "Vegetables", "Sugar-Sweetened Beverages", "Deserts and Other Sweets", "Red Meat or Processed Meat")
 
-df <- data.frame(
-  x1 = food,
-  x2 = NA,
-  x3 = NA,
-  x4 = NA,
-  x5 = NA,
-  x6 = NA,
-  x7 = NA,
-  stringsAsFactors = FALSE
+ea_kable(
+  x = x, 
+  xlab = food, 
+  nrows = 5, 
+  ncols = 7, 
+  colnames = c("Food", "0 Servings", "1 Serving", "2 Servings", "3 Servings", "4 Servings", 
+    "5 or More Servings")
 )
-
-i <- 1
-for (var in x) {
-  resp_table <- table(var)
-  resp <- as.vector(resp_table)
-  df$x2[i] <- resp[1]
-  df$x3[i] <- resp[2]
-  df$x4[i] <- resp[3]
-  df$x5[i] <- resp[4]
-  df$x6[i] <- resp[5]
-  df$x7[i] <- resp[6]
-  i <- i + 1
-}
-
-names(df) <- c("Food", "0 Servings", "1 Serving", "2 Servings", "3 Servings", "4 Servings", "5 or More Servings")
-
-kable(df)
 ```
 
 Diet Charts
@@ -432,8 +340,7 @@ for (var in x) {
     geom_bar() +
     scale_x_discrete("") +
     ggtitle(paste("Ate", food[i], "Yesterday")) +
-    theme_bw() +
-    theme()
+    theme_bw()
   print(plot)
   i <- i + 1
 }
@@ -442,8 +349,91 @@ for (var in x) {
 
 
 
+
+
+
+
+
 Medication
 ===============================================================================
+
+Medication Table {.tabset .tabset-fade}
+-------------------------------------------------------------------------------
+
+### Did you take all your medication as prescribed yesterday, and if not, which ones didn't you take?
+
+```{r med_table_1}
+x <- select(daily, take_meds, medtype_dep, medtype_psy, medtype_ast, medtype_bp, medtype_diab, medtype_pain, medtype_chol, medtype_anti, medtype_other)
+
+xlab <- c("Take Medications", "Didn't Take Depression / Anxiety / Mood Medication", "Didn't Take Psychiatric Medication", "Didn't Take Asthma / COPD Medication", "Didn't Take Blood Pressure Medication", "Didn't Take Diabetes Medication", "Didn't Take Pain Medication", "Didn't Take Cholesterol Medication", "Didn't Take Antibiotic / Antiviral Medication", "Didn't Take Other Medication")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 10, 
+  ncols = 3, 
+  colnames = c("Medication", "No", "Yes")
+)
+```
+
+### Why didn't you take medications?
+
+```{r med_table_2}
+x <- select(daily, meds_ran_out, meds_forgot, meds_no_need, meds_side, meds_lost, meds_other)
+
+xlab <- c("Ran out", "Forgot", "Don't Need It", "Side Effects", "Got Lost / Stolen", "Other")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 6, 
+  ncols = 3, 
+  colnames = c("Reason", "Wasn't a Reason", "Was a Reason")
+)
+```
+
+Medication Charts
+-------------------------------------------------------------------------------
+```{r med_chart}
+# Take (Yes / No)
+# Would be much more informative if each were a single column on the same chart
+x <- select(daily, take_meds, medtype_dep, medtype_psy, medtype_ast, medtype_bp, medtype_diab, medtype_pain, medtype_chol, medtype_anti, medtype_other)
+
+xlab <- c("Take Medications", "Didn't Take Depression / Anxiety / Mood Medication", "Didn't Take Psychiatric Medication", "Didn't Take Asthma / COPD Medication", "Didn't Take Blood Pressure Medication", "Didn't Take Diabetes Medication", "Didn't Take Pain Medication", "Didn't Take Cholesterol Medication", "Didn't Take Antibiotic / Antiviral Medication", "Didn't Take Other Medication")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste(xlab[i], "Yesterday")) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+
+# Why not?
+# Would be much more informative if each were a single column on the same chart
+x <- select(daily, meds_ran_out, meds_forgot, meds_no_need, meds_side, meds_lost, meds_other)
+
+xlab <- c("Ran out", "Forgot", "Don't Need It", "Side Effects", "Got Lost / Stolen", "Other")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Didn't take because:", xlab[i])) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+```
+
+
+
+
+
 
 
 
@@ -451,11 +441,170 @@ Medication
 Freetime
 ===============================================================================
 
+Freetime Table {.tabset .tabset-fade}
+-------------------------------------------------------------------------------
+
+### How much free time did you have yesterday?
+
+```{r freetime_table_1}
+x <- select(daily, free_time)
+
+xlab <- c("Amount")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 1, 
+  ncols = 7, 
+  colnames = c("Free time", "2 or fewer hours", "More than 2 hours- 4 hours", 
+    "More than 4 hours- 6 hours", "More than 6 hours- 8 hours", "More than 8 hours- 10 hours", 
+    "More than 10 hours")
+)
+```
+
+### What did you do in your free time yesterday?
+
+```{r freetime_table_2}
+x <- select(daily, tv_free, games_free, movie_free, internet_free, book_free, music_free, craft_free, cleaned_free, pets_free, pray_free, sport_free, walk_free, cards_free, shop_free, volunteer_free, social_free, none_free)
+
+xlab <- c("Watched TV", "Played Computer Games", "Went to a Movie", "Surfed the Internet", "Read", "Listened to Music or Played Instrument", "Arts and Crafts", "Cleaned", "Took Care of Pets", "Prayed, Meditated, or Went to Religious Service", "Played a Sport", "Walk or Jog", "Played Cards, Dice, or Board Games", "Went Shopping", "Volunteered", "Socialized", "None of These")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 17, 
+  ncols = 3, 
+  colnames = c("Activity", "Didn't Do Yesterday", "Did Yesterday")
+)
+```
+
+Freetime Charts
+-------------------------------------------------------------------------------
+```{r freetime_chart}
+# How much
+x <- select(daily, free_time)
+
+xlab <- c("Amount")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle("Amount of Free Time Yesterday") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+  print(plot)
+  i <- i + 1
+}
+
+# What they did
+# Would be much more informative if each were a single column on the same chart
+x <- select(daily, tv_free, games_free, movie_free, internet_free, book_free, music_free, craft_free, cleaned_free, pets_free, pray_free, sport_free, walk_free, cards_free, shop_free, volunteer_free, social_free, none_free)
+
+xlab <- c("Watched TV", "Played Computer Games", "Went to a Movie", "Surfed the Internet", "Read", "Listened to Music or Played Instrument", "Arts and Crafts", "Cleaned", "Took Care of Pets", "Prayed, Meditated, or Went to Religious Service", "Played a Sport", "Walk or Jog", "Played Cards, Dice, or Board Games", "Went Shopping", "Volunteered", "Socialized", "None of These")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Did in Free Time Yesterday:", xlab[i])) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+```
+
+
+
+
+
+
 
 
 
 Interaction
 ===============================================================================
+
+Interaction Table {.tabset .tabset-fade}
+-------------------------------------------------------------------------------
+
+### Any meaningful interaction yesterday
+
+```{r interaction_table_1}
+x <- select(daily, any_talk, any_group)
+
+xlab <- c("One-On-One Conversations", "Group Interactions")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 2, 
+  ncols = 3, 
+  colnames = c("Type", "No", "Yes")
+)
+```
+
+### Amount of meaningful interaction yesterday
+
+```{r interaction_table_2}
+x <- select(daily, min_talk, min_group)
+
+xlab <- c("One-On-One Conversations", "Group Interactions")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 2, 
+  ncols = 8, 
+  colnames = c("Type", "15 or Fewer Minutes", "16-30 Minutes", "31 min- 1 Hour", 
+    "More than 1 Hour- 2 Hours", "More than 2 Hours- 3 Hours", "More than 3 Hours- 4 Hours", 
+    "More than 4 Hours")
+)
+```
+
+Interaction Charts
+-------------------------------------------------------------------------------
+```{r interaction_chart}
+# Any interaction
+x <- select(daily, any_talk, any_group)
+
+xlab <- c("One-On-One Conversations", "Group Interactions")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste(xlab[i], "Yesterday")) +
+    theme_bw()
+  print(plot)
+  i <- i + 1
+}
+  
+# Amount of interaction
+x <- select(daily, min_talk, min_group)
+
+xlab <- c("One-On-One Conversations", "Group Interactions")
+
+i <- 1
+for (var in x) {
+  plot <- ggplot(daily, aes_string(x = var)) +
+    geom_bar() +
+    scale_x_discrete("") +
+    ggtitle(paste("Amount of", xlab[i], "Yesterday")) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+  print(plot)
+  i <- i + 1
+}
+```
+
+
+
+
+
 
 
 
@@ -463,10 +612,29 @@ Interaction
 Substances
 ===============================================================================
 
-Substances Plot
+Substances Tables
 -------------------------------------------------------------------------------
 
-```{r plot_sub_yest}
+### Substances used yesterday
+
+```{r substance_table}
+x <- select(daily, alc_sub, heavy_drink, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub)
+
+xlab <- c("Alcohol", "5 or More Alcoholic Drinks", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs / Incense", "Another drug", "None")
+
+ea_kable(
+  x = x, 
+  xlab = xlab, 
+  nrows = 9, 
+  ncols = 3, 
+  colnames = c("Type", "No", "Yes")
+)
+```
+
+Substances Charts
+-------------------------------------------------------------------------------
+
+```{r substance_chart}
 x <- names(select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub))
 sub <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances")
 i <- 1
