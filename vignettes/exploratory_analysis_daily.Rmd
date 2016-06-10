@@ -15,6 +15,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(flexdashboard)
 library(dplyr)
 library(knitr)
+library(tidyr)
 library(ggplot2)
 
 # devtools::install_github("mbcann01/dataclean")
@@ -126,17 +127,26 @@ ea_kable(
 Location Charts
 -------------------------------------------------------------------------------
 
-```{r plot_location}
-i <- 1
-for (var in x) {
-  plot <- ggplot(daily, aes_string(x = var)) +
-    geom_bar() +
-    scale_x_discrete("") +
-    ggtitle(paste("Location at Time of Assessment:", loc[i])) +
-    theme_bw()
-  print(plot)
-  i <- i + 1
-}
+```{r plot_location, fig.width=12}
+# Summarize
+x <- data.frame(sapply(x, table))
+
+# Tidy data
+x <- gather(x)
+
+# Keep even numbered rows
+x <- x[c(FALSE, TRUE), ]
+
+# Improve readability
+x$key <- loc
+
+# Plot the data
+ggplot(x, aes(x = key, y = value)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete("") +
+  scale_y_continuous("Number of Responses") +
+  ggtitle("Location at Time of Assessment") +
+  theme_bw()
 ```
 
 
