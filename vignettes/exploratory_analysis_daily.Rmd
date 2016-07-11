@@ -9,7 +9,7 @@ output:
 
 ```{r setup, include=FALSE}
 # Setup options
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
 
 # CRAN packages
 library(flexdashboard)
@@ -31,7 +31,7 @@ load("/Users/bradcannell/Dropbox/Research/mChat/data/daily_april_2016.RData")
 daily <- dplyr::arrange(daily, case_number, date)
 ```
 
-Overview {.sidebar}
+Overview {.sidebar data-width=300}
 ===============================================================================
 
 Here we plot the aggregate unconditional distribution of responses for each of the following variables:
@@ -53,6 +53,27 @@ Here we plot the aggregate unconditional distribution of responses for each of t
 8. Meaningful Interaction yesterday
 
 9. Substance use yesterday
+
+```{r overview}
+obs          <- nrow(daily)
+vars         <- ncol(daily)
+subj         <- length(base::unique(daily$case_number))
+n_per_subj   <- count(daily, case_number)
+avg_per_subj <- round(mean(n_per_subj$n), 0)
+max_n_subj   <- max(n_per_subj$n)
+min_n_subj   <- min(n_per_subj$n)
+  
+
+cat(paste("The dataset contains: \n", 
+  obs, "Observations \n",
+  vars, "Variables \n",
+  subj, "Unique participants \n",
+  "With an average of", avg_per_subj, "\n", "observations each \n",
+  "Max =", max_n_subj, "observations \n",
+  "Min =", min_n_subj, "observation(s)")
+)
+```
+
 
 
 
