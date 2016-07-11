@@ -23,3 +23,5 @@ Vignettes
 [Individual substance trajectories - daily](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/lagged_mood_daily.html)
 
 [Plot - Cicumplex Model of Affect](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/plot_circumplex_model_of_affect.html)
+
+[Association Rules Analysis](https://rawgit.com/mbcann01/mChatEMA/master/vignettes/association_rules_daily.html)
