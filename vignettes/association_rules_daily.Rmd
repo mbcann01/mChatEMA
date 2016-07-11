@@ -1,0 +1,142 @@
+---
+title: "Association Rules Analysis - Daily"
+author: "Brad Cannell"
+date: "July 11, 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
+
+# Set working directory
+knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
+```
+
+Useful websites:
+[Intro to arules]("https://cran.r-project.org/web/packages/arules/vignettes/arules.pdf")
+[arules functions]("https://cran.r-project.org/web/packages/arules/arules.pdf")
+
+-------------------------------------------------------------------------------
+
+**Load packages**
+```{r message=FALSE,}
+# CRAN packages
+library(dplyr)
+library(purrr)
+library(arules)
+
+# devtools::install_github("mbcann01/dataclean")
+library(dataclean)
+```
+
+**Load data**  
+```{r}
+load("data/daily_april_2016.RData")
+
+# Sort by case number and date
+daily <- dplyr::arrange(daily, case_number, date)
+about_data(daily)
+```
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+## Introduction
+
+> Market basket analysis is used behind the scenes for the recommendation systems used in many brick-and-mortar and online retailers. The learned association rules indicate combinations of items that are often purchased together in a set. The acquired knowledge might provide insight into new ways for a grocery chain to optimize the inventory, advertise promotions, or organize the physical layout of the store. For instance, if shoppers frequently purchase coffee or orange juice with a breakfast pastry, then it may be possible to increase profit by relocating pastries closer to the coffee and juice...    
+However, the techniques could be applied to many different types of problems, from movie recommendations, to dating sites, to finding dangerous interactions among medications. In doing so, we will see how the Apriori algorithm is able to efficiently evaluate a potentially massive set of association rules.   
+    - Lantz, Brett (2013-10-25). Machine Learning with R (pp. 249-250). Packt Publishing. Kindle Edition. 
+    
+We are interested in understanding which behaviors, if any, tend to occur together. In order to explore patterns of co-occurrence we use association rules analysis (Lantz, 2013; Miner, Nisbet, & Elder IV, 2009).
+
+Candidate behaviors for inclusion in the analysis include:
+
+1. Physical activity
+
+2. Diet
+
+3. Medication use
+
+4. Free-time activities
+
+5. Meaningful interactions
+
+6. Substance use
+
+In addition to behaviors, we may also explore the co-occurrence of mood states.
+
+**References:**
+
+Lantz, B. (2013). Machine learning with R. Packt Publishing Ltd.   
+Miner, G., Nisbet, R., & Elder IV, J. (2009). Handbook of statistical analysis and data mining applications. Academic Press.
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+# Create Sparse Matrix
+
+```{r create_sparse_matrix}
+# Dichotomize (0/1) all variables of interest in order to coerce the data into
+# a sparse matrix - a requirement of the arules package.
+dichotomize <- function(x) {
+  length = length(levels(x))
+  if (length == 5) {
+    ifelse(x %in% c("Strongly agree", "Agree"), 1, 0)
+  } else if (length == 2) {
+    ifelse(x == "Yes", 1, 0)
+  }
+}
+### Note: Assumes that all variables with 5 levels have "Strongly agree, Agree, Neutral, Disagree, and Stongly disagree" and all variables with 2 variables are "Yes/No." Always double-check this assumption.
+
+daily_matrix <- daily %>%
+  
+  # Keep vars of interest
+  select(happy:sluggish, other_act:talk_act, pre_who:none_yest, any_fruit, any_veg, any_ssb, any_sweets, any_meat, take_meds:meds_other, none_free:social_free, any_talk, any_group, alc_sub:none_sub, op_heroin:op_other) %>%
+  
+  # Apply anonymous function to dichotomize each remaining var using map
+  map(dichotomize) %>%
+  
+  # Coerce list into a matrix
+  do.call(cbind, .)
+
+# Coerce matix to be of class transactions
+daily_trans <- as(daily_matrix, "transactions")
+```
+
+
+# Association Rules Analysis
+
+```{r ar_analysis_1}
+summary(daily_trans)
+inspect(daily_trans[1:10])
+itemFrequencyPlot(daily_trans, support = 0.1)
+rules <- apriori(daily_trans, parameter = list(support = 0.01, confidence = 0.6))
+summary(rules)
+inspect(head(rules, n = 20, by = "support"))
+```
+
+# Save the rules
+
+```{r save_rules}
+# write(rules, file = "data/arules.csv", sep = ",")
+```
+
+
+
+&nbsp;
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+#### Session Info:
+```{r echo=FALSE}
+sessionInfo()
+```
