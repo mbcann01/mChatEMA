@@ -460,7 +460,7 @@ about_data(daily)
   )
 
 # Data check
-# View(test[c(&quot;min_group1&quot;, &quot;any_group&quot;)])</code></pre>
+# View(daily[c(&quot;min_group1&quot;, &quot;any_group&quot;)])</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -860,6 +860,110 @@ rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
     start_time,
     completed
   )</code></pre>
+</div>
+<div id="update-2016-07-12" class="section level2">
+<h2>Update 2016-07-12</h2>
+<p>rearranged variable names to <em>var group</em>_<em>question</em> format</p>
+<pre class="r"><code>suff_to_pre &lt;- function(x, suffix, prefix) {
+  for (i in seq_along(names(x))) {
+    if (grepl(suffix, names(x)[[i]])) {
+      names(x)[[i]] &lt;- sub(suffix, &quot;&quot;, names(x)[[i]])
+      names(x)[[i]] &lt;- paste0(prefix, names(x)[[i]])
+    }
+  }
+  names(x)
+}
+names(daily)
+#&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
+#&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
+#&gt;   [7] &quot;worried&quot;         &quot;restless&quot;        &quot;excited&quot;        
+#&gt;  [10] &quot;calm&quot;            &quot;lonely&quot;          &quot;bored&quot;          
+#&gt;  [13] &quot;sluggish&quot;        &quot;bus_loc&quot;         &quot;church_loc&quot;     
+#&gt;  [16] &quot;home_loc&quot;        &quot;frifam_loc&quot;      &quot;store_loc&quot;      
+#&gt;  [19] &quot;outdoors_loc&quot;    &quot;other_loc&quot;       &quot;restaurant_loc&quot; 
+#&gt;  [22] &quot;school_loc&quot;      &quot;work_loc&quot;        &quot;other_act&quot;      
+#&gt;  [25] &quot;sit_act&quot;         &quot;sleep_act&quot;       &quot;stand_act&quot;      
+#&gt;  [28] &quot;walk_act&quot;        &quot;talk_act&quot;        &quot;pre_who&quot;        
+#&gt;  [31] &quot;bike_yest&quot;       &quot;run_yest&quot;        &quot;cleaning_yest&quot;  
+#&gt;  [34] &quot;none_yest&quot;       &quot;min_walk&quot;        &quot;min_walk_c&quot;     
+#&gt;  [37] &quot;min_run&quot;         &quot;min_run_c&quot;       &quot;min_act&quot;        
+#&gt;  [40] &quot;min_act_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
+#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;phys_act_sat&quot;   
+#&gt;  [46] &quot;serv_fruit&quot;      &quot;any_fruit&quot;       &quot;serv_veg&quot;       
+#&gt;  [49] &quot;any_veg&quot;         &quot;serv_ssb&quot;        &quot;any_ssb&quot;        
+#&gt;  [52] &quot;serv_sweets&quot;     &quot;any_sweets&quot;      &quot;serv_meat&quot;      
+#&gt;  [55] &quot;any_meat&quot;        &quot;food_sat&quot;        &quot;take_meds&quot;      
+#&gt;  [58] &quot;medtype_dep&quot;     &quot;medtype_psy&quot;     &quot;medtype_ast&quot;    
+#&gt;  [61] &quot;medtype_bp&quot;      &quot;medtype_diab&quot;    &quot;medtype_pain&quot;   
+#&gt;  [64] &quot;medtype_chol&quot;    &quot;medtype_anti&quot;    &quot;medtype_other&quot;  
+#&gt;  [67] &quot;meds_ran_out&quot;    &quot;meds_forgot&quot;     &quot;meds_no_need&quot;   
+#&gt;  [70] &quot;meds_side&quot;       &quot;meds_lost&quot;       &quot;meds_other&quot;     
+#&gt;  [73] &quot;free_time&quot;       &quot;none_free&quot;       &quot;tv_free&quot;        
+#&gt;  [76] &quot;games_free&quot;      &quot;movie_free&quot;      &quot;internet_free&quot;  
+#&gt;  [79] &quot;book_free&quot;       &quot;music_free&quot;      &quot;craft_free&quot;     
+#&gt;  [82] &quot;cleaned_free&quot;    &quot;pets_free&quot;       &quot;pray_free&quot;      
+#&gt;  [85] &quot;sport_free&quot;      &quot;walk_free&quot;       &quot;cards_free&quot;     
+#&gt;  [88] &quot;shop_free&quot;       &quot;volunteer_free&quot;  &quot;social_free&quot;    
+#&gt;  [91] &quot;free_time_sat&quot;   &quot;min_talk&quot;        &quot;any_talk&quot;       
+#&gt;  [94] &quot;min_group&quot;       &quot;any_group&quot;       &quot;interaction_sat&quot;
+#&gt;  [97] &quot;alc_sub&quot;         &quot;cig_sub&quot;         &quot;mar_sub&quot;        
+#&gt; [100] &quot;opi_sub&quot;         &quot;stim_sub&quot;        &quot;herb_sub&quot;       
+#&gt; [103] &quot;other_sub&quot;       &quot;none_sub&quot;        &quot;num_drinks&quot;     
+#&gt; [106] &quot;heavy_drink&quot;     &quot;subs_time&quot;       &quot;first_drink&quot;    
+#&gt; [109] &quot;last_drink&quot;      &quot;num_cigs&quot;        &quot;first_cig&quot;      
+#&gt; [112] &quot;last_cig&quot;        &quot;op_heroin&quot;       &quot;op_methadone&quot;   
+#&gt; [115] &quot;op_pills&quot;        &quot;op_other&quot;        &quot;num_opiate&quot;     
+#&gt; [118] &quot;stim&quot;            &quot;num_coc&quot;         &quot;num_stim&quot;       
+#&gt; [121] &quot;alert_time&quot;      &quot;alert_action&quot;    &quot;start_time&quot;     
+#&gt; [124] &quot;completed&quot;
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_loc&quot;, prefix = &quot;loc_&quot;)
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_act&quot;, prefix = &quot;act_&quot;)
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_yest&quot;, prefix = &quot;yest_&quot;)
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_free&quot;, prefix = &quot;free_&quot;)
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_sub&quot;, prefix = &quot;sub_&quot;)
+names(daily)
+#&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
+#&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
+#&gt;   [7] &quot;worried&quot;         &quot;restless&quot;        &quot;excited&quot;        
+#&gt;  [10] &quot;calm&quot;            &quot;lonely&quot;          &quot;bored&quot;          
+#&gt;  [13] &quot;sluggish&quot;        &quot;loc_bus&quot;         &quot;loc_church&quot;     
+#&gt;  [16] &quot;loc_home&quot;        &quot;loc_frifam&quot;      &quot;loc_store&quot;      
+#&gt;  [19] &quot;loc_outdoors&quot;    &quot;loc_other&quot;       &quot;loc_restaurant&quot; 
+#&gt;  [22] &quot;loc_school&quot;      &quot;loc_work&quot;        &quot;act_other&quot;      
+#&gt;  [25] &quot;act_sit&quot;         &quot;act_sleep&quot;       &quot;act_stand&quot;      
+#&gt;  [28] &quot;act_walk&quot;        &quot;act_talk&quot;        &quot;pre_who&quot;        
+#&gt;  [31] &quot;yest_bike&quot;       &quot;yest_run&quot;        &quot;yest_cleaning&quot;  
+#&gt;  [34] &quot;yest_none&quot;       &quot;min_walk&quot;        &quot;min_walk_c&quot;     
+#&gt;  [37] &quot;min_run&quot;         &quot;min_run_c&quot;       &quot;act_min&quot;        
+#&gt;  [40] &quot;act_min_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
+#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;act_phys_sat&quot;   
+#&gt;  [46] &quot;serv_fruit&quot;      &quot;any_fruit&quot;       &quot;serv_veg&quot;       
+#&gt;  [49] &quot;any_veg&quot;         &quot;serv_ssb&quot;        &quot;any_ssb&quot;        
+#&gt;  [52] &quot;serv_sweets&quot;     &quot;any_sweets&quot;      &quot;serv_meat&quot;      
+#&gt;  [55] &quot;any_meat&quot;        &quot;food_sat&quot;        &quot;take_meds&quot;      
+#&gt;  [58] &quot;medtype_dep&quot;     &quot;medtype_psy&quot;     &quot;medtype_ast&quot;    
+#&gt;  [61] &quot;medtype_bp&quot;      &quot;medtype_diab&quot;    &quot;medtype_pain&quot;   
+#&gt;  [64] &quot;medtype_chol&quot;    &quot;medtype_anti&quot;    &quot;medtype_other&quot;  
+#&gt;  [67] &quot;meds_ran_out&quot;    &quot;meds_forgot&quot;     &quot;meds_no_need&quot;   
+#&gt;  [70] &quot;meds_side&quot;       &quot;meds_lost&quot;       &quot;meds_other&quot;     
+#&gt;  [73] &quot;free_time&quot;       &quot;free_none&quot;       &quot;free_tv&quot;        
+#&gt;  [76] &quot;free_games&quot;      &quot;free_movie&quot;      &quot;free_internet&quot;  
+#&gt;  [79] &quot;free_book&quot;       &quot;free_music&quot;      &quot;free_craft&quot;     
+#&gt;  [82] &quot;free_cleaned&quot;    &quot;free_pets&quot;       &quot;free_pray&quot;      
+#&gt;  [85] &quot;free_sport&quot;      &quot;free_walk&quot;       &quot;free_cards&quot;     
+#&gt;  [88] &quot;free_shop&quot;       &quot;free_volunteer&quot;  &quot;free_social&quot;    
+#&gt;  [91] &quot;free_time_sat&quot;   &quot;min_talk&quot;        &quot;any_talk&quot;       
+#&gt;  [94] &quot;min_group&quot;       &quot;any_group&quot;       &quot;interaction_sat&quot;
+#&gt;  [97] &quot;sub_alc&quot;         &quot;sub_cig&quot;         &quot;sub_mar&quot;        
+#&gt; [100] &quot;sub_opi&quot;         &quot;sub_stim&quot;        &quot;sub_herb&quot;       
+#&gt; [103] &quot;sub_other&quot;       &quot;sub_none&quot;        &quot;num_drinks&quot;     
+#&gt; [106] &quot;heavy_drink&quot;     &quot;subs_time&quot;       &quot;first_drink&quot;    
+#&gt; [109] &quot;last_drink&quot;      &quot;num_cigs&quot;        &quot;first_cig&quot;      
+#&gt; [112] &quot;last_cig&quot;        &quot;op_heroin&quot;       &quot;op_methadone&quot;   
+#&gt; [115] &quot;op_pills&quot;        &quot;op_other&quot;        &quot;num_opiate&quot;     
+#&gt; [118] &quot;stim&quot;            &quot;num_coc&quot;         &quot;num_stim&quot;       
+#&gt; [121] &quot;alert_time&quot;      &quot;act_alertion&quot;    &quot;start_time&quot;     
+#&gt; [124] &quot;completed&quot;</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -875,6 +979,7 @@ rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <li><p>Create a dummy variable (date_match) that is equal to 1 when date_yest and date_lag are equal.</p></li>
 <li><p>When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.</p></li>
 </ul></li>
+<li><p>The same idea applies to location at time of response and activity at time of response.</p></li>
 </ul>
 <pre class="r"><code># Sort by case_number and date
 daily &lt;- dplyr::arrange(daily, case_number, date)
@@ -885,36 +990,32 @@ daily &lt;- daily %&gt;%
   mutate(
     date_yest = as.Date(as.character(date - 1)),
     date_lag  = as.Date(as.character(lag(date)))
-  )
-
-# Create date match variable
-daily &lt;- daily %&gt;% 
-  ungroup %&gt;%
-  mutate(
-    date_match = ifelse(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
-  )
-
-# Create lagged emotion variables
-daily &lt;- daily %&gt;%
-  group_by(case_number) %&gt;%
-  mutate(
-    happy_lag      = lag(happy),
-    frustrated_lag = lag(frustrated),
-    sad_lag        = lag(sad),
-    worried_lag    = lag(worried),
-    restless_lag   = lag(restless),
-    excited_lag    = lag(excited),
-    calm_lag       = lag(calm),
-    lonely_lag     = lag(lonely),
-    bored_lag      = lag(bored),
-    sluggish_lag   = lag(sluggish)
   ) %&gt;%
   ungroup
 
+# Create date match variable
+daily &lt;- daily %&gt;% 
+  mutate(
+    date_match = if_else(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
+  )
+
+# Create lagged mood, location, activity, interacting variables
+daily &lt;- daily %&gt;%
+  group_by(case_number) %&gt;%
+  mutate_at(
+    vars(happy:pre_who),
+    funs(&quot;lag&quot; = lag)) %&gt;%
+  ungroup
+
+# Move lag suffix to prefix
+names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_lag&quot;, prefix = &quot;lag_&quot;)
+
 # Data checking:
+# View(select(daily, ends_with(&quot;_lag&quot;)))
+
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;happy_lag&quot;, &quot;alc_sub&quot;)])
 
-# View(test[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;happy_lag&quot;, &quot;bike_yest&quot;, &quot;min_walk_c&quot;)])</code></pre>
+# View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;date_lag&quot;, &quot;date_match&quot;, &quot;happy&quot;, &quot;happy_lag&quot;, &quot;bike_yest&quot;, &quot;min_walk_c&quot;)])</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -1019,26 +1120,26 @@ quad4y &lt;- function(x) {
 # Create x and y coordinates for each row
 daily &lt;- daily %&gt;%
   mutate(
-    x_happy      = ifelse(date_match == 1, happy_axis(happy_lag), NA),
+    x_happy      = ifelse(date_match == 1, happy_axis(lag_happy), NA),
     y_happy      = 0,
-    x_frustrated = ifelse(date_match == 1, quad2x(frustrated_lag), NA),
-    y_frustrated = ifelse(date_match == 1, quad2y(frustrated_lag), NA),
-    x_sad        = ifelse(date_match == 1, sad_axis(sad_lag), NA),
+    x_frustrated = ifelse(date_match == 1, quad2x(lag_frustrated), NA),
+    y_frustrated = ifelse(date_match == 1, quad2y(lag_frustrated), NA),
+    x_sad        = ifelse(date_match == 1, sad_axis(lag_sad), NA),
     y_sad        = 0,
-    x_worried    = ifelse(date_match == 1, quad2x(worried_lag), NA),
-    y_worried    = ifelse(date_match == 1, quad2y(worried_lag), NA),
-    x_restless   = ifelse(date_match == 1, quad2x(restless_lag), NA),
-    y_restless   = ifelse(date_match == 1, quad2y(restless_lag), NA),
-    x_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    y_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    x_calm       = ifelse(date_match == 1, quad4x(calm_lag), NA),
-    y_calm       = ifelse(date_match == 1, quad4y(calm_lag), NA),
-    x_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    y_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    x_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    y_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    x_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA),
-    y_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA)
+    x_worried    = ifelse(date_match == 1, quad2x(lag_worried), NA),
+    y_worried    = ifelse(date_match == 1, quad2y(lag_worried), NA),
+    x_restless   = ifelse(date_match == 1, quad2x(lag_restless), NA),
+    y_restless   = ifelse(date_match == 1, quad2y(lag_restless), NA),
+    x_excited    = ifelse(date_match == 1, quad1(lag_excited), NA),
+    y_excited    = ifelse(date_match == 1, quad1(lag_excited), NA),
+    x_calm       = ifelse(date_match == 1, quad4x(lag_calm), NA),
+    y_calm       = ifelse(date_match == 1, quad4y(lag_calm), NA),
+    x_lonely     = ifelse(date_match == 1, quad3(lag_lonely), NA),
+    y_lonely     = ifelse(date_match == 1, quad3(lag_lonely), NA),
+    x_bored      = ifelse(date_match == 1, quad3(lag_bored), NA),
+    y_bored      = ifelse(date_match == 1, quad3(lag_bored), NA),
+    x_sluggish   = ifelse(date_match == 1, quad3(lag_sluggish), NA),
+    y_sluggish   = ifelse(date_match == 1, quad3(lag_sluggish), NA)
   )
 
 # Aggregate across all X values
@@ -1057,7 +1158,7 @@ daily &lt;- daily %&gt;%
 <div id="save-as-rdata" class="section level2">
 <h2>Save as RData</h2>
 <pre class="r"><code>about_data(daily)
-#&gt; 1390 observations and 159 variables in the data
+#&gt; 1390 observations and 176 variables in the data
 save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 <p><strong>Save a .csv</strong></p>
 <pre class="r"><code>write_csv(daily, path = &quot;data/daily_april_2016.csv&quot;)</code></pre>
@@ -1067,9 +1168,9 @@ save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 <p> </p>
 <div id="session-info" class="section level4">
 <h4>Session Info:</h4>
-<pre><code>#&gt; R version 3.3.0 (2016-05-03)
+<pre><code>#&gt; R version 3.3.1 (2016-06-21)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
-#&gt; Running under: OS X 10.11.4 (El Capitan)
+#&gt; Running under: OS X 10.11.5 (El Capitan)
 #&gt; 
 #&gt; locale:
 #&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1078,14 +1179,14 @@ save(daily, file = &quot;data/daily_april_2016.RData&quot;)</code></pre>
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] dataclean_0.1.0 readr_0.2.2     stringr_1.0.0   dplyr_0.4.3    
+#&gt; [1] dataclean_0.1.0 readr_0.2.2     stringr_1.0.0   dplyr_0.5.0    
 #&gt; [5] readxl_0.1.1   
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_0.12.5     digest_0.6.9    assertthat_0.1  R6_2.1.2       
-#&gt;  [5] DBI_0.4-1       formatR_1.4     magrittr_1.5    evaluate_0.9   
-#&gt;  [9] stringi_1.0-1   lazyeval_0.1.10 rmarkdown_0.9.6 tools_3.3.0    
-#&gt; [13] yaml_2.1.13     parallel_3.3.0  htmltools_0.3.5 knitr_1.13</code></pre>
+#&gt;  [1] Rcpp_0.12.4     digest_0.6.9    assertthat_0.1  R6_2.1.2       
+#&gt;  [5] DBI_0.4-1       formatR_1.3     magrittr_1.5    evaluate_0.9   
+#&gt;  [9] stringi_1.0-1   lazyeval_0.2.0  rmarkdown_0.9.6 tools_3.3.1    
+#&gt; [13] yaml_2.1.13     htmltools_0.3.5 knitr_1.13      tibble_1.1</code></pre>
 </div>
 </div>
 

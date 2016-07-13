@@ -254,7 +254,7 @@ daily <- daily %>%
   )
 
 # Data check
-# View(test[c("min_group1", "any_group")])
+# View(daily[c("min_group1", "any_group")])
 ```
 
 
@@ -676,6 +676,28 @@ daily <- daily %>%
   )
 ```
 
+## Update 2016-07-12 
+
+rearranged variable names to _var group_\__question_ format
+
+```{r rename_vars}
+suff_to_pre <- function(x, suffix, prefix) {
+  for (i in seq_along(names(x))) {
+    if (grepl(suffix, names(x)[[i]])) {
+      names(x)[[i]] <- sub(suffix, "", names(x)[[i]])
+      names(x)[[i]] <- paste0(prefix, names(x)[[i]])
+    }
+  }
+  names(x)
+}
+names(daily)
+names(daily) <- suff_to_pre(daily, suffix = "_loc", prefix = "loc_")
+names(daily) <- suff_to_pre(daily, suffix = "_act", prefix = "act_")
+names(daily) <- suff_to_pre(daily, suffix = "_yest", prefix = "yest_")
+names(daily) <- suff_to_pre(daily, suffix = "_free", prefix = "free_")
+names(daily) <- suff_to_pre(daily, suffix = "_sub", prefix = "sub_")
+names(daily)
+```
 
 -------------------------------------------------------------------------------   
 
@@ -693,11 +715,13 @@ daily <- daily %>%
     
     + Create a variable (date_lag) that is equal to the date value for the preceding row, within person.
     
-    + Create a dummy variable (date_match) that is equal to 1 when date_yest and date_lag are equal.
+    + Create a dummy variable (date\_match) that is equal to 1 when date\_yest and date_lag are equal.
     
     + When date_match equals 1, then the lagged emotion value will be the emotion reported on the day that activity / substance use was reported. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (April 1) on April 2. The lagged value of for happiness (April 1) in the April 2nd row and the value for substance use yesterday (April 1) in the April 2nd row, gives us the combination of emotion and outcome we are interested in.
     
-```{r lagged_time}
+* The same idea applies to location at time of response and activity at time of response.
+    
+```{r lagged_vars}
 # Sort by case_number and date
 daily <- dplyr::arrange(daily, case_number, date)
 
@@ -707,36 +731,32 @@ daily <- daily %>%
   mutate(
     date_yest = as.Date(as.character(date - 1)),
     date_lag  = as.Date(as.character(lag(date)))
-  )
-
-# Create date match variable
-daily <- daily %>% 
-  ungroup %>%
-  mutate(
-    date_match = ifelse(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
-  )
-
-# Create lagged emotion variables
-daily <- daily %>%
-  group_by(case_number) %>%
-  mutate(
-    happy_lag      = lag(happy),
-    frustrated_lag = lag(frustrated),
-    sad_lag        = lag(sad),
-    worried_lag    = lag(worried),
-    restless_lag   = lag(restless),
-    excited_lag    = lag(excited),
-    calm_lag       = lag(calm),
-    lonely_lag     = lag(lonely),
-    bored_lag      = lag(bored),
-    sluggish_lag   = lag(sluggish)
   ) %>%
   ungroup
 
+# Create date match variable
+daily <- daily %>% 
+  mutate(
+    date_match = if_else(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
+  )
+
+# Create lagged mood, location, activity, interacting variables
+daily <- daily %>%
+  group_by(case_number) %>%
+  mutate_at(
+    vars(happy:pre_who),
+    funs("lag" = lag)) %>%
+  ungroup
+
+# Move lag suffix to prefix
+names(daily) <- suff_to_pre(daily, suffix = "_lag", prefix = "lag_")
+
 # Data checking:
+# View(select(daily, ends_with("_lag")))
+
 # View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "alc_sub")])
 
-# View(test[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "bike_yest", "min_walk_c")])
+# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "bike_yest", "min_walk_c")])
 ```
 
 -------------------------------------------------------------------------------   
@@ -845,26 +865,26 @@ quad4y <- function(x) {
 # Create x and y coordinates for each row
 daily <- daily %>%
   mutate(
-    x_happy      = ifelse(date_match == 1, happy_axis(happy_lag), NA),
+    x_happy      = ifelse(date_match == 1, happy_axis(lag_happy), NA),
     y_happy      = 0,
-    x_frustrated = ifelse(date_match == 1, quad2x(frustrated_lag), NA),
-    y_frustrated = ifelse(date_match == 1, quad2y(frustrated_lag), NA),
-    x_sad        = ifelse(date_match == 1, sad_axis(sad_lag), NA),
+    x_frustrated = ifelse(date_match == 1, quad2x(lag_frustrated), NA),
+    y_frustrated = ifelse(date_match == 1, quad2y(lag_frustrated), NA),
+    x_sad        = ifelse(date_match == 1, sad_axis(lag_sad), NA),
     y_sad        = 0,
-    x_worried    = ifelse(date_match == 1, quad2x(worried_lag), NA),
-    y_worried    = ifelse(date_match == 1, quad2y(worried_lag), NA),
-    x_restless   = ifelse(date_match == 1, quad2x(restless_lag), NA),
-    y_restless   = ifelse(date_match == 1, quad2y(restless_lag), NA),
-    x_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    y_excited    = ifelse(date_match == 1, quad1(excited_lag), NA),
-    x_calm       = ifelse(date_match == 1, quad4x(calm_lag), NA),
-    y_calm       = ifelse(date_match == 1, quad4y(calm_lag), NA),
-    x_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    y_lonely     = ifelse(date_match == 1, quad3(lonely_lag), NA),
-    x_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    y_bored      = ifelse(date_match == 1, quad3(bored_lag), NA),
-    x_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA),
-    y_sluggish   = ifelse(date_match == 1, quad3(sluggish_lag), NA)
+    x_worried    = ifelse(date_match == 1, quad2x(lag_worried), NA),
+    y_worried    = ifelse(date_match == 1, quad2y(lag_worried), NA),
+    x_restless   = ifelse(date_match == 1, quad2x(lag_restless), NA),
+    y_restless   = ifelse(date_match == 1, quad2y(lag_restless), NA),
+    x_excited    = ifelse(date_match == 1, quad1(lag_excited), NA),
+    y_excited    = ifelse(date_match == 1, quad1(lag_excited), NA),
+    x_calm       = ifelse(date_match == 1, quad4x(lag_calm), NA),
+    y_calm       = ifelse(date_match == 1, quad4y(lag_calm), NA),
+    x_lonely     = ifelse(date_match == 1, quad3(lag_lonely), NA),
+    y_lonely     = ifelse(date_match == 1, quad3(lag_lonely), NA),
+    x_bored      = ifelse(date_match == 1, quad3(lag_bored), NA),
+    y_bored      = ifelse(date_match == 1, quad3(lag_bored), NA),
+    x_sluggish   = ifelse(date_match == 1, quad3(lag_sluggish), NA),
+    y_sluggish   = ifelse(date_match == 1, quad3(lag_sluggish), NA)
   )
 
 # Aggregate across all X values
@@ -878,6 +898,7 @@ daily <- daily %>%
 # Data check:
 # View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "alc_sub", "happy", "happy_lag", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 ```
+
 
 -------------------------------------------------------------------------------
 
