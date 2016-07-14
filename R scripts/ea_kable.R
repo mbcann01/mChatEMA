@@ -48,7 +48,7 @@ ea_kable <- function(x, xlab, nrows, ncols, colnames) {
     resp <- as.vector(resp_table)
     perc <- round(table(var) / sum(table(var)) * 100)
     perc <- as.vector(perc)
-    out <- paste0(resp, " (", perc, ")")
+    out <- paste0(resp, " (", perc, "%", ")")
     m[i, ] <- out
     i <- i + 1
   }
