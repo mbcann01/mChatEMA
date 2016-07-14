@@ -131,7 +131,7 @@ Source: [BIOPAC Systems, Inc.](http://blog.biopac.com/circumplex-model-affect-mo
 ## Composite emotion score and activity at assessement
 
 ```{r plot_comp_aaa}
-acts <- select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who)
+acts <- select(daily, act_other, act_sit, act_sleep, act_stand, act_walk, act_talk, pre_who)
 act_name <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
 i <- 1
 for (act in acts) {
@@ -158,7 +158,7 @@ for (act in acts) {
 
 ```{r plot_comp_physact}
 # Dichotomous variables
-acts <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest)
+acts <- select(daily, yest_bike, yest_run, yest_cleaning, yest_none)
 act_name <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These")
 i <- 1
 for (act in acts) {
@@ -176,7 +176,7 @@ for (act in acts) {
 
 # Ordinal variables
 blues <- brewer.pal(6, "Blues")
-acts <- select(daily, min_walk, min_run, min_act, min_sit)
+acts <- select(daily, min_walk, min_run, act_min, min_sit)
 act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
 i <- 1
 for (act in acts) {
@@ -202,7 +202,7 @@ for (act in acts) {
 ## Composite emotion score and substance use
 
 ```{r plot_comp_sub}
-subs <- select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub, heavy_drink)
+subs <- select(daily, sub_alc, sub_cig, sub_mar, sub_opi, sub_stim, sub_herb, sub_other, sub_none, heavy_drink)
 sub_name <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances", "Alcohol (5+ Drinks)")
 i <- 1
 for (sub in subs) {
@@ -224,7 +224,7 @@ for (sub in subs) {
 NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
 
 ```{r plot_emotions_aaa}
-acts <- select(daily, other_act, sit_act, sleep_act, stand_act, walk_act, talk_act, pre_who)
+acts <- select(daily, act_other, act_sit, act_sleep, act_stand, act_walk, act_talk, pre_who)
 act_name <- c("Other", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Interacting With Someone")
 x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
 y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
@@ -258,7 +258,7 @@ NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
 
 ```{r plot_emotions_physact}
 # Dichotomous variables
-acts <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest)
+acts <- select(daily, yest_bike, yest_run, yest_cleaning, yest_none)
 act_name <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These")
 x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
 y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
@@ -282,7 +282,7 @@ for (act in acts) {                           # Substances
 
 # Ordinal variables
 blues <- brewer.pal(6, "Blues")
-acts <- select(daily, min_walk, min_run, min_act, min_sit)
+acts <- select(daily, min_walk, min_run, act_min, min_sit)
 act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
 x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
 y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
@@ -317,7 +317,7 @@ NOTE: Distance above and below the x-axis is meaningless for Happy and Sad.
 
 ```{r plot_emotions_sub}
 # For each emotion
-subs <- select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub, heavy_drink)
+subs <- select(daily, sub_alc, sub_cig, sub_mar, sub_opi, sub_stim, sub_herb, sub_other, sub_none, heavy_drink)
 sub_name <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances", "Alcohol (5+ Drinks)")
 x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
 y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
