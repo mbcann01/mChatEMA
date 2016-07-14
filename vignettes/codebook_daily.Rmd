@@ -5,7 +5,7 @@ output: html_document
 ---
 
 ```{r setup, echo = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
 
 # Set working directory
 knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
@@ -170,6 +170,23 @@ lab <- c(
   "Value for lonely in previous observation (within person) - use with date_match == 1 for lagged analysis",
   "Value for bored in previous observation (within person) - use with date_match == 1 for lagged analysis",
   "Value for sluggish in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_bus in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_church in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_home in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_frifam in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_store in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_outdoors in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_other in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_restaurant in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_school in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for loc_work in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_other in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_sit in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_sleep in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_stand in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_walk in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for act_talk in previous observation (within person) - use with date_match == 1 for lagged analysis",
+  "Value for pre_who in previous observation (within person) - use with date_match == 1 for lagged analysis",
   "Happy X value for CMOA plot",
   "Happy Y value for CMOA plot",
   "Frustrated X value for CMOA plot",
