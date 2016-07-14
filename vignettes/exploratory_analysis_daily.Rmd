@@ -70,7 +70,7 @@ cat(paste("The dataset contains: \n",
   subj, "Unique participants \n",
   "With an average of", avg_per_subj, "\n", "observations each \n",
   "Max =", max_n_subj, "observations \n",
-  "Min =", min_n_subj, "observation(s)")
+  "Min =", min_n_subj, "observation")
 )
 ```
 
@@ -87,7 +87,7 @@ Feelings Table
 ### Feelings at time of assessment
 
 ```{r feeling_table}
-feelings <- select(daily, happy, frustrated, sad, worried, restless, excited, calm, lonely, bored, sluggish)
+feelings <- select(daily, happy:sluggish)
 
 vars <- tools::toTitleCase(names(feelings))
 
@@ -132,7 +132,7 @@ Location Table
 ### Location at time of assessment
 
 ```{r location_table}
-x <- select(daily, bus_loc, church_loc, home_loc, frifam_loc, store_loc, outdoors_loc, other_loc, restaurant_loc, school_loc, work_loc)
+x <- select(daily, loc_bus:loc_work)
 
 loc <- c("Bus, Train, or Vehicle", "Church", "Home", "Friend's or Relative's House", "Store / Mall", "Outdoors", "Other", "Restaurant", "School / Library", "Work")
 
@@ -187,9 +187,9 @@ Activity Table
 ### Activity at time of assessment
 
 ```{r activity_table}
-x <- select(daily, pre_who, sit_act, sleep_act, stand_act, talk_act, walk_act, other_act)
+x <- select(daily, pre_who, act_sit:act_talk, act_other)
 
-act <- c("Interacting With Someone", "Sitting", "Sleeping", "Standing", "Talking", "Walking / Excercising", "Other")
+act <- c("Interacting With Someone", "Sitting", "Sleeping", "Standing", "Walking / Excercising", "Talking", "Other")
 
 ea_kable(
   x = x, 
@@ -235,7 +235,7 @@ Table Row {.tabset .tabset-fade}
 ### Physical activity yesterday (Yes / No)
 
 ```{r physact_table_1}
-x <- select(daily, bike_yest, run_yest, cleaning_yest, none_yest, pedometer)
+x <- select(daily, yest_bike, yest_run, yest_cleaning, yest_none, pedometer)
 
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer")
 
@@ -251,7 +251,7 @@ ea_kable(
 ### Physical activity yesterday (Minutes)
 
 ```{r physact_table_2}
-x <- select(daily, min_walk, min_run, min_act)
+x <- select(daily, min_walk, min_run, act_min)
 
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home")
 
@@ -285,7 +285,7 @@ Physical Activity Charts
 -------------------------------------------------------------------------------
 
 ```{r plot_act_yest}
-x <- names(select(daily, bike_yest, run_yest, cleaning_yest, none_yest, pedometer, min_walk, min_run, min_act, min_sit))
+x <- names(select(daily, yest_bike, yest_run, yest_cleaning, yest_none, pedometer, min_walk, min_run, act_min, min_sit))
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
 i <- 1
 for (var in x) {
@@ -505,7 +505,7 @@ ea_kable(
 ### What did you do in your free time yesterday?
 
 ```{r freetime_table_2}
-x <- select(daily, tv_free, games_free, movie_free, internet_free, book_free, music_free, craft_free, cleaned_free, pets_free, pray_free, sport_free, walk_free, cards_free, shop_free, volunteer_free, social_free, none_free)
+x <- select(daily, free_tv:free_social, free_none)
 
 xlab <- c("Watched TV", "Played Computer Games", "Went to a Movie", "Surfed the Internet", "Read", "Listened to Music or Played Instrument", "Arts and Crafts", "Cleaned", "Took Care of Pets", "Prayed, Meditated, or Went to Religious Service", "Played a Sport", "Walk or Jog", "Played Cards, Dice, or Board Games", "Went Shopping", "Volunteered", "Socialized", "None of These")
 
@@ -539,7 +539,7 @@ for (var in x) {
 }
 
 # What they did during free time
-x <- select(daily, tv_free, games_free, movie_free, internet_free, book_free, music_free, craft_free, cleaned_free, pets_free, pray_free, sport_free, walk_free, cards_free, shop_free, volunteer_free, social_free, none_free)
+x <- select(daily, free_tv:free_social, free_none)
 
 xlab <- c("Watched TV", "Played Computer Games", "Went to a Movie", "Surfed the Internet", "Read", "Listened to Music or Played Instrument", "Arts and Crafts", "Cleaned", "Took Care of Pets", "Prayed, Meditated, or Went to Religious Service", "Played a Sport", "Walk or Jog", "Played Cards, Dice, or Board Games", "Went Shopping", "Volunteered", "Socialized", "None of These")
 
@@ -659,7 +659,7 @@ Substances Tables
 ### Substances used yesterday
 
 ```{r substance_table}
-x <- select(daily, alc_sub, heavy_drink, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub)
+x <- select(daily, sub_alc, heavy_drink, sub_cig, sub_mar, sub_opi, sub_stim, sub_herb, sub_other, sub_none)
 
 xlab <- c("Alcohol", "5 or More Alcoholic Drinks", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs / Incense", "Another drug", "None")
 
@@ -676,7 +676,7 @@ Substances Charts
 -------------------------------------------------------------------------------
 
 ```{r substance_chart}
-x <- names(select(daily, alc_sub, cig_sub, mar_sub, opi_sub, stim_sub, herb_sub, other_sub, none_sub))
+x <- names(select(daily, sub_alc, heavy_drink, sub_cig, sub_mar, sub_opi, sub_stim, sub_herb, sub_other, sub_none))
 sub <- c("Alcohol", "Tobacco", "Marijuana", "Opiates", "Stimulants", "Herbal Drugs", "Another drug", "No Substances")
 i <- 1
 for (var in x) {
