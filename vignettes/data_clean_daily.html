@@ -227,7 +227,8 @@ library(stringr)
 library(readr)
 
 # devtools::install_github(&quot;mbcann01/dataclean&quot;)
-library(dataclean) # Use this instead of str() to prevent showing raw data values</code></pre>
+library(dataclean) 
+# Use this instead of str() to prevent showing raw data values</code></pre>
 </div>
 <div id="import-data" class="section level2">
 <h2>Import data</h2>
@@ -864,16 +865,7 @@ rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <div id="update-2016-07-12" class="section level2">
 <h2>Update 2016-07-12</h2>
 <p>rearranged variable names to <em>var group</em>_<em>question</em> format</p>
-<pre class="r"><code>suff_to_pre &lt;- function(x, suffix, prefix) {
-  for (i in seq_along(names(x))) {
-    if (grepl(suffix, names(x)[[i]])) {
-      names(x)[[i]] &lt;- sub(suffix, &quot;&quot;, names(x)[[i]])
-      names(x)[[i]] &lt;- paste0(prefix, names(x)[[i]])
-    }
-  }
-  names(x)
-}
-names(daily)
+<pre class="r"><code>names(daily)
 #&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
 #&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
 #&gt;   [7] &quot;worried&quot;         &quot;restless&quot;        &quot;excited&quot;        
@@ -916,11 +908,9 @@ names(daily)
 #&gt; [118] &quot;stim&quot;            &quot;num_coc&quot;         &quot;num_stim&quot;       
 #&gt; [121] &quot;alert_time&quot;      &quot;alert_action&quot;    &quot;start_time&quot;     
 #&gt; [124] &quot;completed&quot;
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_loc&quot;, prefix = &quot;loc_&quot;)
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_act&quot;, prefix = &quot;act_&quot;)
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_yest&quot;, prefix = &quot;yest_&quot;)
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_free&quot;, prefix = &quot;free_&quot;)
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_sub&quot;, prefix = &quot;sub_&quot;)
+suffix &lt;- c(&quot;loc&quot;, &quot;act&quot;, &quot;yest&quot;, &quot;free&quot;, &quot;sub&quot;)
+pattern &lt;- paste0(&quot;^(.*)_(&quot;, paste(suffix, collapse = &quot;|&quot;), &quot;)$&quot;)
+daily &lt;- daily %&gt;% setNames(sub(pattern, &quot;\\2_\\1&quot;, names(.)))
 names(daily)
 #&gt;   [1] &quot;case_number&quot;     &quot;date&quot;            &quot;id&quot;             
 #&gt;   [4] &quot;happy&quot;           &quot;frustrated&quot;      &quot;sad&quot;            
@@ -935,8 +925,8 @@ names(daily)
 #&gt;  [31] &quot;yest_bike&quot;       &quot;yest_run&quot;        &quot;yest_cleaning&quot;  
 #&gt;  [34] &quot;yest_none&quot;       &quot;min_walk&quot;        &quot;min_walk_c&quot;     
 #&gt;  [37] &quot;min_run&quot;         &quot;min_run_c&quot;       &quot;act_min&quot;        
-#&gt;  [40] &quot;act_min_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
-#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;act_phys_sat&quot;   
+#&gt;  [40] &quot;min_act_c&quot;       &quot;min_sit&quot;         &quot;min_sit_c&quot;      
+#&gt;  [43] &quot;pedometer&quot;       &quot;steps&quot;           &quot;phys_act_sat&quot;   
 #&gt;  [46] &quot;serv_fruit&quot;      &quot;any_fruit&quot;       &quot;serv_veg&quot;       
 #&gt;  [49] &quot;any_veg&quot;         &quot;serv_ssb&quot;        &quot;any_ssb&quot;        
 #&gt;  [52] &quot;serv_sweets&quot;     &quot;any_sweets&quot;      &quot;serv_meat&quot;      
@@ -962,7 +952,7 @@ names(daily)
 #&gt; [112] &quot;last_cig&quot;        &quot;op_heroin&quot;       &quot;op_methadone&quot;   
 #&gt; [115] &quot;op_pills&quot;        &quot;op_other&quot;        &quot;num_opiate&quot;     
 #&gt; [118] &quot;stim&quot;            &quot;num_coc&quot;         &quot;num_stim&quot;       
-#&gt; [121] &quot;alert_time&quot;      &quot;act_alertion&quot;    &quot;start_time&quot;     
+#&gt; [121] &quot;alert_time&quot;      &quot;alert_action&quot;    &quot;start_time&quot;     
 #&gt; [124] &quot;completed&quot;</code></pre>
 <hr />
 <p> </p>
@@ -1007,8 +997,9 @@ daily &lt;- daily %&gt;%
     funs(&quot;lag&quot; = lag)) %&gt;%
   ungroup
 
-# Move lag suffix to prefix
-names(daily) &lt;- suff_to_pre(daily, suffix = &quot;_lag&quot;, prefix = &quot;lag_&quot;)
+# Move &quot;lag&quot;&quot; suffix to prefix
+pattern &lt;- paste0(&quot;^(.*)_(&quot;, paste(&quot;lag&quot;, collapse = &quot;|&quot;), &quot;)$&quot;)
+daily &lt;- daily %&gt;% setNames(sub(pattern, &quot;\\2_\\1&quot;, names(.)))
 
 # Data checking:
 # View(select(daily, ends_with(&quot;_lag&quot;)))

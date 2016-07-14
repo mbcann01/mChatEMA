@@ -26,7 +26,8 @@ library(stringr)
 library(readr)
 
 # devtools::install_github("mbcann01/dataclean")
-library(dataclean) # Use this instead of str() to prevent showing raw data values
+library(dataclean) 
+# Use this instead of str() to prevent showing raw data values
 ```
 
 ## Import data  
@@ -681,21 +682,10 @@ daily <- daily %>%
 rearranged variable names to _var group_\__question_ format
 
 ```{r rename_vars}
-suff_to_pre <- function(x, suffix, prefix) {
-  for (i in seq_along(names(x))) {
-    if (grepl(suffix, names(x)[[i]])) {
-      names(x)[[i]] <- sub(suffix, "", names(x)[[i]])
-      names(x)[[i]] <- paste0(prefix, names(x)[[i]])
-    }
-  }
-  names(x)
-}
 names(daily)
-names(daily) <- suff_to_pre(daily, suffix = "_loc", prefix = "loc_")
-names(daily) <- suff_to_pre(daily, suffix = "_act", prefix = "act_")
-names(daily) <- suff_to_pre(daily, suffix = "_yest", prefix = "yest_")
-names(daily) <- suff_to_pre(daily, suffix = "_free", prefix = "free_")
-names(daily) <- suff_to_pre(daily, suffix = "_sub", prefix = "sub_")
+suffix <- c("loc", "act", "yest", "free", "sub")
+pattern <- paste0("^(.*)_(", paste(suffix, collapse = "|"), ")$")
+daily <- daily %>% setNames(sub(pattern, "\\2_\\1", names(.)))
 names(daily)
 ```
 
@@ -748,8 +738,9 @@ daily <- daily %>%
     funs("lag" = lag)) %>%
   ungroup
 
-# Move lag suffix to prefix
-names(daily) <- suff_to_pre(daily, suffix = "_lag", prefix = "lag_")
+# Move "lag"" suffix to prefix
+pattern <- paste0("^(.*)_(", paste("lag", collapse = "|"), ")$")
+daily <- daily %>% setNames(sub(pattern, "\\2_\\1", names(.)))
 
 # Data checking:
 # View(select(daily, ends_with("_lag")))
