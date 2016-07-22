@@ -128,7 +128,7 @@ col_info <- c(
   "gps",                  "text",
   "order_test",           "blank",
   "which_meds2",          "text",
-  "dob",                  "text",
+  "dob",                  "date",
   "gender",               "text",
   "hispanic",             "text",
   "race",                 "text",
@@ -214,6 +214,39 @@ daily <- daily %>%
 -------------------------------------------------------------------------------   
 
 &nbsp;  
+
+# Recode race and ethnicity
+
+```{r race}
+daily <- mutate(daily, 
+  race = if_else(grepl(";", race), "Multiple", race),
+  
+  race = factor(race, 
+    levels = c("White", "Black/African American", "Indian (Native American)", 
+      "Multiple", "Other"),
+    labels = c("White", "Black", "Indian", "Multiple", "Other")),
+  
+  hispanic = factor(hispanic, levels = c("No", "Yes"), labels = c("No", "Yes")),
+  
+  race_eth = case_when(
+    daily$hispanic == "Yes" ~ "Hispanic, any race",
+    daily$race == "White" & daily$hispanic == "No" ~ "White, non-Hispanic",
+    daily$race == "Black" & daily$hispanic == "No" ~ "Black, non-Hispanic",
+    daily$hispanic == "No" ~ "Other race, non-Hispanic"),
+  
+  race_eth = factor(race_eth,
+    levels = c("White, non-Hispanic", "Black, non-Hispanic", "Hispanic, any race", 
+      "Other race, non-Hispanic"))
+)
+
+# Data check
+# View(select(daily, race, hispanic, race_eth))
+# table(daily$race_eth, daily$race); table(daily$race_eth, Hispanic = daily$hispanic)
+```
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
 
 # Create dummy variables for multiple answer questions
 
@@ -333,14 +366,6 @@ daily <- daily %>%
     # Data check
     # View(filter(test, !is.na(stim)) %>% select(stim, stim_coc:stim_other))
   )
-
-# Data check
-about_data(daily)
-# 2016-07-22: 7,378 observations and 150 variables in the data
-
-test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 150)
-})
 ```
 
 -------------------------------------------------------------------------------   
@@ -614,19 +639,13 @@ daily <- daily %>%
     stim_coc        = factor(stim_coc, levels = 0:1, labels = yesno),
     stim_meth       = factor(stim_meth, levels = 0:1, labels = yesno),
     stim_pills      = factor(stim_pills, levels = 0:1, labels = yesno),
-    stim_other      = factor(stim_other, levels = 0:1, labels = yesno)
+    stim_other      = factor(stim_other, levels = 0:1, labels = yesno),
+    
+    gender          = factor(gender, levels = c("Female", "Male"))
   )
 
 # Clean environment
 rm(list = setdiff(ls(), "daily"))
-
-# Data check
-about_data(daily)
-# 2016-07-22: 7,378 observations and 172 variables in the data
-
-test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 172)
-})
 ```
 
 
@@ -819,15 +838,16 @@ daily <- daily %>%
     gender,
     hispanic,
     race,
-    race_other
+    race_other,
+    race_eth
   )
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 134 variables in the data
+# 2016-07-22: 7,378 observations and 135 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 134)
+  expect_equal(ncol(daily), 135)
 })
 ```
 
@@ -891,14 +911,6 @@ daily <- daily %>%
 pattern <- paste0("^(.*)_(", paste("lag", collapse = "|"), ")$")
 daily <- daily %>% setNames(sub(pattern, "\\2_\\1", names(.)))
 rm(pattern)
-
-# Data check:
-about_data(daily)
-# 2016-07-22: 7,378 observations and 164 variables in the data
-
-test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 164)
-})
 ```
 
 -------------------------------------------------------------------------------   
@@ -1043,10 +1055,10 @@ rm(list = setdiff(ls(), "daily"))
 # View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 
 about_data(daily)
-# 2016-07-22: 7,378 observations and 186 variables in the data
+# 2016-07-22: 7,378 observations and 187 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 186)
+  expect_equal(ncol(daily), 187)
 })
 ```
 

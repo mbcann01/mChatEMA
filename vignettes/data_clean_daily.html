@@ -329,7 +329,7 @@ library(dataclean)
   &quot;gps&quot;,                  &quot;text&quot;,
   &quot;order_test&quot;,           &quot;blank&quot;,
   &quot;which_meds2&quot;,          &quot;text&quot;,
-  &quot;dob&quot;,                  &quot;text&quot;,
+  &quot;dob&quot;,                  &quot;date&quot;,
   &quot;gender&quot;,               &quot;text&quot;,
   &quot;hispanic&quot;,             &quot;text&quot;,
   &quot;race&quot;,                 &quot;text&quot;,
@@ -410,6 +410,35 @@ daily &lt;- daily %&gt;%
     x = NULL,
     y = NULL
   )</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="recode-race-and-ethnicity" class="section level1">
+<h1>Recode race and ethnicity</h1>
+<pre class="r"><code>daily &lt;- mutate(daily, 
+  race = if_else(grepl(&quot;;&quot;, race), &quot;Multiple&quot;, race),
+  
+  race = factor(race, 
+    levels = c(&quot;White&quot;, &quot;Black/African American&quot;, &quot;Indian (Native American)&quot;, 
+      &quot;Multiple&quot;, &quot;Other&quot;),
+    labels = c(&quot;White&quot;, &quot;Black&quot;, &quot;Indian&quot;, &quot;Multiple&quot;, &quot;Other&quot;)),
+  
+  hispanic = factor(hispanic, levels = c(&quot;No&quot;, &quot;Yes&quot;), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
+  
+  race_eth = case_when(
+    daily$hispanic == &quot;Yes&quot; ~ &quot;Hispanic, any race&quot;,
+    daily$race == &quot;White&quot; &amp; daily$hispanic == &quot;No&quot; ~ &quot;White, non-Hispanic&quot;,
+    daily$race == &quot;Black&quot; &amp; daily$hispanic == &quot;No&quot; ~ &quot;Black, non-Hispanic&quot;,
+    daily$hispanic == &quot;No&quot; ~ &quot;Other race, non-Hispanic&quot;),
+  
+  race_eth = factor(race_eth,
+    levels = c(&quot;White, non-Hispanic&quot;, &quot;Black, non-Hispanic&quot;, &quot;Hispanic, any race&quot;, 
+      &quot;Other race, non-Hispanic&quot;))
+)
+
+# Data check
+# View(select(daily, race, hispanic, race_eth))
+# table(daily$race_eth, daily$race); table(daily$race_eth, Hispanic = daily$hispanic)</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -529,16 +558,7 @@ daily &lt;- daily %&gt;%
     
     # Data check
     # View(filter(test, !is.na(stim)) %&gt;% select(stim, stim_coc:stim_other))
-  )
-
-# Data check
-about_data(daily)
-#&gt; 7378 observations and 150 variables in the data
-# 2016-07-22: 7,378 observations and 150 variables in the data
-
-test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 150)
-})</code></pre>
+  )</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -803,20 +823,13 @@ daily &lt;- daily %&gt;%
     stim_coc        = factor(stim_coc, levels = 0:1, labels = yesno),
     stim_meth       = factor(stim_meth, levels = 0:1, labels = yesno),
     stim_pills      = factor(stim_pills, levels = 0:1, labels = yesno),
-    stim_other      = factor(stim_other, levels = 0:1, labels = yesno)
+    stim_other      = factor(stim_other, levels = 0:1, labels = yesno),
+    
+    gender          = factor(gender, levels = c(&quot;Female&quot;, &quot;Male&quot;))
   )
 
 # Clean environment
-rm(list = setdiff(ls(), &quot;daily&quot;))
-
-# Data check
-about_data(daily)
-#&gt; 7378 observations and 172 variables in the data
-# 2016-07-22: 7,378 observations and 172 variables in the data
-
-test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 172)
-})</code></pre>
+rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -994,16 +1007,17 @@ daily &lt;- daily %&gt;%
     gender,
     hispanic,
     race,
-    race_other
+    race_other,
+    race_eth
   )
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 134 variables in the data
-# 2016-07-22: 7,378 observations and 134 variables in the data
+#&gt; 7378 observations and 135 variables in the data
+# 2016-07-22: 7,378 observations and 135 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 134)
+  expect_equal(ncol(daily), 135)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1057,16 +1071,7 @@ daily &lt;- daily %&gt;%
 # Move &quot;lag&quot;&quot; suffix to prefix
 pattern &lt;- paste0(&quot;^(.*)_(&quot;, paste(&quot;lag&quot;, collapse = &quot;|&quot;), &quot;)$&quot;)
 daily &lt;- daily %&gt;% setNames(sub(pattern, &quot;\\2_\\1&quot;, names(.)))
-rm(pattern)
-
-# Data check:
-about_data(daily)
-#&gt; 7378 observations and 164 variables in the data
-# 2016-07-22: 7,378 observations and 164 variables in the data
-
-test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 164)
-})</code></pre>
+rm(pattern)</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -1207,11 +1212,11 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;lag_date&quot;, &quot;date_match&quot;, &quot;sub_alc&quot;, &quot;happy&quot;, &quot;lag_happy&quot;, &quot;x_happy&quot;, &quot;y_happy&quot;, &quot;x_sad&quot;, &quot;x_restless&quot;, &quot;x_excited&quot;, &quot;x_calm&quot;, &quot;x_bored&quot;, &quot;x&quot;)])
 
 about_data(daily)
-#&gt; 7378 observations and 186 variables in the data
-# 2016-07-22: 7,378 observations and 186 variables in the data
+#&gt; 7378 observations and 187 variables in the data
+# 2016-07-22: 7,378 observations and 187 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 186)
+  expect_equal(ncol(daily), 187)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1219,7 +1224,7 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 <div id="save-as-rdata" class="section level1">
 <h1>Save as RData</h1>
 <pre class="r"><code>about_data(daily)
-#&gt; 7378 observations and 186 variables in the data
+#&gt; 7378 observations and 187 variables in the data
 save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 </div>
 <div id="save-as-.csv" class="section level1">
