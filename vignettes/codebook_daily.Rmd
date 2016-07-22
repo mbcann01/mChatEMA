@@ -1,6 +1,6 @@
 ---
 title: "Codebook"
-date: "July 14, 2016"
+date: "July 22, 2016"
 output: html_document
 ---
 
@@ -19,7 +19,7 @@ library(dataclean)
 
 **Load data**   
 ```{r load_data}
-load("data/daily_april_2016.RData")
+load("data/daily_ema.RData")
 about_data(daily)
 ```
 
@@ -29,13 +29,10 @@ about_data(daily)
 
 **Create Codebook**   
 
-Remember, this is currently April, 2016 only.
-
 ```{r create_labels, echo=FALSE}
 lab <- c(
   "Case number (Identifies unique participants)",
   "Date assessment taken",
-  "Response ID (Identifies unique assessments within participants)",
   "Mark the response that most applies to you RIGHT NOW: I feel happy",
   "Mark the response that most applies to you RIGHT NOW: I feel frustrated",
   "Mark the response that most applies to you RIGHT NOW: I feel sad",
@@ -150,13 +147,25 @@ lab <- c(
   "Which of the following opiates did you used yesterday? Pills (e.g. oxycontin, hydrocodone, buprenorphine)",
   "Which of the following opiates did you used yesterday? Other",
   "How many opiates pills did you take yesterday?",
-  "Which of the following stimulants did you use yesterday?",
+  "Which of the following stimulants did you use yesterday? Cocaine/Crack Cocaine",
+  "Which of the following stimulants did you use yesterday? Methamphetamines",
+  "Which of the following stimulants did you use yesterday? Pills (e.g., amphetamines, ritalin)",
+  "Which of the following stimulants did you use yesterday? Other",
   "How many dimes of cocaine/crack did you use yesterday?",
   "How many stimulant pills did you take yesterday?",
   "Initial alert time",
-  "Initial alert action",
   "Assessment start time",
-  "Completed",
+  "Assessment end time",
+  "Time spent taking the assessment (minutes)",
+  "GPS location information",
+  "GPS longitude",
+  "GPS latitude",
+  "Date of birth",
+  "Geneder",
+  "Hispanic ethnicity",
+  "Race",
+  "Other Race",
+  "Race and ethnicity combined",
   "Current observation's date minus one day",
   "Date value of previous observation (within person)",
   "Equals 1 when date_yest and date_lag are equal",
