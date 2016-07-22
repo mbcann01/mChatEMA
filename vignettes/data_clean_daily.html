@@ -840,12 +840,11 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 </div>
 <div id="separate-gps-into-longitude-and-latitude" class="section level1">
 <h1>Separate GPS into longitude and latitude</h1>
-<pre class="r"><code>daily &lt;- daily %&gt;%
+<pre class="r"><code>options(digits = 15)
+daily &lt;- daily %&gt;%
   mutate(
     long = as.numeric(sub(&quot;^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)&quot;, &quot;\\1&quot;, gps)),
-    lat  = as.numeric(sub(&quot;^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)&quot;, &quot;\\2&quot;, gps)),
-    long = format(round(long, 13), nsmall = 13),
-    lat  = format(round(lat, 13), nsmall = 13)
+    lat  = as.numeric(sub(&quot;^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)&quot;, &quot;\\2&quot;, gps))
   )
 #&gt; Warning in eval(substitute(expr), envir, enclos): NAs introduced by
 #&gt; coercion
@@ -854,7 +853,7 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 #&gt; coercion
 
 # Data check
-# View(select(test, gps, long, lat))</code></pre>
+# View(select(daily, gps, long, lat))</code></pre>
 <hr />
 <p> </p>
 </div>

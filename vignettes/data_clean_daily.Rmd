@@ -665,16 +665,15 @@ daily <- daily %>%
 # Separate GPS into longitude and latitude
 
 ```{r long_lat}
+options(digits = 15)
 daily <- daily %>%
   mutate(
     long = as.numeric(sub("^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)", "\\1", gps)),
-    lat  = as.numeric(sub("^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)", "\\2", gps)),
-    long = format(round(long, 13), nsmall = 13),
-    lat  = format(round(lat, 13), nsmall = 13)
+    lat  = as.numeric(sub("^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)", "\\2", gps))
   )
 
 # Data check
-# View(select(test, gps, long, lat))
+# View(select(daily, gps, long, lat))
 ```
 
 
