@@ -144,6 +144,13 @@ daily <- read_excel(
   skip = 1)
 rm(col_info)
 
+# Convert selected variables to type numeric
+daily <- daily %>%
+  mutate(
+    num_coc  = as.integer(num_coc),
+    num_stim = as.integer(num_stim)
+  )
+
 # Remove blank rows
 index <- all_na(daily)
 if (length(index) == 0) {
@@ -312,18 +319,27 @@ daily <- daily %>%
     op_heroin      = ifelse(grepl("Heroin", opiate), 1, 0),
     op_methadone   = ifelse(grepl("Methadone", opiate), 1, 0),
     op_pills       = ifelse(grepl("Pills", opiate), 1, 0),
-    op_other       = ifelse(grepl("Other", opiate), 1, 0)
+    op_other       = ifelse(grepl("Other", opiate), 1, 0),
     
     # Data check
     # View(select(test, opiate, op_heroin:op_other))
+    
+    # Which of the following stimulants did you used yesterday?
+    stim_coc      = ifelse(grepl("Cocaine/Crack Cocaine", stim), 1, 0),
+    stim_meth     = ifelse(grepl("Methamphetamines", stim), 1, 0),
+    stim_pills    = ifelse(grepl("Pills", stim), 1, 0),
+    stim_other    = ifelse(grepl("Other", stim), 1, 0)
+    
+    # Data check
+    # View(filter(test, !is.na(stim)) %>% select(stim, stim_coc:stim_other))
   )
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 146 variables in the data
+# 2016-07-22: 7,378 observations and 150 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 146)
+  expect_equal(ncol(daily), 150)
 })
 ```
 
@@ -593,7 +609,12 @@ daily <- daily %>%
     op_methadone    = factor(op_methadone, levels = 0:1, labels = yesno),
     op_pills        = factor(op_pills, levels = 0:1, labels = yesno),
     op_other        = factor(op_other, levels = 0:1, labels = yesno),
-    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many)
+    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many),
+    
+    stim_coc        = factor(stim_coc, levels = 0:1, labels = yesno),
+    stim_meth       = factor(stim_meth, levels = 0:1, labels = yesno),
+    stim_pills      = factor(stim_pills, levels = 0:1, labels = yesno),
+    stim_other      = factor(stim_other, levels = 0:1, labels = yesno)
   )
 
 # Clean environment
@@ -601,10 +622,10 @@ rm(list = setdiff(ls(), "daily"))
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 168 variables in the data
+# 2016-07-22: 7,378 observations and 172 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 168)
+  expect_equal(ncol(daily), 172)
 })
 ```
 
@@ -751,7 +772,10 @@ daily <- daily %>%
     op_pills,
     op_other,
     num_opiate,
-    stim,
+    stim_coc,
+    stim_meth,
+    stim_pills,
+    stim_other,
     num_coc,
     num_stim,
     initial_alert_time,
@@ -767,10 +791,10 @@ daily <- daily %>%
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 128 variables in the data
+# 2016-07-22: 7,378 observations and 131 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 128)
+  expect_equal(ncol(daily), 131)
 })
 ```
 
@@ -837,10 +861,10 @@ rm(pattern)
 
 # Data check:
 about_data(daily)
-# 2016-07-22: 7,378 observations and 158 variables in the data
+# 2016-07-22: 7,378 observations and 161 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 158)
+  expect_equal(ncol(daily), 161)
 })
 ```
 
@@ -986,10 +1010,10 @@ rm(list = setdiff(ls(), "daily"))
 # View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 
 about_data(daily)
-# 2016-07-22: 7,378 observations and 180 variables in the data
+# 2016-07-22: 7,378 observations and 183 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 180)
+  expect_equal(ncol(daily), 183)
 })
 ```
 

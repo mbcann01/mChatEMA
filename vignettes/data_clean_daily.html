@@ -345,6 +345,15 @@ daily &lt;- read_excel(
   skip = 1)
 rm(col_info)
 
+# Convert selected variables to type numeric
+daily &lt;- daily %&gt;%
+  mutate(
+    num_coc  = as.integer(num_coc),
+    num_stim = as.integer(num_stim)
+  )
+#&gt; Warning in eval(substitute(expr), envir, enclos): NAs introduced by
+#&gt; coercion
+
 # Remove blank rows
 index &lt;- all_na(daily)
 if (length(index) == 0) {
@@ -507,19 +516,28 @@ daily &lt;- daily %&gt;%
     op_heroin      = ifelse(grepl(&quot;Heroin&quot;, opiate), 1, 0),
     op_methadone   = ifelse(grepl(&quot;Methadone&quot;, opiate), 1, 0),
     op_pills       = ifelse(grepl(&quot;Pills&quot;, opiate), 1, 0),
-    op_other       = ifelse(grepl(&quot;Other&quot;, opiate), 1, 0)
+    op_other       = ifelse(grepl(&quot;Other&quot;, opiate), 1, 0),
     
     # Data check
     # View(select(test, opiate, op_heroin:op_other))
+    
+    # Which of the following stimulants did you used yesterday?
+    stim_coc      = ifelse(grepl(&quot;Cocaine/Crack Cocaine&quot;, stim), 1, 0),
+    stim_meth     = ifelse(grepl(&quot;Methamphetamines&quot;, stim), 1, 0),
+    stim_pills    = ifelse(grepl(&quot;Pills&quot;, stim), 1, 0),
+    stim_other    = ifelse(grepl(&quot;Other&quot;, stim), 1, 0)
+    
+    # Data check
+    # View(filter(test, !is.na(stim)) %&gt;% select(stim, stim_coc:stim_other))
   )
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 146 variables in the data
-# 2016-07-22: 7,378 observations and 146 variables in the data
+#&gt; 7378 observations and 150 variables in the data
+# 2016-07-22: 7,378 observations and 150 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 146)
+  expect_equal(ncol(daily), 150)
 })</code></pre>
 <hr />
 <p> </p>
@@ -780,7 +798,12 @@ daily &lt;- daily %&gt;%
     op_methadone    = factor(op_methadone, levels = 0:1, labels = yesno),
     op_pills        = factor(op_pills, levels = 0:1, labels = yesno),
     op_other        = factor(op_other, levels = 0:1, labels = yesno),
-    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many)
+    num_opiate      = factor(num_opiate, levels = how_many, labels = how_many),
+    
+    stim_coc        = factor(stim_coc, levels = 0:1, labels = yesno),
+    stim_meth       = factor(stim_meth, levels = 0:1, labels = yesno),
+    stim_pills      = factor(stim_pills, levels = 0:1, labels = yesno),
+    stim_other      = factor(stim_other, levels = 0:1, labels = yesno)
   )
 
 # Clean environment
@@ -788,11 +811,11 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 168 variables in the data
-# 2016-07-22: 7,378 observations and 168 variables in the data
+#&gt; 7378 observations and 172 variables in the data
+# 2016-07-22: 7,378 observations and 172 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 168)
+  expect_equal(ncol(daily), 172)
 })</code></pre>
 <hr />
 <p> </p>
@@ -927,7 +950,10 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
     op_pills,
     op_other,
     num_opiate,
-    stim,
+    stim_coc,
+    stim_meth,
+    stim_pills,
+    stim_other,
     num_coc,
     num_stim,
     initial_alert_time,
@@ -943,11 +969,11 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 128 variables in the data
-# 2016-07-22: 7,378 observations and 128 variables in the data
+#&gt; 7378 observations and 131 variables in the data
+# 2016-07-22: 7,378 observations and 131 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 128)
+  expect_equal(ncol(daily), 131)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1005,11 +1031,11 @@ rm(pattern)
 
 # Data check:
 about_data(daily)
-#&gt; 7378 observations and 158 variables in the data
-# 2016-07-22: 7,378 observations and 158 variables in the data
+#&gt; 7378 observations and 161 variables in the data
+# 2016-07-22: 7,378 observations and 161 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 158)
+  expect_equal(ncol(daily), 161)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1151,11 +1177,11 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;lag_date&quot;, &quot;date_match&quot;, &quot;sub_alc&quot;, &quot;happy&quot;, &quot;lag_happy&quot;, &quot;x_happy&quot;, &quot;y_happy&quot;, &quot;x_sad&quot;, &quot;x_restless&quot;, &quot;x_excited&quot;, &quot;x_calm&quot;, &quot;x_bored&quot;, &quot;x&quot;)])
 
 about_data(daily)
-#&gt; 7378 observations and 180 variables in the data
-# 2016-07-22: 7,378 observations and 180 variables in the data
+#&gt; 7378 observations and 183 variables in the data
+# 2016-07-22: 7,378 observations and 183 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 180)
+  expect_equal(ncol(daily), 183)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1163,7 +1189,7 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 <div id="save-as-rdata" class="section level2">
 <h2>Save as RData</h2>
 <pre class="r"><code>about_data(daily)
-#&gt; 7378 observations and 180 variables in the data
+#&gt; 7378 observations and 183 variables in the data
 save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 <p><strong>Save a .csv</strong></p>
 <pre class="r"><code>write_csv(daily, path = &quot;data/daily_ema.csv&quot;)</code></pre>
