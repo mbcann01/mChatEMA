@@ -231,7 +231,7 @@ daily <- mutate(daily,
   race_eth = case_when(
     daily$hispanic == "Yes" ~ "Hispanic, any race",
     daily$race == "White" & daily$hispanic == "No" ~ "White, non-Hispanic",
-    daily$race == "Black" & daily$hispanic == "No" ~ "Black, non-Hispanic",
+    daily$race == "Black/African American" & daily$hispanic == "No" ~ "Black, non-Hispanic",
     daily$hispanic == "No" ~ "Other race, non-Hispanic"),
   
   race_eth = factor(race_eth,

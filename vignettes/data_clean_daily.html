@@ -428,7 +428,7 @@ daily &lt;- daily %&gt;%
   race_eth = case_when(
     daily$hispanic == &quot;Yes&quot; ~ &quot;Hispanic, any race&quot;,
     daily$race == &quot;White&quot; &amp; daily$hispanic == &quot;No&quot; ~ &quot;White, non-Hispanic&quot;,
-    daily$race == &quot;Black&quot; &amp; daily$hispanic == &quot;No&quot; ~ &quot;Black, non-Hispanic&quot;,
+    daily$race == &quot;Black/African American&quot; &amp; daily$hispanic == &quot;No&quot; ~ &quot;Black, non-Hispanic&quot;,
     daily$hispanic == &quot;No&quot; ~ &quot;Other race, non-Hispanic&quot;),
   
   race_eth = factor(race_eth,
