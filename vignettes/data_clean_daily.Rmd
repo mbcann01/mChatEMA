@@ -1,6 +1,6 @@
 ---
-title: "Data Clean Daily"
-date: "July 14, 2016"
+title: "Clean Daily EMA Data"
+date: "July 22, 2016"
 output: 
   html_document:
     toc: true
@@ -16,124 +16,191 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 
 -------------------------------------------------------------------------------
 
-## Load packages and functions
+# Load packages and functions
 
 ```{r load_packages, message=FALSE}
 # CRAN packages
 library(readxl)
 library(dplyr)
-library(stringr)
+library(tidyr)
 library(readr)
+library(testthat)
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean) 
 # Use this instead of str() to prevent showing raw data values
 ```
 
-## Import data  
+
+
+# Import data   
+
+1. Create character vector of column names and types (necessary because of sparsely populated columns).   
+2. Import data assigning names and types.   
+3. Remove any empty rows that were imported erroneously.   
+4. Test for expected number of variables.   
 
 ```{r import_data}
-daily <- read_excel("data/raw data/daily_2016_05_02.xls")
-
-# Create character vector to rename variables upon import
-new_names <- c(
-  "case_number",
-  "date",
-  "id",
-  "happy",
-  "frustrated",
-  "sad",
-  "worried",
-  "restless",
-  "excited",
-  "calm",
-  "lonely",
-  "bored",
-  "sluggish",
-  "pre_location",
-  "pre_action",
-  "pre_who1",
-  "pre_who2",
-  "pre_yesterday",
-  "min_walk",
-  "min_walk_c",
-  "min_run",
-  "min_run_c",
-  "min_act",
-  "min_act_c",
-  "min_sit",
-  "min_sit_c",
-  "pedometer1",
-  "pedometer2",
-  "steps",
-  "phys_act_sat1",
-  "phys_act_sat2",
-  "serv_fruit1",
-  "serv_fruit2",
-  "serv_veg",
-  "serv_ssb1",
-  "serv_ssb2",
-  "serv_sweets1",
-  "serv_sweets2",
-  "serv_meat",
-  "food_sat1",
-  "food_sat2",
-  "take_meds1",
-  "take_meds2",
-  "which_meds1",
-  "why_no_meds",
-  "free_time",
-  "free_time_act",
-  "free_time_sat1",
-  "free_time_sat2",
-  "min_talk1",
-  "min_talk2",
-  "min_group1",
-  "min_group2",
-  "interaction_sat1",
-  "interaction_sat2",
-  "subs_check1",
-  "subs_check2",
-  "num_drinks1",
-  "num_drinks2",
-  "subs_time",
-  "first_drink",
-  "last_drink",
-  "num_cigs1",
-  "num_cigs2",
-  "first_cig",
-  "last_cig",
-  "opiate",
-  "num_heroin",
-  "num_opiate",
-  "stim",
-  "num_coc",
-  "num_stim",
-  "alert_time",
-  "alert_action",
-  "start_time",
-  "completed",
-  "which_meds2"
+col_info <- c( 
+  # "col_name",           "col_type"
+  "case_number",          "text",
+  "date",                 "date",
+  "touch_name",           "text",
+  "happy",                "text",
+  "frustrated",           "text",
+  "sad",                  "text",
+  "worried",              "text",
+  "restless",             "text",
+  "excited",              "text",
+  "calm",                 "text",
+  "lonely",               "text",
+  "bored",                "text",
+  "sluggish",             "text",
+  "pre_location",         "text",
+  "pre_action",           "text",
+  "pre_who1",             "text",
+  "pre_who2",             "numeric",
+  "pre_yesterday",        "text",
+  "min_walk",             "text",
+  "min_walk_c",           "numeric",
+  "min_run",              "text",
+  "min_run_c",            "numeric",
+  "min_act",              "text",
+  "min_act_c",            "numeric",
+  "min_sit",              "text",
+  "min_sit_c",            "numeric",
+  "pedometer1",           "text",
+  "pedometer2",           "numeric",
+  "steps",                "numeric",
+  "phys_act_sat1",        "text",
+  "phys_act_sat2",        "numeric",
+  "serv_fruit1",          "text",
+  "serv_fruit2",          "numeric",
+  "serv_veg",             "text",
+  "serv_ssb1",            "text",
+  "serv_ssb2",            "numeric",
+  "serv_sweets1",         "text",
+  "serv_sweets2",         "numeric",
+  "serv_meat",            "text",
+  "food_sat1",            "text",
+  "food_sat2",            "numeric",
+  "take_meds1",           "text",
+  "take_meds2",           "numeric",
+  "which_meds1",          "text",
+  "why_no_meds",          "text",
+  "free_time",            "text",
+  "free_time_act",        "text",
+  "free_time_sat1",       "text",
+  "free_time_sat2",       "numeric",
+  "min_talk1",            "text",
+  "min_talk2",            "numeric",
+  "min_group1",           "text",
+  "min_group2",           "numeric",
+  "interaction_sat1",     "text",
+  "interaction_sat2",     "numeric",
+  "subs_check1",          "text",
+  "subs_check2",          "numeric",
+  "num_drinks1",          "text",
+  "num_drinks2",          "numeric",
+  "subs_time",            "text",
+  "first_drink",          "text",
+  "last_drink",           "text",
+  "num_cigs1",            "text",
+  "num_cigs2",            "numeric",
+  "first_cig",            "text",
+  "last_cig",             "text",
+  "opiate",               "text",
+  "num_heroin",           "text",
+  "num_opiate",           "text",
+  "stim",                 "text",
+  "num_coc",              "text",
+  "num_stim",             "text",
+  "case_number_2",        "blank",
+  "alert_id",             "blank",
+  "alert_time",           "blank",
+  "alert_type",           "blank",
+  "initial_alert_time",   "text",
+  "initial_alert_action", "blank",
+  "start_time",           "text",
+  "end_time",             "text",
+  "completed_1",          "blank",
+  "completed_2",          "blank",
+  "gps",                  "text",
+  "order_test",           "blank",
+  "which_meds2",          "text",
+  "dob",                  "text",
+  "gender",               "text",
+  "hispanic",             "text",
+  "race",                 "text",
+  "race_other",           "text"
 )
 
-# Rename variables
-names(daily) <- new_names
-rm(new_names)
+# Import data
+daily <- read_excel(
+  path = "data/raw data/All EMA Data 7_19_16.xls",
+  sheet = "Daily EMA",
+  col_names = col_info[seq(1, length(col_info), 2)],
+  col_types = col_info[seq(2, length(col_info), 2)],
+  skip = 1)
+rm(col_info)
 
+# Remove blank rows
+index <- all_na(daily)
+if (length(index) == 0) {
+  cat("Now rows deleted because of missing values for all variables")
+} else if (index > 0) {
+  daily <- daily[-index, ]
+  cat(paste("Row(s)", index, "deleted because all values were missing")) 
+}
+rm(index)
+
+# Data check
 about_data(daily)
+# 2016-07-22: 7,378 observations and 82 variables in the data
+
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 82)
+})
+
+test_that("Every row contains a case_number", {
+  expect_equal(sum(is.na(daily$case_number)), 0)
+})
 ```
 
 -------------------------------------------------------------------------------   
 
 &nbsp; 
 
-## Convert date / time variables
+# Convert date / time variables   
 
-```{r convert_date}
+```{r convert_date, warning=FALSE}
+# Convert initial_alert_time, start_time, and end_time to class POSIXct
 daily <- daily %>%
-  dplyr::mutate(
-    # Create new POSIX class variable by combining date and start time
-    start_time = as.POSIXct(paste(date, start_time), format = "%Y-%m-%d %H:%M")
+  # Separate initial alert time into hour and part of hour columns (x, y)
+  separate(
+    col = initial_alert_time, 
+    into = c("x", "y"), 
+    remove = FALSE) %>% 
+  
+  # Convert initial_alert_time to the form hours:minutes
+  # Convert start_time and end_time to class POSIX
+  mutate(
+    x = as.integer(x),
+    y = as.integer(y),
+    y = y / 100,
+    # Covert to minutes
+    y = round(y * 60),
+    # If initial alert time wasn't missing, set y = 0
+    y = if_else(!is.na(initial_alert_time) & is.na(y), 0, y),
+    
+    # Create new POSIX class variable by combining date and time
+    initial_alert_time = as.POSIXct(paste(date, x, y), format = "%Y-%m-%d %H %M"),
+    start_time = as.POSIXct(paste(date, start_time), format = "%Y-%m-%d %H:%M"),
+    end_time = as.POSIXct(paste(date, end_time), format = "%Y-%m-%d %H:%M"),
+    
+    # Drop x and y
+    x = NULL,
+    y = NULL
   )
 ```
 
@@ -141,37 +208,45 @@ daily <- daily %>%
 
 &nbsp;  
 
-## Create dummy variables for multiple answer questions
+# Create dummy variables for multiple answer questions
 
 ```{r dummy_coding}
 daily <- daily %>%
-  dplyr::mutate(
-    
+  mutate(
     # Where are you right now?
-    bus_loc        = ifelse(grepl("Bus", pre_location), 1, 0),
-    church_loc     = ifelse(grepl("Church", pre_location), 1, 0),
-    home_loc       = ifelse(grepl("Home", pre_location), 1, 0),
-    frifam_loc     = ifelse(grepl("Friend's", pre_location), 1, 0),
-    store_loc      = ifelse(grepl("Store", pre_location), 1, 0),
-    outdoors_loc   = ifelse(grepl("Outdoors", pre_location), 1, 0),
-    other_loc      = ifelse(grepl("Other", pre_location), 1, 0),
-    restaurant_loc = ifelse(grepl("Restaurant", pre_location), 1, 0),
-    school_loc     = ifelse(grepl("school", pre_location), 1, 0),
-    work_loc       = ifelse(grepl("Work", pre_location), 1, 0),
+    loc_bus        = ifelse(grepl("Bus", pre_location), 1, 0),
+    loc_church     = ifelse(grepl("Church", pre_location), 1, 0),
+    loc_home       = ifelse(grepl("Home", pre_location), 1, 0),
+    loc_frifam     = ifelse(grepl("Friend's", pre_location), 1, 0),
+    loc_store      = ifelse(grepl("Store", pre_location), 1, 0),
+    loc_outdoors   = ifelse(grepl("Outdoors", pre_location), 1, 0),
+    loc_other      = ifelse(grepl("Other", pre_location), 1, 0),
+    loc_restaurant = ifelse(grepl("Restaurant", pre_location), 1, 0),
+    loc_school     = ifelse(grepl("school", pre_location), 1, 0),
+    loc_work       = ifelse(grepl("Work", pre_location), 1, 0),
+
+    # Data check
+    # View(select(test, pre_location, loc_bus:loc_work))
     
     # What were you doing right before your phone rang/vibrated?
-    other_act      = ifelse(grepl("Other", pre_action), 1, 0),
-    sit_act        = ifelse(grepl("Sitting", pre_action), 1, 0),
-    sleep_act      = ifelse(grepl("Sleeping", pre_action), 1, 0),
-    stand_act      = ifelse(grepl("Standing", pre_action), 1, 0),
-    walk_act       = ifelse(grepl("Walking", pre_action), 1, 0),
-    talk_act       = ifelse(grepl("Talking", pre_action), 1, 0),
+    act_other      = ifelse(grepl("Other", pre_action), 1, 0),
+    act_sit        = ifelse(grepl("Sitting", pre_action), 1, 0),
+    act_sleep      = ifelse(grepl("Sleeping", pre_action), 1, 0),
+    act_stand      = ifelse(grepl("Standing", pre_action), 1, 0),
+    act_walk       = ifelse(grepl("Walking", pre_action), 1, 0),
+    act_talk       = ifelse(grepl("Talking", pre_action), 1, 0),
+
+    # Data check
+    # View(select(test, pre_action, act_other:act_talk))
     
     # Which of these things did you do yesterday?
-    bike_yest      = ifelse(grepl("Walk or bicycle", pre_yesterday), 1, 0),
-    run_yest       = ifelse(grepl("running", pre_yesterday), 1, 0),
-    cleaning_yest  = ifelse(grepl("cleaning", pre_yesterday), 1, 0),
-    none_yest      = ifelse(grepl("None", pre_yesterday), 1, 0),
+    yest_bike      = ifelse(grepl("Walk or bicycle", pre_yesterday), 1, 0),
+    yest_run       = ifelse(grepl("running", pre_yesterday), 1, 0),
+    yest_cleaning  = ifelse(grepl("cleaning", pre_yesterday), 1, 0),
+    yest_none      = ifelse(grepl("None", pre_yesterday), 1, 0),
+
+    # Data check
+    # View(select(test, pre_yesterday, yest_bike:yest_none))
     
     # Which medication didn’t you take? 
     medtype_dep    = ifelse(grepl("Depression", which_meds2), 1, 0),
@@ -183,6 +258,9 @@ daily <- daily %>%
     medtype_chol   = ifelse(grepl("Cholesterol", which_meds2), 1, 0),
     medtype_anti   = ifelse(grepl("Antibiotic", which_meds2), 1, 0),
     medtype_other  = ifelse(grepl("Other", which_meds2), 1, 0),
+
+    # Data check
+    # View(select(test, which_meds2, medtype_dep:medtype_other))
     
     # Why didn’t you take medications?
     meds_ran_out   = ifelse(grepl("Ran", why_no_meds), 1, 0),
@@ -191,52 +269,69 @@ daily <- daily %>%
     meds_side      = ifelse(grepl("Side effects", why_no_meds), 1, 0),
     meds_lost      = ifelse(grepl("lost", why_no_meds), 1, 0),
     meds_other     = ifelse(grepl("Other", why_no_meds), 1, 0),
+
+    # Data check
+    # View(select(test, why_no_meds, meds_ran_out:meds_other))
     
     # What did you do in your free time yesterday?
-    none_free      = ifelse(grepl("None", free_time_act), 1, 0),
-    tv_free        = ifelse(grepl("Watched TV", free_time_act), 1, 0),
-    games_free     = ifelse(grepl("computer games", free_time_act), 1, 0),
-    movie_free     = ifelse(grepl("movie", free_time_act), 1, 0),
-    internet_free  = ifelse(grepl("Surfed the i", free_time_act), 1, 0),
-    book_free      = ifelse(grepl("Read a book", free_time_act), 1, 0),
-    music_free     = ifelse(grepl("music or played", free_time_act), 1, 0),
-    craft_free     = ifelse(grepl("Arts,", free_time_act), 1, 0),
-    cleaned_free   = ifelse(grepl("Cleaned", free_time_act), 1, 0),
-    pets_free      = ifelse(grepl("of pets", free_time_act), 1, 0),
-    pray_free      = ifelse(grepl("Prayed,", free_time_act), 1, 0),
-    sport_free     = ifelse(grepl("Played a sport", free_time_act), 1, 0),
-    walk_free      = ifelse(grepl("or jog", free_time_act), 1, 0),
-    cards_free     = ifelse(grepl("cards", free_time_act), 1, 0),
-    shop_free      = ifelse(grepl("Went shopping", free_time_act), 1, 0),
-    volunteer_free = ifelse(grepl("Volunteered", free_time_act), 1, 0),
-    social_free    = ifelse(grepl("Socialized with", free_time_act), 1, 0),
+    free_none      = ifelse(grepl("None", free_time_act), 1, 0),
+    free_tv        = ifelse(grepl("Watched TV", free_time_act), 1, 0),
+    free_games     = ifelse(grepl("computer games", free_time_act), 1, 0),
+    free_movie     = ifelse(grepl("movie", free_time_act), 1, 0),
+    free_internet  = ifelse(grepl("Surfed the i", free_time_act), 1, 0),
+    free_book      = ifelse(grepl("Read a book", free_time_act), 1, 0),
+    free_music     = ifelse(grepl("music or played", free_time_act), 1, 0),
+    free_craft     = ifelse(grepl("Arts,", free_time_act), 1, 0),
+    free_cleaned   = ifelse(grepl("Cleaned", free_time_act), 1, 0),
+    free_pets      = ifelse(grepl("of pets", free_time_act), 1, 0),
+    free_pray      = ifelse(grepl("Prayed,", free_time_act), 1, 0),
+    free_sport     = ifelse(grepl("Played a sport", free_time_act), 1, 0),
+    free_walk      = ifelse(grepl("or jog", free_time_act), 1, 0),
+    free_cards     = ifelse(grepl("cards", free_time_act), 1, 0),
+    free_shop      = ifelse(grepl("Went shopping", free_time_act), 1, 0),
+    free_volunteer = ifelse(grepl("Volunteered", free_time_act), 1, 0),
+    free_social    = ifelse(grepl("Socialized with", free_time_act), 1, 0),
+    
+    # Data check
+    # View(select(test, free_time_act, free_none:free_social))
     
     # Which of the following did you use yesterday, even once?
-    alc_sub        = ifelse(grepl("Alcohol", subs_check1), 1, 0),
-    cig_sub        = ifelse(grepl("Tobacco", subs_check1), 1, 0),
-    mar_sub        = ifelse(grepl("Marijuana", subs_check1), 1, 0),
-    opi_sub        = ifelse(grepl("Opiates", subs_check1), 1, 0),
-    stim_sub       = ifelse(grepl("Stimulants", subs_check1), 1, 0),
-    herb_sub       = ifelse(grepl("Herbal", subs_check1), 1, 0),
-    other_sub      = ifelse(grepl("Another drug", subs_check1), 1, 0),
-    none_sub       = ifelse(grepl("None", subs_check1), 1, 0),
+    sub_alc        = ifelse(grepl("Alcohol", subs_check1), 1, 0),
+    sub_cig        = ifelse(grepl("Tobacco", subs_check1), 1, 0),
+    sub_mar        = ifelse(grepl("Marijuana", subs_check1), 1, 0),
+    sub_opi        = ifelse(grepl("Opiates", subs_check1), 1, 0),
+    sub_stim       = ifelse(grepl("Stimulants", subs_check1), 1, 0),
+    sub_herb       = ifelse(grepl("Herbal", subs_check1), 1, 0),
+    sub_other      = ifelse(grepl("Another drug", subs_check1), 1, 0),
+    sub_none       = ifelse(grepl("None", subs_check1), 1, 0),
+    
+    # Data check
+    # View(select(test, subs_check1, sub_alc:sub_none))
     
     # Which of the following opiates did you used yesterday?
     op_heroin      = ifelse(grepl("Heroin", opiate), 1, 0),
     op_methadone   = ifelse(grepl("Methadone", opiate), 1, 0),
     op_pills       = ifelse(grepl("Pills", opiate), 1, 0),
     op_other       = ifelse(grepl("Other", opiate), 1, 0)
+    
+    # Data check
+    # View(select(test, opiate, op_heroin:op_other))
   )
 
-# Data Check
-# View(daily[c("why_no_meds", "meds_ran_out", "meds_forgot", "meds_no_need", "meds_side", "meds_other")])
+# Data check
+about_data(daily)
+# 2016-07-22: 7,378 observations and 146 variables in the data
+
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 146)
+})
 ```
 
 -------------------------------------------------------------------------------   
 
 &nbsp;  
 
-## Dichotomize selected categorical variables
+# Dichotomize selected categorical variables
 
 ```{r dichotomize}
 daily <- daily %>%
@@ -258,12 +353,13 @@ daily <- daily %>%
 # View(daily[c("min_group1", "any_group")])
 ```
 
+Note: There was no way for a participant to indicate that they had zero minutes of meaningful individual or group interaction on the previous day (`min_talk1` and `min_group1`). `any_talk` and `any_group` really represent at least 15 minutes of meaningful conversation or group interaction on the previous day.
 
 -------------------------------------------------------------------------------   
 
 &nbsp;
 
-## Covert categorical variables to class factor  
+# Covert categorical variables to class factor  
 
 ```{r to_factor}
 # Create factor labels
@@ -385,30 +481,30 @@ daily <- daily %>%
     bored           = factor(bored, levels = likert, labels = likert),
     sluggish        = factor(sluggish, levels = likert, labels = likert),
     
-    bus_loc         = factor(bus_loc, levels = 0:1, labels = yesno),
-    church_loc      = factor(church_loc, levels = 0:1, labels = yesno),
-    home_loc        = factor(home_loc, levels = 0:1, labels = yesno),
-    frifam_loc      = factor(frifam_loc, levels = 0:1, labels = yesno),
-    store_loc       = factor(store_loc, levels = 0:1, labels = yesno),
-    outdoors_loc    = factor(outdoors_loc, levels = 0:1, labels = yesno),
-    other_loc       = factor(other_loc, levels = 0:1, labels = yesno),
-    restaurant_loc  = factor(restaurant_loc, levels = 0:1, labels = yesno),
-    school_loc      = factor(school_loc, levels = 0:1, labels = yesno),
-    work_loc        = factor(work_loc, levels = 0:1, labels = yesno),
+    loc_bus         = factor(loc_bus, levels = 0:1, labels = yesno),
+    loc_church      = factor(loc_church, levels = 0:1, labels = yesno),
+    loc_home        = factor(loc_home, levels = 0:1, labels = yesno),
+    loc_frifam      = factor(loc_frifam, levels = 0:1, labels = yesno),
+    loc_store       = factor(loc_store, levels = 0:1, labels = yesno),
+    loc_outdoors    = factor(loc_outdoors, levels = 0:1, labels = yesno),
+    loc_other       = factor(loc_other, levels = 0:1, labels = yesno),
+    loc_restaurant  = factor(loc_restaurant, levels = 0:1, labels = yesno),
+    loc_school      = factor(loc_school, levels = 0:1, labels = yesno),
+    loc_work        = factor(loc_work, levels = 0:1, labels = yesno),
     
-    other_act       = factor(other_act, levels = 0:1, labels = yesno),
-    sit_act         = factor(sit_act, levels = 0:1, labels = yesno),
-    sleep_act       = factor(sleep_act, levels = 0:1, labels = yesno),
-    stand_act       = factor(stand_act, levels = 0:1, labels = yesno),
-    walk_act        = factor(walk_act, levels = 0:1, labels = yesno),
-    talk_act        = factor(talk_act, levels = 0:1, labels = yesno),
+    act_other       = factor(act_other, levels = 0:1, labels = yesno),
+    act_sit         = factor(act_sit, levels = 0:1, labels = yesno),
+    act_sleep       = factor(act_sleep, levels = 0:1, labels = yesno),
+    act_stand       = factor(act_stand, levels = 0:1, labels = yesno),
+    act_walk        = factor(act_walk, levels = 0:1, labels = yesno),
+    act_talk        = factor(act_talk, levels = 0:1, labels = yesno),
     
     pre_who         = factor(pre_who2, levels = 0:1, labels = yesno),
     
-    bike_yest       = factor(bike_yest, levels = 0:1, labels = yesno),
-    run_yest        = factor(run_yest, levels = 0:1, labels = yesno),
-    cleaning_yest   = factor(cleaning_yest, levels = 0:1, labels = yesno),
-    none_yest       = factor(none_yest, levels = 0:1, labels = yesno),
+    yest_bike       = factor(yest_bike, levels = 0:1, labels = yesno),
+    yest_run        = factor(yest_run, levels = 0:1, labels = yesno),
+    yest_cleaning   = factor(yest_cleaning, levels = 0:1, labels = yesno),
+    yest_none       = factor(yest_none, levels = 0:1, labels = yesno),
     min_walk        = factor(min_walk, levels = minutes, labels = minutes),
     min_run         = factor(min_run, levels = minutes, labels = minutes),
     min_act         = factor(min_act, levels = minutes, labels = minutes),
@@ -449,23 +545,23 @@ daily <- daily %>%
     meds_other      = factor(meds_other, levels = 0:1, labels = yesno),
     
     free_time       = factor(free_time, levels = hours2, labels = hours2),
-    none_free       = factor(none_free, levels = 0:1, labels = yesno),
-    tv_free         = factor(tv_free, levels = 0:1, labels = yesno),
-    games_free      = factor(games_free, levels = 0:1, labels = yesno),
-    movie_free      = factor(movie_free, levels = 0:1, labels = yesno),
-    internet_free   = factor(internet_free, levels = 0:1, labels = yesno),
-    book_free       = factor(book_free, levels = 0:1, labels = yesno),
-    music_free      = factor(music_free, levels = 0:1, labels = yesno),
-    craft_free      = factor(craft_free, levels = 0:1, labels = yesno),
-    cleaned_free    = factor(cleaned_free, levels = 0:1, labels = yesno),
-    pets_free       = factor(pets_free, levels = 0:1, labels = yesno),
-    pray_free       = factor(pray_free, levels = 0:1, labels = yesno),
-    sport_free      = factor(sport_free, levels = 0:1, labels = yesno),
-    walk_free       = factor(walk_free, levels = 0:1, labels = yesno),
-    cards_free      = factor(cards_free, levels = 0:1, labels = yesno),
-    shop_free       = factor(shop_free, levels = 0:1, labels = yesno),
-    volunteer_free  = factor(volunteer_free, levels = 0:1, labels = yesno),
-    social_free     = factor(social_free, levels = 0:1, labels = yesno),
+    free_none       = factor(free_none, levels = 0:1, labels = yesno),
+    free_tv         = factor(free_tv, levels = 0:1, labels = yesno),
+    free_games      = factor(free_games, levels = 0:1, labels = yesno),
+    free_movie      = factor(free_movie, levels = 0:1, labels = yesno),
+    free_internet   = factor(free_internet, levels = 0:1, labels = yesno),
+    free_book       = factor(free_book, levels = 0:1, labels = yesno),
+    free_music      = factor(free_music, levels = 0:1, labels = yesno),
+    free_craft      = factor(free_craft, levels = 0:1, labels = yesno),
+    free_cleaned    = factor(free_cleaned, levels = 0:1, labels = yesno),
+    free_pets       = factor(free_pets, levels = 0:1, labels = yesno),
+    free_pray       = factor(free_pray, levels = 0:1, labels = yesno),
+    free_sport      = factor(free_sport, levels = 0:1, labels = yesno),
+    free_walk       = factor(free_walk, levels = 0:1, labels = yesno),
+    free_cards      = factor(free_cards, levels = 0:1, labels = yesno),
+    free_shop       = factor(free_shop, levels = 0:1, labels = yesno),
+    free_volunteer  = factor(free_volunteer, levels = 0:1, labels = yesno),
+    free_social     = factor(free_social, levels = 0:1, labels = yesno),
     free_time_sat   = factor(free_time_sat1, levels = satisfy, labels = satisfy),
     
     min_talk        = factor(min_talk1, levels = meaningful_time, labels = meaningful_time),
@@ -475,15 +571,15 @@ daily <- daily %>%
     any_talk        = factor(any_talk, levels = 0:1, labels = yesno),
     any_group       = factor(any_group, levels = 0:1, labels = yesno),
     
-    alc_sub         = factor(alc_sub, levels = 0:1, labels = yesno),
+    sub_alc         = factor(sub_alc, levels = 0:1, labels = yesno),
     heavy_drink     = factor(heavy_drink, levels = 0:1, labels = yesno),
-    cig_sub         = factor(cig_sub, levels = 0:1, labels = yesno),
-    mar_sub         = factor(mar_sub, levels = 0:1, labels = yesno),
-    opi_sub         = factor(opi_sub, levels = 0:1, labels = yesno),
-    stim_sub        = factor(stim_sub, levels = 0:1, labels = yesno),
-    herb_sub        = factor(herb_sub, levels = 0:1, labels = yesno),
-    other_sub       = factor(other_sub, levels = 0:1, labels = yesno),
-    none_sub        = factor(none_sub, levels = 0:1, labels = yesno),
+    sub_cig         = factor(sub_cig, levels = 0:1, labels = yesno),
+    sub_mar         = factor(sub_mar, levels = 0:1, labels = yesno),
+    sub_opi         = factor(sub_opi, levels = 0:1, labels = yesno),
+    sub_stim        = factor(sub_stim, levels = 0:1, labels = yesno),
+    sub_herb        = factor(sub_herb, levels = 0:1, labels = yesno),
+    sub_other       = factor(sub_other, levels = 0:1, labels = yesno),
+    sub_none        = factor(sub_none, levels = 0:1, labels = yesno),
     
     num_drinks      = factor(num_drinks1, levels = drinks, labels = drinks),
     subs_time       = factor(subs_time, levels = time, labels = time),
@@ -502,34 +598,23 @@ daily <- daily %>%
 
 # Clean environment
 rm(list = setdiff(ls(), "daily"))
+
+# Data check
+about_data(daily)
+# 2016-07-22: 7,378 observations and 168 variables in the data
+
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 168)
+})
 ```
+
 
 
 -------------------------------------------------------------------------------   
 
 &nbsp;
 
-## Coerce selected variables from character to numeric
-
-```{r coerce}
-daily <- daily %>%
-  mutate(
-    case_number = as.integer(case_number),
-    min_walk_c  = as.integer(min_walk_c),
-    min_run_c   = as.integer(min_run_c),
-    min_act_c   = as.integer(min_act_c),
-    min_sit_c   = as.integer(min_sit_c),
-    steps       = as.integer(steps),
-    alert_time  = as.numeric(alert_time)
-  )
-```
-
-
--------------------------------------------------------------------------------   
-
-&nbsp;
-
-## Rename selected variables
+# Rename selected variables
 
 ```{r rename}
 daily <- daily %>%
@@ -552,7 +637,6 @@ daily <- daily %>%
   select(
     case_number,
     date,
-    id,
     happy,
     frustrated,
     sad,
@@ -563,27 +647,27 @@ daily <- daily %>%
     lonely,
     bored,
     sluggish,
-    bus_loc,
-    church_loc,
-    home_loc,
-    frifam_loc,
-    store_loc,
-    outdoors_loc,
-    other_loc,
-    restaurant_loc,
-    school_loc,
-    work_loc,
-    other_act,
-    sit_act,
-    sleep_act,
-    stand_act,
-    walk_act,
-    talk_act,
+    loc_bus,
+    loc_church,
+    loc_home,
+    loc_frifam,
+    loc_store,
+    loc_outdoors,
+    loc_other,
+    loc_restaurant,
+    loc_school,
+    loc_work,
+    act_other,
+    act_sit,
+    act_sleep,
+    act_stand,
+    act_walk,
+    act_talk,
     pre_who,
-    bike_yest,
-    run_yest,
-    cleaning_yest,
-    none_yest,
+    yest_bike,
+    yest_run,
+    yest_cleaning,
+    yest_none,
     min_walk,
     min_walk_c,
     min_run,
@@ -623,37 +707,37 @@ daily <- daily %>%
     meds_lost,
     meds_other,
     free_time,
-    none_free,
-    tv_free,
-    games_free,
-    movie_free,
-    internet_free,
-    book_free,
-    music_free,
-    craft_free,
-    cleaned_free,
-    pets_free,
-    pray_free,
-    sport_free,
-    walk_free,
-    cards_free,
-    shop_free,
-    volunteer_free,
-    social_free,
+    free_none,
+    free_tv,
+    free_games,
+    free_movie,
+    free_internet,
+    free_book,
+    free_music,
+    free_craft,
+    free_cleaned,
+    free_pets,
+    free_pray,
+    free_sport,
+    free_walk,
+    free_cards,
+    free_shop,
+    free_volunteer,
+    free_social,
     free_time_sat,
     min_talk,
     any_talk,
     min_group,
     any_group,
     interaction_sat,
-    alc_sub,
-    cig_sub,
-    mar_sub,
-    opi_sub,
-    stim_sub,
-    herb_sub,
-    other_sub,
-    none_sub,
+    sub_alc,
+    sub_cig,
+    sub_mar,
+    sub_opi,
+    sub_stim,
+    sub_herb,
+    sub_other,
+    sub_none,
     num_drinks,
     heavy_drink,
     subs_time,
@@ -670,24 +754,26 @@ daily <- daily %>%
     stim,
     num_coc,
     num_stim,
-    alert_time,
-    alert_action,
+    initial_alert_time,
     start_time,
-    completed
+    end_time,
+    gps,
+    dob,
+    gender,
+    hispanic,
+    race,
+    race_other
   )
+
+# Data check
+about_data(daily)
+# 2016-07-22: 7,378 observations and 128 variables in the data
+
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 128)
+})
 ```
 
-## Update 2016-07-12 
-
-rearranged variable names to _var group_\__question_ format
-
-```{r rename_vars}
-names(daily)
-suffix <- c("loc", "act", "yest", "free", "sub")
-pattern <- paste0("^(.*)_(", paste(suffix, collapse = "|"), ")$")
-daily <- daily %>% setNames(sub(pattern, "\\2_\\1", names(.)))
-names(daily)
-```
 
 -------------------------------------------------------------------------------   
 
@@ -713,7 +799,7 @@ names(daily)
     
 ```{r lagged_vars}
 # Sort by case_number and date
-daily <- dplyr::arrange(daily, case_number, date)
+daily <- arrange(daily, case_number, date)
 
 # Create date variables
 daily <- daily %>%
@@ -730,6 +816,9 @@ daily <- daily %>%
     date_match = if_else(as.numeric(date_yest) == as.numeric(date_lag), 1, 0)
   )
 
+# Data check
+# View(select(daily, date, date_yest, date_lag, date_match))
+
 # Create lagged mood, location, activity, interacting variables
 daily <- daily %>%
   group_by(case_number) %>%
@@ -738,16 +827,21 @@ daily <- daily %>%
     funs("lag" = lag)) %>%
   ungroup
 
+# Data check
+# View(select(daily, date, date_yest, date_lag, date_match, happy, happy_lag))
+
 # Move "lag"" suffix to prefix
 pattern <- paste0("^(.*)_(", paste("lag", collapse = "|"), ")$")
 daily <- daily %>% setNames(sub(pattern, "\\2_\\1", names(.)))
+rm(pattern)
 
-# Data checking:
-# View(select(daily, ends_with("_lag")))
+# Data check:
+about_data(daily)
+# 2016-07-22: 7,378 observations and 158 variables in the data
 
-# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "alc_sub")])
-
-# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "happy", "happy_lag", "bike_yest", "min_walk_c")])
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 158)
+})
 ```
 
 -------------------------------------------------------------------------------   
@@ -886,8 +980,17 @@ daily <- daily %>%
     y = y_happy + y_sad + y_restless + y_excited + y_calm + y_bored
   )
 
+rm(list = setdiff(ls(), "daily"))
+
 # Data check:
-# View(daily[c("case_number", "date", "date_yest", "date_lag", "date_match", "alc_sub", "happy", "happy_lag", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
+# View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
+
+about_data(daily)
+# 2016-07-22: 7,378 observations and 180 variables in the data
+
+test_that("The number of variables hasn't changed", {
+  expect_equal(ncol(daily), 180)
+})
 ```
 
 
@@ -898,12 +1001,12 @@ daily <- daily %>%
 ## Save as RData
 ```{r save_rdata}
 about_data(daily)
-save(daily, file = "data/daily_april_2016.RData")
+save(daily, file = "data/daily_2016_07_19.RData")
 ```
 
 **Save a .csv**
 ```{r save_csv}
-write_csv(daily, path = "data/daily_april_2016.csv")
+write_csv(daily, path = "data/daily_2016_07_19.csv")
 ```
 
 
