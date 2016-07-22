@@ -219,7 +219,7 @@ daily <- daily %>%
 
 ```{r race}
 daily <- mutate(daily, 
-  race = if_else(grepl(";", race), "Multiple", race),
+  race = ifelse(grepl(";", race), "Multiple", race),
   
   race = factor(race, 
     levels = c("White", "Black/African American", "Indian (Native American)", 

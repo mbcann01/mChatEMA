@@ -416,7 +416,7 @@ daily &lt;- daily %&gt;%
 <div id="recode-race-and-ethnicity" class="section level1">
 <h1>Recode race and ethnicity</h1>
 <pre class="r"><code>daily &lt;- mutate(daily, 
-  race = if_else(grepl(&quot;;&quot;, race), &quot;Multiple&quot;, race),
+  race = ifelse(grepl(&quot;;&quot;, race), &quot;Multiple&quot;, race),
   
   race = factor(race, 
     levels = c(&quot;White&quot;, &quot;Black/African American&quot;, &quot;Indian (Native American)&quot;, 
