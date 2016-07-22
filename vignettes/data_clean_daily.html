@@ -830,8 +830,36 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
   )</code></pre>
 <hr />
 <p> </p>
-<div id="select-variables-for-analysis-data" class="section level2">
-<h2>Select variables for analysis data</h2>
+</div>
+<div id="calculate-time-to-complete-the-assessment" class="section level1">
+<h1>Calculate time to complete the assessment</h1>
+<pre class="r"><code>daily &lt;- daily %&gt;%
+  mutate(assess_time = (end_time - start_time) / 60)</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="separate-gps-into-longitude-and-latitude" class="section level1">
+<h1>Separate GPS into longitude and latitude</h1>
+<pre class="r"><code>daily &lt;- daily %&gt;%
+  mutate(
+    long = as.numeric(sub(&quot;^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)&quot;, &quot;\\1&quot;, gps)),
+    lat  = as.numeric(sub(&quot;^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)&quot;, &quot;\\2&quot;, gps)),
+    long = format(round(long, 13), nsmall = 13),
+    lat  = format(round(lat, 13), nsmall = 13)
+  )
+#&gt; Warning in eval(substitute(expr), envir, enclos): NAs introduced by
+#&gt; coercion
+
+#&gt; Warning in eval(substitute(expr), envir, enclos): NAs introduced by
+#&gt; coercion
+
+# Data check
+# View(select(test, gps, long, lat))</code></pre>
+<hr />
+<p> </p>
+</div>
+<div id="select-variables-for-analysis-data" class="section level1">
+<h1>Select variables for analysis data</h1>
 <pre class="r"><code>daily &lt;- daily %&gt;%
   select(
     case_number,
@@ -959,7 +987,10 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
     initial_alert_time,
     start_time,
     end_time,
+    assess_time,
     gps,
+    long,
+    lat,
     dob,
     gender,
     hispanic,
@@ -969,17 +1000,17 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 131 variables in the data
-# 2016-07-22: 7,378 observations and 131 variables in the data
+#&gt; 7378 observations and 134 variables in the data
+# 2016-07-22: 7,378 observations and 134 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 131)
+  expect_equal(ncol(daily), 134)
 })</code></pre>
 <hr />
 <p> </p>
 </div>
-<div id="create-lag-variables" class="section level2">
-<h2>Create lag variables</h2>
+<div id="create-lag-variables" class="section level1">
+<h1>Create lag variables</h1>
 <ul>
 <li><p>The data is currently set up such that emotion today is paired with activity / substance use yesterday. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (March 31st) on April 1.</p></li>
 <li><p>If our goal is to use emotional state today to predict activity / substance use <em>today</em>, then we need to create leading emotion variables or a lagged outcome variables.</p></li>
@@ -1031,17 +1062,17 @@ rm(pattern)
 
 # Data check:
 about_data(daily)
-#&gt; 7378 observations and 161 variables in the data
-# 2016-07-22: 7,378 observations and 161 variables in the data
+#&gt; 7378 observations and 164 variables in the data
+# 2016-07-22: 7,378 observations and 164 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 161)
+  expect_equal(ncol(daily), 164)
 })</code></pre>
 <hr />
 <p> </p>
 </div>
-<div id="coding-for-cmoa-plot" class="section level2">
-<h2>Coding for CMOA plot</h2>
+<div id="coding-for-cmoa-plot" class="section level1">
+<h1>Coding for CMOA plot</h1>
 <pre class="r"><code># Happy
 # X ranges from 0 to 4
 # Y is fixed at 0
@@ -1177,28 +1208,33 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;lag_date&quot;, &quot;date_match&quot;, &quot;sub_alc&quot;, &quot;happy&quot;, &quot;lag_happy&quot;, &quot;x_happy&quot;, &quot;y_happy&quot;, &quot;x_sad&quot;, &quot;x_restless&quot;, &quot;x_excited&quot;, &quot;x_calm&quot;, &quot;x_bored&quot;, &quot;x&quot;)])
 
 about_data(daily)
-#&gt; 7378 observations and 183 variables in the data
-# 2016-07-22: 7,378 observations and 183 variables in the data
+#&gt; 7378 observations and 186 variables in the data
+# 2016-07-22: 7,378 observations and 186 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 183)
+  expect_equal(ncol(daily), 186)
 })</code></pre>
 <hr />
 <p> </p>
 </div>
-<div id="save-as-rdata" class="section level2">
-<h2>Save as RData</h2>
+<div id="save-as-rdata" class="section level1">
+<h1>Save as RData</h1>
 <pre class="r"><code>about_data(daily)
-#&gt; 7378 observations and 183 variables in the data
+#&gt; 7378 observations and 186 variables in the data
 save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
-<p><strong>Save a .csv</strong></p>
+</div>
+<div id="save-as-.csv" class="section level1">
+<h1>Save as .csv</h1>
 <pre class="r"><code>write_csv(daily, path = &quot;data/daily_ema.csv&quot;)</code></pre>
-<p><strong>Clean up environment</strong></p>
+</div>
+<div id="clean-up-environment" class="section level1">
+<h1>Clean up environment</h1>
 <pre class="r"><code>rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <hr />
 <p> </p>
-<div id="session-info" class="section level4">
-<h4>Session Info:</h4>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session Info:</h1>
 <pre><code>#&gt; R version 3.3.1 (2016-06-21)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
 #&gt; Running under: OS X 10.11.6 (El Capitan)
@@ -1219,8 +1255,6 @@ save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 #&gt;  [9] evaluate_0.9    stringi_1.0-1   lazyeval_0.2.0  rmarkdown_0.9.6
 #&gt; [13] tools_3.3.1     stringr_1.0.0   yaml_2.1.13     memoise_1.0.0  
 #&gt; [17] htmltools_0.3.5 knitr_1.13      tibble_1.1</code></pre>
-</div>
-</div>
 </div>
 
 

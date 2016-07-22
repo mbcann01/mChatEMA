@@ -630,7 +630,6 @@ test_that("The number of variables hasn't changed", {
 ```
 
 
-
 -------------------------------------------------------------------------------   
 
 &nbsp;
@@ -651,7 +650,39 @@ daily <- daily %>%
 
 &nbsp;
 
-## Select variables for analysis data
+# Calculate time to complete the assessment
+
+```{r assess_time}
+daily <- daily %>%
+  mutate(assess_time = (end_time - start_time) / 60)
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+# Separate GPS into longitude and latitude
+
+```{r long_lat}
+daily <- daily %>%
+  mutate(
+    long = as.numeric(sub("^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)", "\\1", gps)),
+    lat  = as.numeric(sub("^(-\\d\\d.\\d*), (\\d\\d.\\d*)(.*)", "\\2", gps)),
+    long = format(round(long, 13), nsmall = 13),
+    lat  = format(round(lat, 13), nsmall = 13)
+  )
+
+# Data check
+# View(select(test, gps, long, lat))
+```
+
+
+-------------------------------------------------------------------------------   
+
+&nbsp;
+
+# Select variables for analysis data
 
 ```{r select_vars}
 daily <- daily %>%
@@ -781,7 +812,10 @@ daily <- daily %>%
     initial_alert_time,
     start_time,
     end_time,
+    assess_time,
     gps,
+    long,
+    lat,
     dob,
     gender,
     hispanic,
@@ -791,10 +825,10 @@ daily <- daily %>%
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 131 variables in the data
+# 2016-07-22: 7,378 observations and 134 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 131)
+  expect_equal(ncol(daily), 134)
 })
 ```
 
@@ -803,7 +837,7 @@ test_that("The number of variables hasn't changed", {
 
 &nbsp; 
 
-## Create lag variables
+# Create lag variables
 
 * The data is currently set up such that emotion today is paired with activity / substance use yesterday. For example, participant 10286 was asked about happiness on April 1 and about substance use yesterday (March 31st) on April 1.
 
@@ -861,10 +895,10 @@ rm(pattern)
 
 # Data check:
 about_data(daily)
-# 2016-07-22: 7,378 observations and 161 variables in the data
+# 2016-07-22: 7,378 observations and 164 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 161)
+  expect_equal(ncol(daily), 164)
 })
 ```
 
@@ -872,7 +906,7 @@ test_that("The number of variables hasn't changed", {
 
 &nbsp; 
 
-## Coding for CMOA plot
+# Coding for CMOA plot
 
 ```{r cmoa_data}
 # Happy
@@ -1010,10 +1044,10 @@ rm(list = setdiff(ls(), "daily"))
 # View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 
 about_data(daily)
-# 2016-07-22: 7,378 observations and 183 variables in the data
+# 2016-07-22: 7,378 observations and 186 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 183)
+  expect_equal(ncol(daily), 186)
 })
 ```
 
@@ -1022,19 +1056,19 @@ test_that("The number of variables hasn't changed", {
 
 &nbsp;
 
-## Save as RData
+# Save as RData   
 ```{r save_rdata}
 about_data(daily)
 save(daily, file = "data/daily_ema.RData")
 ```
 
-**Save a .csv**
+# Save as .csv   
 ```{r save_csv}
 write_csv(daily, path = "data/daily_ema.csv")
 ```
 
 
-**Clean up environment**
+# Clean up environment   
 ```{r cleanup}
 rm(list = setdiff(ls(), "daily"))
 ```
@@ -1043,7 +1077,7 @@ rm(list = setdiff(ls(), "daily"))
 
 &nbsp;
 
-#### Session Info:
+# Session Info:
 ```{r session info, echo=FALSE}
 sessionInfo()
 ```
