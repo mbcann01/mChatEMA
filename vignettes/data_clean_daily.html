@@ -408,8 +408,13 @@ daily &lt;- daily %&gt;%
     
     # Drop x and y
     x = NULL,
-    y = NULL
-  )</code></pre>
+    y = NULL,
+    
+    # Create age variable
+    age = round(difftime(date, dob, units = &quot;sec&quot;) / 31556926)
+  )
+# Data check
+# View(select(daily, date, dob, age))</code></pre>
 <hr />
 <p> </p>
 </div>
@@ -1004,6 +1009,7 @@ daily &lt;- daily %&gt;%
     long,
     lat,
     dob,
+    age,
     gender,
     hispanic,
     race,
@@ -1013,11 +1019,11 @@ daily &lt;- daily %&gt;%
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 135 variables in the data
-# 2016-07-22: 7,378 observations and 135 variables in the data
+#&gt; 7378 observations and 136 variables in the data
+# 2016-07-22: 7,378 observations and 136 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 135)
+  expect_equal(ncol(daily), 136)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1212,11 +1218,11 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;lag_date&quot;, &quot;date_match&quot;, &quot;sub_alc&quot;, &quot;happy&quot;, &quot;lag_happy&quot;, &quot;x_happy&quot;, &quot;y_happy&quot;, &quot;x_sad&quot;, &quot;x_restless&quot;, &quot;x_excited&quot;, &quot;x_calm&quot;, &quot;x_bored&quot;, &quot;x&quot;)])
 
 about_data(daily)
-#&gt; 7378 observations and 187 variables in the data
-# 2016-07-22: 7,378 observations and 187 variables in the data
+#&gt; 7378 observations and 188 variables in the data
+# 2016-07-22: 7,378 observations and 188 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
-  expect_equal(ncol(daily), 187)
+  expect_equal(ncol(daily), 188)
 })</code></pre>
 <hr />
 <p> </p>
@@ -1224,7 +1230,7 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 <div id="save-as-rdata" class="section level1">
 <h1>Save as RData</h1>
 <pre class="r"><code>about_data(daily)
-#&gt; 7378 observations and 187 variables in the data
+#&gt; 7378 observations and 188 variables in the data
 save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 </div>
 <div id="save-as-.csv" class="section level1">
@@ -1241,7 +1247,7 @@ save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 <h1>Session Info:</h1>
 <pre><code>#&gt; R version 3.3.1 (2016-06-21)
 #&gt; Platform: x86_64-apple-darwin13.4.0 (64-bit)
-#&gt; Running under: OS X 10.11.6 (El Capitan)
+#&gt; Running under: OS X 10.11.4 (El Capitan)
 #&gt; 
 #&gt; locale:
 #&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1254,9 +1260,9 @@ save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 #&gt; [5] dplyr_0.5.0     readxl_0.1.1   
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_0.12.4     crayon_1.3.1    digest_0.6.9    assertthat_0.1 
-#&gt;  [5] R6_2.1.2        DBI_0.4-1       formatR_1.3     magrittr_1.5   
-#&gt;  [9] evaluate_0.9    stringi_1.0-1   lazyeval_0.2.0  rmarkdown_0.9.6
+#&gt;  [1] Rcpp_0.12.5     crayon_1.3.1    digest_0.6.9    assertthat_0.1 
+#&gt;  [5] R6_2.1.2        DBI_0.4-1       formatR_1.4     magrittr_1.5   
+#&gt;  [9] evaluate_0.9    stringi_1.1.1   lazyeval_0.2.0  rmarkdown_0.9.6
 #&gt; [13] tools_3.3.1     stringr_1.0.0   yaml_2.1.13     memoise_1.0.0  
 #&gt; [17] htmltools_0.3.5 knitr_1.13      tibble_1.1</code></pre>
 </div>

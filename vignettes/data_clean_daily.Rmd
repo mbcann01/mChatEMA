@@ -207,8 +207,13 @@ daily <- daily %>%
     
     # Drop x and y
     x = NULL,
-    y = NULL
+    y = NULL,
+    
+    # Create age variable
+    age = round(difftime(date, dob, units = "sec") / 31556926)
   )
+# Data check
+# View(select(daily, date, dob, age))
 ```
 
 -------------------------------------------------------------------------------   
@@ -835,6 +840,7 @@ daily <- daily %>%
     long,
     lat,
     dob,
+    age,
     gender,
     hispanic,
     race,
@@ -844,10 +850,10 @@ daily <- daily %>%
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 135 variables in the data
+# 2016-07-22: 7,378 observations and 136 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 135)
+  expect_equal(ncol(daily), 136)
 })
 ```
 
@@ -1055,10 +1061,10 @@ rm(list = setdiff(ls(), "daily"))
 # View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 
 about_data(daily)
-# 2016-07-22: 7,378 observations and 187 variables in the data
+# 2016-07-22: 7,378 observations and 188 variables in the data
 
 test_that("The number of variables hasn't changed", {
-  expect_equal(ncol(daily), 187)
+  expect_equal(ncol(daily), 188)
 })
 ```
 
