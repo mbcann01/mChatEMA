@@ -411,9 +411,10 @@ daily &lt;- daily %&gt;%
     y = NULL,
     
     # Create age variable
-    age = round(difftime(date, dob, units = &quot;sec&quot;) / 31556926)
+    age = as.integer(round(difftime(date, dob, units = &quot;sec&quot;) / 31556926))
   )
 # Data check
+# class(test$age)
 # View(select(daily, date, dob, age))</code></pre>
 <hr />
 <p> </p>
@@ -1223,7 +1224,10 @@ about_data(daily)
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
   expect_equal(ncol(daily), 188)
-})</code></pre>
+})
+
+class(daily$age)
+#&gt; [1] &quot;integer&quot;</code></pre>
 <hr />
 <p> </p>
 </div>

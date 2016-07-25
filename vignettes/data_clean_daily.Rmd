@@ -210,9 +210,10 @@ daily <- daily %>%
     y = NULL,
     
     # Create age variable
-    age = round(difftime(date, dob, units = "sec") / 31556926)
+    age = as.integer(round(difftime(date, dob, units = "sec") / 31556926))
   )
 # Data check
+# class(test$age)
 # View(select(daily, date, dob, age))
 ```
 
@@ -1066,6 +1067,8 @@ about_data(daily)
 test_that("The number of variables hasn't changed", {
   expect_equal(ncol(daily), 188)
 })
+
+class(daily$age)
 ```
 
 
