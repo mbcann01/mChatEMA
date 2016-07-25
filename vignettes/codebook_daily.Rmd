@@ -13,6 +13,7 @@ knitr::opts_knit$set(root.dir = "/Users/bradcannell/Dropbox/Research/mChat")
 
 **Load packages and functions**
 ```{r load_packages, message=FALSE}
+library(dplyr)
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
 ```
@@ -160,7 +161,8 @@ lab <- c(
   "GPS location information",
   "GPS longitude",
   "GPS latitude",
-  "Date of birth",
+  #"Date of birth",
+  "Age at assessment",
   "Geneder",
   "Hispanic ethnicity",
   "Race",
@@ -222,7 +224,8 @@ lab <- c(
 ```
 
 ```{r create_codebook, highlight=FALSE, comment="", echo=FALSE}
-codebook(daily, label = lab)
+# Leave out dob
+codebook(select(daily, -dob), label = lab)
 ```
 
 -------------------------------------------------------------------------------
