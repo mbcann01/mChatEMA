@@ -25,7 +25,7 @@ library(dataclean)
 source("/Users/bradcannell/Dropbox/Research/mChat/R scripts/ea_kable.R")
 
 # Load data
-load("/Users/bradcannell/Dropbox/Research/mChat/data/daily_april_2016.RData")
+load("/Users/bradcannell/Dropbox/Research/mChat/data/daily_ema.RData")
 
 # Sort by case number and date
 daily <- dplyr::arrange(daily, case_number, date)
@@ -251,7 +251,7 @@ ea_kable(
 ### Physical activity yesterday (Minutes)
 
 ```{r physact_table_2}
-x <- select(daily, min_walk, min_run, act_min)
+x <- select(daily, min_walk, min_run, min_act)
 
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home")
 
@@ -285,7 +285,7 @@ Physical Activity Charts
 -------------------------------------------------------------------------------
 
 ```{r plot_act_yest}
-x <- names(select(daily, yest_bike, yest_run, yest_cleaning, yest_none, pedometer, min_walk, min_run, act_min, min_sit))
+x <- names(select(daily, yest_bike, yest_run, yest_cleaning, yest_none, pedometer, min_walk, min_run, min_act, min_sit))
 act <- c("Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Did None of These", "Used Pedometer", "Walked or Biked to Get Somewhere", "Engaged in Physical Fitness", "Engaged in Physical Activity at Work or Home", "Sat")
 i <- 1
 for (var in x) {
