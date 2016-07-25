@@ -405,7 +405,8 @@ daily &lt;- daily %&gt;%
     initial_alert_time = as.POSIXct(paste(date, x, y), format = &quot;%Y-%m-%d %H %M&quot;),
     start_time = as.POSIXct(paste(date, start_time), format = &quot;%Y-%m-%d %H:%M&quot;),
     end_time = as.POSIXct(paste(date, end_time), format = &quot;%Y-%m-%d %H:%M&quot;),
-    
+    assess_time = as.integer((end_time - start_time) / 60),
+
     # Drop x and y
     x = NULL,
     y = NULL,
@@ -414,7 +415,7 @@ daily &lt;- daily %&gt;%
     age = as.integer(round(difftime(date, dob, units = &quot;sec&quot;) / 31556926))
   )
 # Data check
-# class(test$age)
+# class(test$assess_time)
 # View(select(daily, date, dob, age))</code></pre>
 <hr />
 <p> </p>
@@ -850,13 +851,6 @@ rm(list = setdiff(ls(), &quot;daily&quot;))</code></pre>
 <hr />
 <p> </p>
 </div>
-<div id="calculate-time-to-complete-the-assessment" class="section level1">
-<h1>Calculate time to complete the assessment</h1>
-<pre class="r"><code>daily &lt;- daily %&gt;%
-  mutate(assess_time = (end_time - start_time) / 60)</code></pre>
-<hr />
-<p> </p>
-</div>
 <div id="separate-gps-into-longitude-and-latitude" class="section level1">
 <h1>Separate GPS into longitude and latitude</h1>
 <pre class="r"><code>options(digits = 15)
@@ -1224,10 +1218,7 @@ about_data(daily)
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
   expect_equal(ncol(daily), 188)
-})
-
-class(daily$age)
-#&gt; [1] &quot;integer&quot;</code></pre>
+})</code></pre>
 <hr />
 <p> </p>
 </div>

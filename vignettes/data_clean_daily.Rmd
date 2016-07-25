@@ -204,7 +204,8 @@ daily <- daily %>%
     initial_alert_time = as.POSIXct(paste(date, x, y), format = "%Y-%m-%d %H %M"),
     start_time = as.POSIXct(paste(date, start_time), format = "%Y-%m-%d %H:%M"),
     end_time = as.POSIXct(paste(date, end_time), format = "%Y-%m-%d %H:%M"),
-    
+    assess_time = as.integer((end_time - start_time) / 60),
+
     # Drop x and y
     x = NULL,
     y = NULL,
@@ -213,7 +214,7 @@ daily <- daily %>%
     age = as.integer(round(difftime(date, dob, units = "sec") / 31556926))
   )
 # Data check
-# class(test$age)
+# class(test$assess_time)
 # View(select(daily, date, dob, age))
 ```
 
@@ -675,18 +676,6 @@ daily <- daily %>%
 
 &nbsp;
 
-# Calculate time to complete the assessment
-
-```{r assess_time}
-daily <- daily %>%
-  mutate(assess_time = (end_time - start_time) / 60)
-```
-
-
--------------------------------------------------------------------------------   
-
-&nbsp;
-
 # Separate GPS into longitude and latitude
 
 ```{r long_lat}
@@ -1067,8 +1056,6 @@ about_data(daily)
 test_that("The number of variables hasn't changed", {
   expect_equal(ncol(daily), 188)
 })
-
-class(daily$age)
 ```
 
 
