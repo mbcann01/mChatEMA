@@ -29,7 +29,8 @@ library(dataclean)
 
 **Load data**  
 ```{r}
-load("data/daily_april_2016.RData")
+load("data/daily_ema.RData")
+# 2016-07-26: 7378 observations and 188 variables in the data
 
 # Sort by case number and date
 daily <- dplyr::arrange(daily, case_number, date)
@@ -176,7 +177,7 @@ for (act in acts) {
 
 # Ordinal variables
 blues <- brewer.pal(6, "Blues")
-acts <- select(daily, min_walk, min_run, act_min, min_sit)
+acts <- select(daily, min_walk, min_run, min_act, min_sit)
 act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
 i <- 1
 for (act in acts) {
@@ -282,7 +283,7 @@ for (act in acts) {                           # Substances
 
 # Ordinal variables
 blues <- brewer.pal(6, "Blues")
-acts <- select(daily, min_walk, min_run, act_min, min_sit)
+acts <- select(daily, min_walk, min_run, min_act, min_sit)
 act_name <- c("Minutes Walked or Biked to Get Somewhere", "Minutes Engaged in Physical Fitness", "Minutes Engaged in Physical Activity at Work or Home", "Minutes Sat")
 x_var <- select(daily, x_happy, x_sad, x_restless, x_excited, x_calm, x_bored)
 y_var <- select(daily, y_happy, y_sad, y_restless, y_excited, y_calm, y_bored)
