@@ -194,12 +194,15 @@ _Item frequency_
 View the most and lest frequently occurring items.    
 
 ```{r item_frequency}
-(item_freq <- itemFrequency(daily_trans))
+item_freq <- itemFrequency(daily_trans)
 
 # Sort
 item_freq <- sort(item_freq)
 
+# Most frequently occurring
 (most_freq <- sort(item_freq[length(item_freq) - (9:0)], decreasing = TRUE))
+
+# Least frequently occurring
 (least_freq <- item_freq[1:10])
 ```
 
@@ -220,22 +223,19 @@ write(rules, file = "data/arules.csv", sep = ",", col.names = NA)
 ```
 
 > The **support** of an itemset or rule meausures how frequently it occurs in the data.
-
-> $$support(X) = \frac{count(X)}{N}$$
-
 > Lantz, pg. 246
 
+$$support(X) = \frac{count(X)}{N}$$
+
 > A rule's **confidence** is a measurement of its predictive power or accuracy.
-
-> $$confidence(X \to Y) = \frac{support(X,Y)}{support(X)}$$
-
 > Lantz, pg. 247
 
+$$confidence(X \to Y) = \frac{support(X,Y)}{support(X)}$$
+
 > A rule's **lift** is a measurement of how much more likely one item is to be purchased relative to its typical purchase rate, given that you know another item has been purchased.
-
-> $$lift(X \to Y) = \frac {confidence(X \to Y)} {support(Y)}$$
-
 > Lantz, pg. 260
+
+$$lift(X \to Y) = \frac {confidence(X \to Y)} {support(Y)}$$
 
 ```{r rules_summary}
 summary(rules)
@@ -255,7 +255,7 @@ Hard to tell much from these 20 rules. Lantz (pg. 261), suggests sorting the rul
 
 
 ```{r sort_and_subset}
-# Top 20 rules by support (commonly occuring)
+# Top 20 rules by support (commonly occurring)
 inspect(sort(rules, by = "support")[1:20])
 
 # Top 20 rules by confidence

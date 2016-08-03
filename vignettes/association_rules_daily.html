@@ -464,351 +464,12 @@ includes extended transaction information - examples:
    interaction_sat=Very}                       10286 2015-12-10</code></pre>
 <p><em>Item frequency</em></p>
 <p>View the most and lest frequently occurring items.</p>
-<pre class="r"><code>(item_freq &lt;- itemFrequency(daily_trans))
-                          lag_loc_bus 
-                         0.0762912940 
-                       lag_loc_church 
-                         0.0083956926 
-                       lag_loc_frifam 
-                         0.0576747582 
-                        lag_loc_store 
-                         0.0215367768 
-                     lag_loc_outdoors 
-                         0.0921701040 
-                        lag_loc_other 
-                         0.0655229056 
-                   lag_loc_restaurant 
-                         0.0045628764 
-                         lag_loc_work 
-                         0.0177039606 
-                        lag_act_other 
-                         0.1874429640 
-                          lag_act_sit 
-                         0.4942507757 
-                        lag_act_sleep 
-                         0.2011315934 
-                        lag_act_stand 
-                         0.1483847417 
-                         lag_act_walk 
-                         0.0912575287 
-                         lag_act_talk 
-                         0.2084321957 
-                          lag_pre_who 
-                         0.2757802519 
-                            yest_bike 
-                         0.4112064245 
-                             yest_run 
-                         0.1478371966 
-                        yest_cleaning 
-                         0.5059317394 
-                            yest_none 
-                         0.2617265924 
-                          medtype_dep 
-                         0.0494615806 
-                          medtype_psy 
-                         0.0224493521 
-                          medtype_ast 
-                         0.0089432378 
-                           medtype_bp 
-                         0.0197116262 
-                         medtype_diab 
-                         0.0175214455 
-                         medtype_pain 
-                         0.0129585691 
-                         medtype_chol 
-                         0.0173389305 
-                         medtype_anti 
-                         0.0023726957 
-                        medtype_other 
-                         0.0250045629 
-                         meds_ran_out 
-                         0.0392407374 
-                          meds_forgot 
-                         0.0107683884 
-                         meds_no_need 
-                         0.0014601205 
-                            meds_side 
-                         0.0125935390 
-                            meds_lost 
-                         0.0014601205 
-                           meds_other 
-                         0.0250045629 
-                            free_none 
-                         0.0250045629 
-                        free_internet 
-                         0.4926081402 
-                            free_book 
-                         0.2613615623 
-                           free_music 
-                         0.2914765468 
-                           free_craft 
-                         0.1571454645 
-                         free_cleaned 
-                         0.4610330352 
-                            free_pets 
-                         0.1943785362 
-                            free_pray 
-                         0.3170286549 
-                           free_sport 
-                         0.0177039606 
-                            free_walk 
-                         0.1662712174 
-                            free_shop 
-                         0.1673663077 
-                       free_volunteer 
-                         0.1160795766 
-                          free_social 
-                         0.3683153860 
-                              sub_alc 
-                         0.0693557218 
-                              sub_cig 
-                         0.4133966052 
-                              sub_mar 
-                         0.0680781164 
-                              sub_opi 
-                         0.0536594269 
-                             sub_stim 
-                         0.0034677861 
-                             sub_herb 
-                         0.0009125753 
-                             sub_none 
-                         0.4869501734 
-          lag_happy=Strongly disagree 
-                         0.0343128308 
-                   lag_happy=Disagree 
-                         0.0866946523 
-                    lag_happy=Neutral 
-                         0.3201314108 
-                      lag_happy=Agree 
-                         0.4011680964 
-             lag_happy=Strongly agree 
-                         0.1576930097 
-     lag_frustrated=Strongly disagree 
-                         0.1843402081 
-              lag_frustrated=Disagree 
-                         0.4223398430 
-               lag_frustrated=Neutral 
-                         0.2025917138 
-                 lag_frustrated=Agree 
-                         0.1456470159 
-        lag_frustrated=Strongly agree 
-                         0.0450812192 
-            lag_sad=Strongly disagree 
-                         0.1985763826 
-                     lag_sad=Disagree 
-                         0.4909655047 
-                      lag_sad=Neutral 
-                         0.1920058405 
-                        lag_sad=Agree 
-                         0.0817667458 
-               lag_sad=Strongly agree 
-                         0.0366855266 
-        lag_worried=Strongly disagree 
-                         0.1799598467 
-                 lag_worried=Disagree 
-                         0.3880270122 
-                  lag_worried=Neutral 
-                         0.2082496806 
-                    lag_worried=Agree 
-                         0.1719291842 
-           lag_worried=Strongly agree 
-                         0.0518342763 
-       lag_restless=Strongly disagree 
-                         0.1737543347 
-                lag_restless=Disagree 
-                         0.3883920423 
-                 lag_restless=Neutral 
-                         0.2286913670 
-                   lag_restless=Agree 
-                         0.1766745757 
-          lag_restless=Strongly agree 
-                         0.0324876802 
-        lag_excited=Strongly disagree 
-                         0.0607775141 
-                 lag_excited=Disagree 
-                         0.2642818032 
-                  lag_excited=Neutral 
-                         0.3878444972 
-                    lag_excited=Agree 
-                         0.1817849973 
-           lag_excited=Strongly agree 
-                         0.1053111882 
-           lag_calm=Strongly disagree 
-                         0.0334002555 
-                    lag_calm=Disagree 
-                         0.1284906005 
-                     lag_calm=Neutral 
-                         0.3473261544 
-                       lag_calm=Agree 
-                         0.3728782625 
-              lag_calm=Strongly agree 
-                         0.1179047271 
-         lag_lonely=Strongly disagree 
-                         0.2093447709 
-                  lag_lonely=Disagree 
-                         0.4219748129 
-                   lag_lonely=Neutral 
-                         0.2060594999 
-                     lag_lonely=Agree 
-                         0.0927176492 
-            lag_lonely=Strongly agree 
-                         0.0699032670 
-          lag_bored=Strongly disagree 
-                         0.2120824968 
-                   lag_bored=Disagree 
-                         0.4347508669 
-                    lag_bored=Neutral 
-                         0.2352619091 
-                      lag_bored=Agree 
-                         0.0932651944 
-             lag_bored=Strongly agree 
-                         0.0246395328 
-       lag_sluggish=Strongly disagree 
-                         0.1715641540 
-                lag_sluggish=Disagree 
-                         0.3382004015 
-                 lag_sluggish=Neutral 
-                         0.2115349516 
-                   lag_sluggish=Agree 
-                         0.1965687169 
-          lag_sluggish=Strongly agree 
-                         0.0821317759 
-                         serv_fruit=0 
-                         0.3465960942 
-                         serv_fruit=1 
-                         0.2962219383 
-                         serv_fruit=2 
-                         0.2109874065 
-                         serv_fruit=3 
-                         0.1062237635 
-                         serv_fruit=4 
-                         0.0242745026 
-                 serv_fruit=5 or more 
-                         0.0156962949 
-                           serv_veg=0 
-                         0.2272312466 
-                           serv_veg=1 
-                         0.3265194379 
-                           serv_veg=2 
-                         0.2812557036 
-                           serv_veg=3 
-                         0.1226501186 
-                           serv_veg=4 
-                         0.0257346231 
-                   serv_veg=5 or more 
-                         0.0166088702 
-                           serv_ssb=0 
-                         0.3391129768 
-                           serv_ssb=1 
-                         0.2212082497 
-                           serv_ssb=2 
-                         0.1664537324 
-                           serv_ssb=3 
-                         0.1483847417 
-                           serv_ssb=4 
-                         0.0485490053 
-                   serv_ssb=5 or more 
-                         0.0762912940 
-                        serv_sweets=0 
-                         0.4599379449 
-                        serv_sweets=1 
-                         0.3084504472 
-                        serv_sweets=2 
-                         0.1430918051 
-                        serv_sweets=3 
-                         0.0669830261 
-                        serv_sweets=4 
-                         0.0164263552 
-                serv_sweets=5 or more 
-                         0.0051104216 
-                          serv_meat=0 
-                         0.3117357182 
-                          serv_meat=1 
-                         0.2949443329 
-                          serv_meat=2 
-                         0.2896513962 
-                          serv_meat=3 
-                         0.0881547728 
-                          serv_meat=4 
-                         0.0116809637 
-                  serv_meat=5 or more 
-                         0.0038328162 
-                  food_sat=Not at all 
-                         0.0682606315 
-                    food_sat=A little 
-                         0.2239459755 
-                    food_sat=Somewhat 
-                         0.4387661982 
-                        food_sat=Very 
-                         0.1856178135 
-         food_sat=Extremely satisfied 
-                         0.0834093813 
-           free_time=2 or fewer hours 
-                         0.1279430553 
- free_time=More than 2 hours- 4 hours 
-                         0.1843402081 
- free_time=More than 4 hours- 6 hours 
-                         0.2237634605 
- free_time=More than 6 hours- 8 hours 
-                         0.1867129038 
-free_time=More than 8 hours- 10 hours 
-                         0.1359737178 
-         free_time=More than 10 hours 
-                         0.1412666545 
-             free_time_sat=Not at all 
-                         0.0377806169 
-               free_time_sat=A little 
-                         0.1896331447 
-               free_time_sat=Somewhat 
-                         0.4256251141 
-                   free_time_sat=Very 
-                         0.2374520898 
-    free_time_sat=Extremely satisfied 
-                         0.1095090345 
-          min_talk=15 or less minutes 
-                         0.1858003285 
-               min_talk=16-30 minutes 
-                         0.1447344406 
-              min_talk=31 min- 1 hour 
-                         0.2067895601 
-   min_talk=More than 1 hour- 2 hours 
-                         0.2031392590 
-  min_talk=More than 2 hours- 3 hours 
-                         0.1449169556 
-  min_talk=More than 3 hours- 4 hours 
-                         0.0480014601 
-           min_talk=More than 4 hours 
-                         0.0666179960 
-         min_group=15 or less minutes 
-                         0.5075743749 
-              min_group=16-30 minutes 
-                         0.1213725132 
-             min_group=31 min- 1 hour 
-                         0.1472896514 
-  min_group=More than 1 hour- 2 hours 
-                         0.1387114437 
- min_group=More than 2 hours- 3 hours 
-                         0.0671655412 
- min_group=More than 3 hours- 4 hours 
-                         0.0060229969 
-          min_group=More than 4 hours 
-                         0.0118634787 
-           interaction_sat=Not at all 
-                         0.0511042161 
-             interaction_sat=A little 
-                         0.1850702683 
-             interaction_sat=Somewhat 
-                         0.3770761088 
-                 interaction_sat=Very 
-                         0.2566161708 
-  interaction_sat=Extremely satisfied 
-                         0.1301332360 
-                          heavy_drink 
-                         0.0051104216 
+<pre class="r"><code>item_freq &lt;- itemFrequency(daily_trans)
 
 # Sort
 item_freq &lt;- sort(item_freq)
 
+# Most frequently occurring
 (most_freq &lt;- sort(item_freq[length(item_freq) - (9:0)], decreasing = TRUE))
 min_group=15 or less minutes                yest_cleaning 
                    0.5075744                    0.5059317 
@@ -820,6 +481,8 @@ min_group=15 or less minutes                yest_cleaning
                    0.4610330                    0.4599379 
            food_sat=Somewhat           lag_bored=Disagree 
                    0.4387662                    0.4347509 
+
+# Least frequently occurring
 (least_freq &lt;- item_freq[1:10])
                             sub_herb                         meds_no_need 
                         0.0009125753                         0.0014601205 
@@ -858,38 +521,23 @@ set item appearances ...[0 item(s)] done [0.00s].
 set transactions ...[170 item(s), 5479 transaction(s)] done [0.01s].
 sorting and recoding items ... [127 item(s)] done [0.00s].
 creating transaction tree ... done [0.00s].
-checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.29s].
+checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.31s].
 writing ... [156197 rule(s)] done [0.01s].
 creating S4 object  ... done [0.04s].
 
 write(rules, file = &quot;data/arules.csv&quot;, sep = &quot;,&quot;, col.names = NA)</code></pre>
 <blockquote>
-<p>The <strong>support</strong> of an itemset or rule meausures how frequently it occurs in the data.</p>
+<p>The <strong>support</strong> of an itemset or rule meausures how frequently it occurs in the data. Lantz, pg. 246</p>
 </blockquote>
-<blockquote>
 <p><span class="math display">\[support(X) = \frac{count(X)}{N}\]</span></p>
-</blockquote>
 <blockquote>
-<p>Lantz, pg. 246</p>
+<p>A rule’s <strong>confidence</strong> is a measurement of its predictive power or accuracy. Lantz, pg. 247</p>
 </blockquote>
-<blockquote>
-<p>A rule’s <strong>confidence</strong> is a measurement of its predictive power or accuracy.</p>
-</blockquote>
-<blockquote>
 <p><span class="math display">\[confidence(X \to Y) = \frac{support(X,Y)}{support(X)}\]</span></p>
-</blockquote>
 <blockquote>
-<p>Lantz, pg. 247</p>
+<p>A rule’s <strong>lift</strong> is a measurement of how much more likely one item is to be purchased relative to its typical purchase rate, given that you know another item has been purchased. Lantz, pg. 260</p>
 </blockquote>
-<blockquote>
-<p>A rule’s <strong>lift</strong> is a measurement of how much more likely one item is to be purchased relative to its typical purchase rate, given that you know another item has been purchased.</p>
-</blockquote>
-<blockquote>
 <p><span class="math display">\[lift(X \to Y) = \frac {confidence(X \to Y)} {support(Y)}\]</span></p>
-</blockquote>
-<blockquote>
-<p>Lantz, pg. 260</p>
-</blockquote>
 <pre class="r"><code>summary(rules)
 set of 156197 rules
 
@@ -940,7 +588,7 @@ inspect(rules[1:20])
 * Actionable<br />
 * Trivial<br />
 * Inexplicable</p>
-<pre class="r"><code># Top 20 rules by support (commonly occuring)
+<pre class="r"><code># Top 20 rules by support (commonly occurring)
 inspect(sort(rules, by = &quot;support&quot;)[1:20])
     lhs                          rhs                       support  
 686 {free_cleaned}            =&gt; {yest_cleaning}           0.3675853
