@@ -27,6 +27,7 @@ Useful websites:
 library(dplyr)
 library(purrr)
 library(arules)
+library()
 
 # devtools::install_github("mbcann01/dataclean")
 library(dataclean)
@@ -34,7 +35,7 @@ library(dataclean)
 
 **Load data**  
 ```{r}
-load("data/daily_april_2016.RData")
+load("data/daily_ema.RData")
 
 # Sort by case number and date
 daily <- dplyr::arrange(daily, case_number, date)
@@ -48,8 +49,8 @@ about_data(daily)
 ## Introduction
 
 > Market basket analysis is used behind the scenes for the recommendation systems used in many brick-and-mortar and online retailers. The learned association rules indicate combinations of items that are often purchased together in a set. The acquired knowledge might provide insight into new ways for a grocery chain to optimize the inventory, advertise promotions, or organize the physical layout of the store. For instance, if shoppers frequently purchase coffee or orange juice with a breakfast pastry, then it may be possible to increase profit by relocating pastries closer to the coffee and juice...    
-However, the techniques could be applied to many different types of problems, from movie recommendations, to dating sites, to finding dangerous interactions among medications. In doing so, we will see how the Apriori algorithm is able to efficiently evaluate a potentially massive set of association rules.   
-    - Lantz, Brett (2013-10-25). Machine Learning with R (pp. 249-250). Packt Publishing. Kindle Edition. 
+However, the techniques could be applied to many different types of problems, from movie recommendations, to dating sites, to finding dangerous interactions among medications. In doing so, we will see how the Apriori algorithm is able to efficiently evaluate a potentially massive set of association rules.  </br>
+- Lantz, Brett (2013-10-25). Machine Learning with R (pp. 249-250). Packt Publishing. Kindle Edition. 
     
 We are interested in understanding which behaviors, if any, tend to occur together. In order to explore patterns of co-occurrence we use association rules analysis (Lantz, 2013; Miner, Nisbet, & Elder IV, 2009).
 
@@ -74,61 +75,204 @@ In addition to behaviors, we may also explore the co-occurrence of mood states.
 Lantz, B. (2013). Machine learning with R. Packt Publishing Ltd.   
 Miner, G., Nisbet, R., & Elder IV, J. (2009). Handbook of statistical analysis and data mining applications. Academic Press.
 
-&nbsp;
-
 -------------------------------------------------------------------------------   
 
-&nbsp;
+# Align the time frame of behaviors
 
-# Create Sparse Matrix
+For some variables of interest, participants were asked to give a response for today:   
+Mood: today   
+location: today   
+activity: today   
+
+For other variables of interest, participants were asked to give a response for yesterday:   
+physact: yesterday   
+diet: yesterday   
+medication: yesterday   
+free time: yesterday   
+interaction: yesterday   
+substances: yesterday   
+
+We are interested in investigating what characteristics/feelings/activities group together within day. Therefore, below we used a lagged version (value on the previous day) of the mood, location, and current activity variables.
+
+-------------------------------------------------------------------------------
+
+# Create Sparse Matrix   
+
+1. Keep only the rows where the lagged date is equal to the previous calendar date.   
+2. Coerce factor variables into sparse matrix of class transactions.   
+3. Add case_number and date to extended transaction information.   
+
+_Iterative changes to the data_   
+
+1. First attempt. Setting all variables to factors and then coercing to transactions made for really uninteresting results. Things like {bus=NO, church=NO, etc.} => {home=YES}.   
+
+2. Second attempt. Rules were dominated by highly prevalent and uninteresting conditions. For example, in 91% of observations people say that they took their medication. Therefore, take\_meds turns up in many rules in uninteresting ways. Therefore, I decided to remove take\_meds, free\_tv, and lag\_loc\_home from the transactions data. I also removed num\_drinks and num\_cigs. It didn't make sense to have them included in the model with heavy\_drink and any\_cigs.   
 
 ```{r create_sparse_matrix}
-# Dichotomize (0/1) all variables of interest in order to coerce the data into
-# a sparse matrix - a requirement of the arules package.
-dichotomize <- function(x) {
-  length = length(levels(x))
-  if (length == 5) {
-    ifelse(x %in% c("Strongly agree", "Agree"), 1, 0)
-  } else if (length == 2) {
-    ifelse(x == "Yes", 1, 0)
-  }
-}
-### Note: Assumes that all variables with 5 levels have "Strongly agree, Agree, Neutral, Disagree, and Stongly disagree" and all variables with 2 variables are "Yes/No." Always double-check this assumption.
-
+# For lagged variable analysis, keep only the rows where lag_date = date_yest, and only the variables of interest described above.
 daily_matrix <- daily %>%
-  
-  # Keep vars of interest
-  select(happy:sluggish, other_act:talk_act, pre_who:none_yest, any_fruit, any_veg, any_ssb, any_sweets, any_meat, take_meds:meds_other, none_free:social_free, any_talk, any_group, alc_sub:none_sub, op_heroin:op_other) %>%
-  
-  # Apply anonymous function to dichotomize each remaining var using map
-  map(dichotomize) %>%
-  
-  # Coerce list into a matrix
-  do.call(cbind, .)
+  filter(date_match == 1) %>%
+  # Keep variables of interest
+  select(
+    case_number,
+    date,
+    lag_loc_bus:lag_loc_work, # Location vars
+    lag_act_other:lag_pre_who, # Activity during assessment vars
+    yest_bike:yest_none, # General activity
+    medtype_dep:meds_other, # Medication vars
+    free_none:free_social, # Free time vars
+    sub_alc:sub_none, # Substance use vars
+    lag_happy:lag_sluggish, # Mood vars
+    serv_fruit, serv_veg, serv_ssb, serv_sweets, serv_meat, food_sat, # Diet vars
+    free_time, free_time_sat, # Free time vars
+    min_talk, min_group, interaction_sat, # Interaction vars
+    heavy_drink # Substance use vars
+  ) %>%
+  # Update: Drop vars as described above
+  select(
+    -lag_loc_home,
+    -free_tv
+  )
+about_data(daily_matrix) # 83 variables
 
-# Coerce matix to be of class transactions
-daily_trans <- as(daily_matrix, "transactions")
+
+
+
+# Coerce all Yes / NO factor variables to TRUE / FALSE for sparse matrix
+# Note: Transaction objects are not any different when using factor vs. ordered factor. No need to modifiy factor variables.
+daily_matrix <- daily_matrix %>%
+  # Apply anonymous function to dichotomize to each remaining var using map
+  # Vars that do not meet the if condition (.p) will pass through unchanged
+  map_if(
+    .p = ~ identical(levels(.), c("No", "Yes")),
+    .f = ~ if_else(. == "Yes", TRUE, FALSE, NA)) %>%
+  # Coerce list into a data frame
+  as.data.frame
+
+
+# Coerce df to be of class transactions
+daily_trans <- as(daily_matrix[-c(1, 2)], "transactions")
+trans_info <- data.frame(daily_matrix[1:2])
+
+# Add case_number and date to extended transaction information
+transactionInfo(daily_trans) <- trans_info
+
+# Clean up
+rm(trans_info)
+```
+
+-------------------------------------------------------------------------------
+
+# Data exploration
+
+```{r summary}
+(trans_sum <- summary(daily_trans))
+```
+
+The `r trans_sum@Dim[1]` rows correspond to daily EMA responses. The `r trans_sum@Dim[2]` columns correspond to the different variables the each participant either had/did (1), or did not have/do (0). For example, feeling happy (0/1) or walking yesterday (0/1).
+
+The **density** of `r trans_sum@density`, or `r round(trans_sum@density * 100, 1)`%, is a measure of the proportion of non-zero cells in the sparse matrix.
+
+_Most frequent items_
+
+The most frequent items shows the affirmative responses that most frequently gave in item sets (observations).
+
+_Element sizes_
+
+5 item sets (observations) included 23 affirmative responses, 319 item sets (observations) included 24 affirmative responses, ect...
+
+_Inspect_ 
+
+Inspect allows us to view transactions...
+
+```{r inspect}
+inspect(daily_trans[1:2])
+```
+
+_Item frequency_
+
+View the most and lest frequently occurring items.    
+
+```{r item_frequency}
+(item_freq <- itemFrequency(daily_trans))
+
+# Sort
+item_freq <- sort(item_freq)
+
+(most_freq <- sort(item_freq[length(item_freq) - (9:0)], decreasing = TRUE))
+(least_freq <- item_freq[1:10])
 ```
 
 
-# Association Rules Analysis
+-------------------------------------------------------------------------------
 
-```{r ar_analysis_1}
-summary(daily_trans)
-inspect(daily_trans[1:10])
-itemFrequencyPlot(daily_trans, support = 0.1)
-rules <- apriori(daily_trans, parameter = list(support = 0.01, confidence = 0.6))
+
+# Training the apriori algorithm  
+
+```{r modeling}
+rules <- apriori(data = daily_trans,
+  parameter = list(
+    support = 0.05,
+    confidence = 0.50,
+    minlen = 2))
+
+write(rules, file = "data/arules.csv", sep = ",", col.names = NA)
+```
+
+> The **support** of an itemset or rule meausures how frequently it occurs in the data.
+
+> $$support(X) = \frac{count(X)}{N}$$
+
+> Lantz, pg. 246
+
+> A rule's **confidence** is a measurement of its predictive power or accuracy.
+
+> $$confidence(X \to Y) = \frac{support(X,Y)}{support(X)}$$
+
+> Lantz, pg. 247
+
+> A rule's **lift** is a measurement of how much more likely one item is to be purchased relative to its typical purchase rate, given that you know another item has been purchased.
+
+> $$lift(X \to Y) = \frac {confidence(X \to Y)} {support(Y)}$$
+
+> Lantz, pg. 260
+
+```{r rules_summary}
 summary(rules)
-inspect(head(rules, n = 20, by = "support"))
 ```
 
-# Save the rules
+The apriori algorithm returned 156,197 rules. On average, each rule had 5 items. 
 
-```{r save_rules}
-# write(rules, file = "data/arules.csv", sep = ",")
+```{r inspect_rules}
+# Inspect the first 20 rules
+inspect(rules[1:20])
 ```
 
+Hard to tell much from these 20 rules. Lantz (pg. 261), suggests sorting the rules by support, confidence, or lift, and then categorizing rules as:    
+* Actionable   
+* Trivial   
+* Inexplicable   
 
+
+```{r sort_and_subset}
+# Top 20 rules by support (commonly occuring)
+inspect(sort(rules, by = "support")[1:20])
+
+# Top 20 rules by confidence
+inspect(sort(rules, by = "confidence")[1:20])
+
+# Top 20 rules by lift
+inspect(sort(rules, by = "lift")[1:20])
+```
+
+Still rough. Need to dig deeper.
+
+# Look at the rules that include heavy drinking 
+
+```{r heavy_drinking}
+rules_heavy_drink <- subset(rules, items %in% "heavy_drink")
+rules_heavy_drink
+```
 
 &nbsp;
 
