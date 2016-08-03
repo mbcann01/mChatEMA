@@ -338,7 +338,7 @@ library(dataclean)
 
 # Import data
 daily &lt;- read_excel(
-  path = &quot;data/raw data/All EMA Data 7_19_16.xls&quot;,
+  path = &quot;data/raw data/All EMA Data 8_1_16.xls&quot;,
   sheet = &quot;Daily EMA&quot;,
   col_names = col_info[seq(1, length(col_info), 2)],
   col_types = col_info[seq(2, length(col_info), 2)],
@@ -362,13 +362,13 @@ if (length(index) == 0) {
   daily &lt;- daily[-index, ]
   cat(paste(&quot;Row(s)&quot;, index, &quot;deleted because all values were missing&quot;)) 
 }
-#&gt; Row(s) 7379 deleted because all values were missing
+#&gt; Row(s) 8110 deleted because all values were missing
 rm(index)
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 82 variables in the data
-# 2016-07-22: 7,378 observations and 82 variables in the data
+#&gt; 8109 observations and 82 variables in the data
+# 2016-08-03: 8,109 observations and 82 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
   expect_equal(ncol(daily), 82)
@@ -1014,8 +1014,7 @@ daily &lt;- daily %&gt;%
 
 # Data check
 about_data(daily)
-#&gt; 7378 observations and 136 variables in the data
-# 2016-07-22: 7,378 observations and 136 variables in the data
+#&gt; 8109 observations and 136 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
   expect_equal(ncol(daily), 136)
@@ -1213,8 +1212,7 @@ rm(list = setdiff(ls(), &quot;daily&quot;))
 # View(daily[c(&quot;case_number&quot;, &quot;date&quot;, &quot;date_yest&quot;, &quot;lag_date&quot;, &quot;date_match&quot;, &quot;sub_alc&quot;, &quot;happy&quot;, &quot;lag_happy&quot;, &quot;x_happy&quot;, &quot;y_happy&quot;, &quot;x_sad&quot;, &quot;x_restless&quot;, &quot;x_excited&quot;, &quot;x_calm&quot;, &quot;x_bored&quot;, &quot;x&quot;)])
 
 about_data(daily)
-#&gt; 7378 observations and 188 variables in the data
-# 2016-07-22: 7,378 observations and 188 variables in the data
+#&gt; 8109 observations and 188 variables in the data
 
 test_that(&quot;The number of variables hasn't changed&quot;, {
   expect_equal(ncol(daily), 188)
@@ -1225,7 +1223,7 @@ test_that(&quot;The number of variables hasn't changed&quot;, {
 <div id="save-as-rdata" class="section level1">
 <h1>Save as RData</h1>
 <pre class="r"><code>about_data(daily)
-#&gt; 7378 observations and 188 variables in the data
+#&gt; 8109 observations and 188 variables in the data
 save(daily, file = &quot;data/daily_ema.RData&quot;)</code></pre>
 </div>
 <div id="save-as-.csv" class="section level1">

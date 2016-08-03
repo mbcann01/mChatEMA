@@ -137,7 +137,7 @@ col_info <- c(
 
 # Import data
 daily <- read_excel(
-  path = "data/raw data/All EMA Data 7_19_16.xls",
+  path = "data/raw data/All EMA Data 8_1_16.xls",
   sheet = "Daily EMA",
   col_names = col_info[seq(1, length(col_info), 2)],
   col_types = col_info[seq(2, length(col_info), 2)],
@@ -163,7 +163,7 @@ rm(index)
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 82 variables in the data
+# 2016-08-03: 8,109 observations and 82 variables in the data
 
 test_that("The number of variables hasn't changed", {
   expect_equal(ncol(daily), 82)
@@ -840,7 +840,6 @@ daily <- daily %>%
 
 # Data check
 about_data(daily)
-# 2016-07-22: 7,378 observations and 136 variables in the data
 
 test_that("The number of variables hasn't changed", {
   expect_equal(ncol(daily), 136)
@@ -1051,7 +1050,6 @@ rm(list = setdiff(ls(), "daily"))
 # View(daily[c("case_number", "date", "date_yest", "lag_date", "date_match", "sub_alc", "happy", "lag_happy", "x_happy", "y_happy", "x_sad", "x_restless", "x_excited", "x_calm", "x_bored", "x")])
 
 about_data(daily)
-# 2016-07-22: 7,378 observations and 188 variables in the data
 
 test_that("The number of variables hasn't changed", {
   expect_equal(ncol(daily), 188)
