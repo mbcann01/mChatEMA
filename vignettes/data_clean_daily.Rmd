@@ -161,6 +161,9 @@ if (length(index) == 0) {
 }
 rm(index)
 
+# Remove test id numbers
+daily <- daily[!daily$case_number == "10500", ]
+
 # Data check
 about_data(daily)
 # 2016-08-03: 8,109 observations and 82 variables in the data
