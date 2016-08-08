@@ -523,7 +523,7 @@ set item appearances ...[0 item(s)] done [0.00s].
 set transactions ...[170 item(s), 5479 transaction(s)] done [0.01s].
 sorting and recoding items ... [127 item(s)] done [0.00s].
 creating transaction tree ... done [0.00s].
-checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.40s].
+checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.34s].
 writing ... [155738 rule(s)] done [0.02s].
 creating S4 object  ... done [0.04s].
 
@@ -890,8 +890,7 @@ inspect(sort(rules, by = &quot;lift&quot;)[1:20])
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
     lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05274685  0.9475410 8.048957</code></pre>
-<p>Still rough. Need to dig deeper. Find rules that include substances, acitivities, etc. Not just feelings.</p>
-<p>Ignore rules that are just mood predicting mood. These aren’t very interesting. This really amounts to not including any of the mood items in the rhs.</p>
+<p>Many of these rules are mood states predicting mood states. In order to get away from that a bit, I’m going to view a subset of rules that don’t include mood states on the RHS.</p>
 <pre class="r"><code>rules
 set of 155738 rules 
 moods &lt;- c(&quot;frustrated&quot;, &quot;sad&quot;, &quot;worried&quot;, &quot;restless&quot;, &quot;excited&quot;, &quot;calm&quot;, &quot;lonely&quot;, &quot;bored&quot;, &quot;sluggish&quot;)

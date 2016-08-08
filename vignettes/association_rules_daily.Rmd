@@ -265,9 +265,7 @@ inspect(sort(rules, by = "confidence")[1:20])
 inspect(sort(rules, by = "lift")[1:20])
 ```
 
-Still rough. Need to dig deeper. Find rules that include substances, acitivities, etc. Not just feelings.
-
-Ignore rules that are just mood predicting mood. These aren't very interesting. This really amounts to not including any of the mood items in the rhs.
+Many of these rules are mood states predicting mood states. In order to get away from that a bit, I'm going to view a subset of rules that don't include mood states on the RHS.
 
 ```{r rules_no_mood}
 rules
