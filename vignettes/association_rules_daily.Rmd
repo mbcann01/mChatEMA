@@ -277,13 +277,13 @@ for (mood in moods) {
 }
 rules_no_mood
 
-# Top 20 rules by support (commonly occurring)
+# Top 100 rules by support (commonly occurring)
 inspect(sort(rules_no_mood, by = "support")[1:100])
 
-# Top 20 rules by confidence
+# Top 100 rules by confidence
 inspect(sort(rules_no_mood, by = "confidence")[1:100])
 
-# Top 20 rules by lift
+# Top 100 rules by lift
 inspect(sort(rules_no_mood, by = "lift")[1:100])
 ```
 

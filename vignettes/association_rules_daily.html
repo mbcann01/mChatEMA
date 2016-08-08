@@ -523,8 +523,8 @@ set item appearances ...[0 item(s)] done [0.00s].
 set transactions ...[170 item(s), 5479 transaction(s)] done [0.01s].
 sorting and recoding items ... [127 item(s)] done [0.00s].
 creating transaction tree ... done [0.00s].
-checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.34s].
-writing ... [155738 rule(s)] done [0.02s].
+checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.35s].
+writing ... [155738 rule(s)] done [0.01s].
 creating S4 object  ... done [0.04s].
 
 write(rules, file = &quot;data/arules.csv&quot;, sep = &quot;,&quot;, col.names = NA)</code></pre>
@@ -903,7 +903,7 @@ for (mood in moods) {
 rules_no_mood
 set of 46765 rules 
 
-# Top 20 rules by support (commonly occurring)
+# Top 100 rules by support (commonly occurring)
 inspect(sort(rules_no_mood, by = &quot;support&quot;)[1:100])
     lhs                               rhs                              support confidence      lift
 1   {free_cleaned}                 =&gt; {yest_cleaning}                0.3672203  0.7971474 1.5750344
@@ -1016,7 +1016,7 @@ inspect(sort(rules_no_mood, by = &quot;support&quot;)[1:100])
 99  {serv_ssb=0}                   =&gt; {sub_none}                     0.1945611  0.5731183 1.1769547
 100 {free_pray}                    =&gt; {free_cleaned}                 0.1941960  0.6118459 1.3281710
 
-# Top 20 rules by confidence
+# Top 100 rules by confidence
 inspect(sort(rules_no_mood, by = &quot;confidence&quot;)[1:100])
     lhs                                      rhs                                    support confidence     lift
 1   {free_cleaned,                                                                                             
@@ -1383,7 +1383,7 @@ inspect(sort(rules_no_mood, by = &quot;confidence&quot;)[1:100])
 100 {free_book,                                                                                                
      free_time=More than 10 hours}        =&gt; {free_internet}                     0.05329440  0.9240506 1.876528
 
-# Top 20 rules by lift
+# Top 100 rules by lift
 inspect(sort(rules_no_mood, by = &quot;lift&quot;)[1:100])
     lhs                                      rhs                                      support confidence     lift
 1   {lag_happy=Strongly agree,                                                                                   
