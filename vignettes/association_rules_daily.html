@@ -11,7 +11,7 @@
 
 <meta name="author" content="Brad Cannell" />
 
-<meta name="date" content="2016-08-03" />
+<meta name="date" content="2016-08-07" />
 
 <title>Association Rules Analysis - Daily</title>
 
@@ -214,7 +214,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Association Rules Analysis - Daily</h1>
 <h4 class="author"><em>Brad Cannell</em></h4>
-<h4 class="date"><em>August 03, 2016</em></h4>
+<h4 class="date"><em>August 07, 2016</em></h4>
 
 </div>
 
@@ -242,7 +242,7 @@ defined in the 'lazyeval' namespace
 Warning: failed to assign NativeSymbolInfo for rhs since rhs is already
 defined in the 'lazyeval' namespace
 about_data(daily)
-8109 observations and 188 variables in the data </code></pre>
+8065 observations and 188 variables in the data </code></pre>
 <hr />
 <p> </p>
 <div id="introduction" class="section level2">
@@ -355,25 +355,25 @@ rm(trans_info)</code></pre>
 <pre class="r"><code>(trans_sum &lt;- summary(daily_trans))
 transactions as itemMatrix in sparse format with
  5479 rows (elements/itemsets/transactions) and
- 170 columns (items) and a density of 0.1687073 
+ 170 columns (items) and a density of 0.1687169 
 
 most frequent items:
 min_group=15 or less minutes                yest_cleaning 
-                        2781                         2772 
+                        2783                         2773 
                  lag_act_sit                free_internet 
-                        2708                         2699 
+                        2704                         2698 
             lag_sad=Disagree                      (Other) 
-                        2690                       143489 
+                        2691                       143499 
 
 element (itemset/transaction) length distribution:
 sizes
  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40 
-  5 319 670 672 743 685 486 440 380 272 237 195 135 102  50  44  22  14 
- 41  43  44 
-  4   1   3 
+  5 319 668 675 742 687 484 441 381 270 237 193 136 102  50  44  22  14 
+ 41  43  44  46 
+  4   1   3   1 
 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  23.00   26.00   28.00   28.68   31.00   44.00 
+  23.00   26.00   28.00   28.68   31.00   46.00 
 
 includes extended item information - examples:
           labels      variables levels
@@ -387,7 +387,7 @@ includes extended transaction information - examples:
 2       10286 2015-12-10
 3       10286 2015-12-11</code></pre>
 <p>The 5479 rows correspond to daily EMA responses. The 170 columns correspond to the different variables the each participant either had/did (1), or did not have/do (0). For example, feeling happy (0/1) or walking yesterday (0/1).</p>
-<p>The <strong>density</strong> of 0.1687073, or 16.9%, is a measure of the proportion of non-zero cells in the sparse matrix.</p>
+<p>The <strong>density</strong> of 0.1687169, or 16.9%, is a measure of the proportion of non-zero cells in the sparse matrix.</p>
 <p><em>Most frequent items</em></p>
 <p>The most frequent items shows the affirmative responses that most frequently gave in item sets (observations).</p>
 <p><em>Element sizes</em></p>
@@ -474,22 +474,22 @@ item_freq &lt;- sort(item_freq)
 # Most frequently occurring
 (most_freq &lt;- sort(item_freq[length(item_freq) - (9:0)], decreasing = TRUE))
 min_group=15 or less minutes                yest_cleaning 
-                   0.5075744                    0.5059317 
+                   0.5079394                    0.5061143 
                  lag_act_sit                free_internet 
-                   0.4942508                    0.4926081 
+                   0.4935207                    0.4924256 
             lag_sad=Disagree                     sub_none 
-                   0.4909655                    0.4869502 
+                   0.4911480                    0.4869502 
                 free_cleaned                serv_sweets=0 
-                   0.4610330                    0.4599379 
+                   0.4606680                    0.4599379 
            food_sat=Somewhat           lag_bored=Disagree 
-                   0.4387662                    0.4347509 
+                   0.4387662                    0.4351159 
 
 # Least frequently occurring
 (least_freq &lt;- item_freq[1:10])
                             sub_herb                         meds_no_need 
                         0.0009125753                         0.0014601205 
                            meds_lost                         medtype_anti 
-                        0.0014601205                         0.0023726957 
+                        0.0014601205                         0.0025552108 
                             sub_stim                  serv_meat=5 or more 
                         0.0034677861                         0.0038328162 
                   lag_loc_restaurant                serv_sweets=5 or more 
@@ -523,8 +523,8 @@ set item appearances ...[0 item(s)] done [0.00s].
 set transactions ...[170 item(s), 5479 transaction(s)] done [0.01s].
 sorting and recoding items ... [127 item(s)] done [0.00s].
 creating transaction tree ... done [0.00s].
-checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.31s].
-writing ... [156197 rule(s)] done [0.01s].
+checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.40s].
+writing ... [155738 rule(s)] done [0.02s].
 creating S4 object  ... done [0.04s].
 
 write(rules, file = &quot;data/arules.csv&quot;, sep = &quot;,&quot;, col.names = NA)</code></pre>
@@ -541,23 +541,23 @@ write(rules, file = &quot;data/arules.csv&quot;, sep = &quot;,&quot;, col.names 
 </blockquote>
 <p><span class="math display">\[lift(X \to Y) = \frac {confidence(X \to Y)} {support(Y)}\]</span></p>
 <pre class="r"><code>summary(rules)
-set of 156197 rules
+set of 155738 rules
 
 rule length distribution (lhs + rhs):sizes
     2     3     4     5     6     7     8     9    10 
-  702 12711 37341 45411 36621 17714  4919   738    40 
+  702 12709 37295 45306 36425 17651  4872   738    40 
 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  2.000   4.000   5.000   5.161   6.000  10.000 
+  2.000   4.000   5.000   5.158   6.000  10.000 
 
 summary of quality measures:
     support          confidence          lift       
- Min.   :0.05001   Min.   :0.5000   Min.   :0.9851  
- 1st Qu.:0.05329   1st Qu.:0.6660   1st Qu.:1.6002  
- Median :0.05840   Median :0.7961   Median :1.9527  
- Mean   :0.06496   Mean   :0.7764   Mean   :2.0704  
- 3rd Qu.:0.06863   3rd Qu.:0.8974   3rd Qu.:2.2096  
- Max.   :0.36759   Max.   :1.0000   Max.   :9.2076  
+ Min.   :0.05001   Min.   :0.5000   Min.   :0.9844  
+ 1st Qu.:0.05329   1st Qu.:0.6656   1st Qu.:1.5996  
+ Median :0.05840   Median :0.7957   Median :1.9515  
+ Mean   :0.06496   Mean   :0.7763   Mean   :2.0692  
+ 3rd Qu.:0.06863   3rd Qu.:0.8977   3rd Qu.:2.2089  
+ Max.   :0.36722   Max.   :1.0000   Max.   :9.2002  
 
 mining info:
         data ntransactions support confidence
@@ -567,25 +567,25 @@ mining info:
 inspect(rules[1:20])
    lhs                                      rhs                                      support confidence     lift
 1  {lag_lonely=Strongly agree}           =&gt; {sub_none}                            0.05329440  0.7624021 1.565668
-2  {serv_ssb=5 or more}                  =&gt; {free_internet}                       0.05566709  0.7296651 1.481228
-3  {lag_loc_bus}                         =&gt; {lag_act_sit}                         0.05457200  0.7153110 1.447263
-4  {lag_sad=Agree}                       =&gt; {lag_worried=Agree}                   0.05219931  0.6383929 3.713115
-5  {lag_sluggish=Strongly agree}         =&gt; {yest_cleaning}                       0.05329440  0.6488889 1.282562
-6  {lag_happy=Disagree}                  =&gt; {lag_excited=Disagree}                0.05146925  0.5936842 2.246406
+2  {serv_ssb=5 or more}                  =&gt; {free_internet}                       0.05566709  0.7296651 1.481777
+3  {lag_loc_bus}                         =&gt; {lag_act_sit}                         0.05475452  0.7159905 1.450781
+4  {lag_sad=Agree}                       =&gt; {lag_worried=Agree}                   0.05274685  0.6422222 3.727474
+5  {lag_sluggish=Strongly agree}         =&gt; {yest_cleaning}                       0.05292937  0.6458797 1.276154
+6  {lag_happy=Disagree}                  =&gt; {lag_excited=Disagree}                0.05165176  0.5945378 2.249636
 7  {food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied}   0.07136339  0.8555799 7.812870
 8  {free_time_sat=Extremely satisfied}   =&gt; {food_sat=Extremely satisfied}        0.07136339  0.6516667 7.812870
 9  {food_sat=Extremely satisfied}        =&gt; {interaction_sat=Extremely satisfied} 0.06698303  0.8030635 6.171087
 10 {interaction_sat=Extremely satisfied} =&gt; {food_sat=Extremely satisfied}        0.06698303  0.5147265 6.171087
-11 {food_sat=Extremely satisfied}        =&gt; {lag_happy=Strongly agree}            0.05639715  0.6761488 4.287754
-12 {food_sat=Extremely satisfied}        =&gt; {lag_sluggish=Strongly disagree}      0.05092170  0.6105033 3.558455
-13 {food_sat=Extremely satisfied}        =&gt; {lag_sad=Strongly disagree}           0.05092170  0.6105033 3.074400
-14 {food_sat=Extremely satisfied}        =&gt; {lag_lonely=Strongly disagree}        0.05073919  0.6083151 2.905805
-15 {food_sat=Extremely satisfied}        =&gt; {lag_bored=Strongly disagree}         0.05165176  0.6192560 2.919883
-16 {food_sat=Extremely satisfied}        =&gt; {yest_cleaning}                       0.05201679  0.6236324 1.232641
-17 {lag_bored=Agree}                     =&gt; {lag_restless=Agree}                  0.05402446  0.5792564 3.278663
-18 {lag_bored=Agree}                     =&gt; {lag_sluggish=Agree}                  0.05092170  0.5459883 2.777595
-19 {lag_bored=Agree}                     =&gt; {min_group=15 or less minutes}        0.05165176  0.5538160 1.091103
-20 {lag_lonely=Agree}                    =&gt; {sub_cig}                             0.05858733  0.6318898 1.528532</code></pre>
+11 {food_sat=Extremely satisfied}        =&gt; {lag_happy=Strongly agree}            0.05621464  0.6739606 4.293756
+12 {food_sat=Extremely satisfied}        =&gt; {lag_sluggish=Strongly disagree}      0.05073919  0.6083151 3.549476
+13 {food_sat=Extremely satisfied}        =&gt; {lag_sad=Strongly disagree}           0.05073919  0.6083151 3.069022
+14 {food_sat=Extremely satisfied}        =&gt; {lag_lonely=Strongly disagree}        0.05055667  0.6061269 2.897879
+15 {food_sat=Extremely satisfied}        =&gt; {lag_bored=Strongly disagree}         0.05146925  0.6170678 2.912071
+16 {food_sat=Extremely satisfied}        =&gt; {yest_cleaning}                       0.05201679  0.6236324 1.232197
+17 {lag_bored=Agree}                     =&gt; {lag_restless=Agree}                  0.05402446  0.5792564 3.268533
+18 {lag_bored=Agree}                     =&gt; {lag_sluggish=Agree}                  0.05092170  0.5459883 2.769879
+19 {lag_bored=Agree}                     =&gt; {min_group=15 or less minutes}        0.05165176  0.5538160 1.090319
+20 {lag_lonely=Agree}                    =&gt; {sub_cig}                             0.05858733  0.6331361 1.531546</code></pre>
 <p>Hard to tell much from these 20 rules. Lantz (pg. 261), suggests sorting the rules by support, confidence, or lift, and then categorizing rules as:<br />
 * Actionable<br />
 * Trivial<br />
@@ -593,47 +593,47 @@ inspect(rules[1:20])
 <pre class="r"><code># Top 20 rules by support (commonly occurring)
 inspect(sort(rules, by = &quot;support&quot;)[1:20])
     lhs                          rhs                       support  
-686 {free_cleaned}            =&gt; {yest_cleaning}           0.3675853
-687 {yest_cleaning}           =&gt; {free_cleaned}            0.3675853
-638 {lag_frustrated=Disagree} =&gt; {lag_sad=Disagree}        0.3664902
-639 {lag_sad=Disagree}        =&gt; {lag_frustrated=Disagree} 0.3664902
-604 {lag_worried=Disagree}    =&gt; {lag_sad=Disagree}        0.3431283
-605 {lag_sad=Disagree}        =&gt; {lag_worried=Disagree}    0.3431283
+686 {free_cleaned}            =&gt; {yest_cleaning}           0.3672203
+687 {yest_cleaning}           =&gt; {free_cleaned}            0.3672203
+639 {lag_frustrated=Disagree} =&gt; {lag_sad=Disagree}        0.3666728
+640 {lag_sad=Disagree}        =&gt; {lag_frustrated=Disagree} 0.3666728
+605 {lag_worried=Disagree}    =&gt; {lag_sad=Disagree}        0.3431283
+606 {lag_sad=Disagree}        =&gt; {lag_worried=Disagree}    0.3431283
 666 {lag_bored=Disagree}      =&gt; {lag_sad=Disagree}        0.3429458
 667 {lag_sad=Disagree}        =&gt; {lag_bored=Disagree}      0.3429458
-651 {lag_lonely=Disagree}     =&gt; {lag_sad=Disagree}        0.3363753
-652 {lag_sad=Disagree}        =&gt; {lag_lonely=Disagree}     0.3363753
-648 {lag_lonely=Disagree}     =&gt; {lag_bored=Disagree}      0.3318124
-649 {lag_bored=Disagree}      =&gt; {lag_lonely=Disagree}     0.3318124
-590 {lag_restless=Disagree}   =&gt; {lag_sad=Disagree}        0.3199489
-591 {lag_sad=Disagree}        =&gt; {lag_restless=Disagree}   0.3199489
-597 {lag_worried=Disagree}    =&gt; {lag_frustrated=Disagree} 0.3089980
-598 {lag_frustrated=Disagree} =&gt; {lag_worried=Disagree}    0.3089980
-620 {lag_happy=Agree}         =&gt; {lag_sad=Disagree}        0.3068078
-621 {lag_sad=Disagree}        =&gt; {lag_happy=Agree}         0.3068078
-642 {free_time_sat=Somewhat}  =&gt; {food_sat=Somewhat}       0.2991422
-643 {food_sat=Somewhat}       =&gt; {free_time_sat=Somewhat}  0.2991422
+652 {lag_lonely=Disagree}     =&gt; {lag_sad=Disagree}        0.3365578
+653 {lag_sad=Disagree}        =&gt; {lag_lonely=Disagree}     0.3365578
+649 {lag_lonely=Disagree}     =&gt; {lag_bored=Disagree}      0.3318124
+650 {lag_bored=Disagree}      =&gt; {lag_lonely=Disagree}     0.3318124
+591 {lag_restless=Disagree}   =&gt; {lag_sad=Disagree}        0.3201314
+592 {lag_sad=Disagree}        =&gt; {lag_restless=Disagree}   0.3201314
+598 {lag_worried=Disagree}    =&gt; {lag_frustrated=Disagree} 0.3091805
+599 {lag_frustrated=Disagree} =&gt; {lag_worried=Disagree}    0.3091805
+621 {lag_happy=Agree}         =&gt; {lag_sad=Disagree}        0.3068078
+622 {lag_sad=Disagree}        =&gt; {lag_happy=Agree}         0.3068078
+643 {free_time_sat=Somewhat}  =&gt; {food_sat=Somewhat}       0.2989597
+644 {food_sat=Somewhat}       =&gt; {free_time_sat=Somewhat}  0.2989597
     confidence lift    
-686 0.7973080  1.575920
-687 0.7265512  1.575920
-638 0.8677615  1.767459
-639 0.7464684  1.767459
-604 0.8842897  1.801124
-605 0.6988848  1.801124
-666 0.7888329  1.606697
-667 0.6985130  1.606697
-651 0.7971453  1.623628
-652 0.6851301  1.623628
-648 0.7863322  1.808696
-649 0.7632242  1.808696
-590 0.8237782  1.677874
-591 0.6516729  1.677874
-597 0.7963311  1.885522
-598 0.7316335  1.885522
-620 0.7647862  1.557719
-621 0.6249071  1.557719
-642 0.7028302  1.601833
-643 0.6817804  1.601833
+686 0.7971474  1.575034
+687 0.7255680  1.575034
+639 0.8674439  1.766156
+640 0.7465626  1.766156
+605 0.8851224  1.802150
+606 0.6986250  1.802150
+666 0.7881711  1.604753
+667 0.6982534  1.604753
+652 0.7972330  1.623203
+653 0.6852471  1.623203
+649 0.7859922  1.806397
+650 0.7625839  1.806397
+591 0.8246356  1.678996
+592 0.6518023  1.678996
+598 0.7975518  1.886782
+599 0.7314335  1.886782
+621 0.7640909  1.555724
+622 0.6246748  1.555724
+643 0.7030043  1.602230
+644 0.6813644  1.602230
 
 # Top 20 rules by confidence
 inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
@@ -642,33 +642,33 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_frustrated=Strongly disagree,                                                              
     lag_worried=Strongly disagree,                                                                 
     lag_bored=Strongly disagree,                                                                   
-    lag_sluggish=Strongly disagree}   =&gt; {lag_sad=Strongly disagree} 0.05420697  1.0000000 5.035846
+    lag_sluggish=Strongly disagree}   =&gt; {lag_sad=Strongly disagree} 0.05420697  1.0000000 5.045120
 2  {free_social,                                                                                   
     lag_frustrated=Strongly disagree,                                                              
     lag_worried=Strongly disagree,                                                                 
     lag_lonely=Strongly disagree,                                                                  
     lag_bored=Strongly disagree,                                                                   
-    lag_sluggish=Strongly disagree}   =&gt; {lag_sad=Strongly disagree} 0.05274685  1.0000000 5.035846
+    lag_sluggish=Strongly disagree}   =&gt; {lag_sad=Strongly disagree} 0.05274685  1.0000000 5.045120
 3  {lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     serv_sweets=0,                                                                                 
-    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05146925  1.0000000 2.036803
+    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05146925  1.0000000 2.036046
 4  {free_internet,                                                                                 
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
     lag_lonely=Disagree,                                                                           
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05274685  1.0000000 2.036803
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05274685  1.0000000 2.036046
 5  {lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
     serv_sweets=0,                                                                                 
-    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05073919  1.0000000 2.036803
+    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05073919  1.0000000 2.036046
 6  {lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
@@ -676,7 +676,7 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_bored=Disagree,                                                                            
     lag_sluggish=Disagree,                                                                         
     free_time_sat=Somewhat,                                                                        
-    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.05384194  1.0000000 2.036803
+    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.05384194  1.0000000 2.036046
 7  {lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_lonely=Disagree,                                                                           
@@ -684,7 +684,7 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_sluggish=Disagree,                                                                         
     food_sat=Somewhat,                                                                             
     free_time_sat=Somewhat,                                                                        
-    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.05000913  1.0000000 2.036803
+    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.05000913  1.0000000 2.036046
 8  {free_internet,                                                                                 
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
@@ -692,27 +692,27 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_restless=Disagree,                                                                         
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05146925  1.0000000 2.036803
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05146925  1.0000000 2.036046
 9  {lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
     lag_sluggish=Disagree,                                                                         
-    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.06351524  0.9971347 2.030967
+    interaction_sat=Somewhat}         =&gt; {lag_sad=Disagree}          0.06351524  0.9971347 2.030212
 10 {sub_none,                                                                                      
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06315021  0.9971182 2.030933
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06296769  0.9971098 2.030162
 11 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_worried=Disagree,                                                                          
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06187260  0.9970588 2.030812
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06187260  0.9970588 2.030058
 12 {sub_none,                                                                                      
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
@@ -720,14 +720,14 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06096003  0.9970149 2.030723
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.06077751  0.9970060 2.029950
 13 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
-    lag_bored=Disagree}               =&gt; {lag_sad=Disagree}          0.06041248  0.9969880 2.030668
+    lag_bored=Disagree}               =&gt; {lag_sad=Disagree}          0.06041248  0.9969880 2.029913
 14 {sub_none,                                                                                      
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
@@ -735,34 +735,34 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05986494  0.9969605 2.030612
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05986494  0.9969605 2.029857
 15 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
     lag_lonely=Disagree,                                                                           
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05968242  0.9969512 2.030593
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05968242  0.9969512 2.029839
 16 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05913488  0.9969231 2.030536
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05913488  0.9969231 2.029781
 17 {lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05913488  0.9969231 2.030536
+    free_time_sat=Somewhat}           =&gt; {lag_sad=Disagree}          0.05895236  0.9969136 2.029762
 18 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05822230  0.9968750 2.030438
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05822230  0.9968750 2.029683
 19 {sub_none,                                                                                      
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
@@ -771,134 +771,983 @@ inspect(sort(rules, by = &quot;confidence&quot;)[1:20])
     lag_calm=Agree,                                                                                
     lag_lonely=Disagree,                                                                           
     lag_bored=Disagree,                                                                            
-    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05822230  0.9968750 2.030438
+    lag_sluggish=Disagree}            =&gt; {lag_sad=Disagree}          0.05822230  0.9968750 2.029683
 20 {lag_act_sit,                                                                                   
     lag_happy=Agree,                                                                               
     lag_frustrated=Disagree,                                                                       
     lag_worried=Disagree,                                                                          
     lag_restless=Disagree,                                                                         
     lag_calm=Agree,                                                                                
-    lag_lonely=Disagree}              =&gt; {lag_sad=Disagree}          0.05785727  0.9968553 2.030398
+    lag_lonely=Disagree}              =&gt; {lag_sad=Disagree}          0.05785727  0.9968553 2.029643
 
 # Top 20 rules by lift
 inspect(sort(rules, by = &quot;lift&quot;)[1:20])
    lhs                                      rhs                                    support confidence     lift
 1  {lag_happy=Strongly agree,                                                                                 
-    free_time_sat=Extremely satisfied}   =&gt; {food_sat=Extremely satisfied}      0.05256434  0.7680000 9.207597
+    free_time_sat=Extremely satisfied}   =&gt; {food_sat=Extremely satisfied}      0.05238182  0.7673797 9.200160
 2  {free_time_sat=Extremely satisfied,                                                                        
     interaction_sat=Extremely satisfied} =&gt; {food_sat=Extremely satisfied}      0.06315021  0.7377399 8.844807
 3  {food_sat=Extremely satisfied,                                                                             
     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied} 0.06315021  0.9427793 8.609146
 4  {lag_happy=Strongly agree,                                                                                 
-    food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied} 0.05256434  0.9320388 8.511068
+    food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied} 0.05238182  0.9318182 8.509053
 5  {lag_frustrated=Strongly disagree,                                                                         
     lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9618056 8.157481
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05037416  0.9616725 8.168998
 6  {lag_frustrated=Strongly disagree,                                                                         
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05073919  0.9586207 8.130469
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9584775 8.141858
 7  {lag_frustrated=Strongly disagree,                                                                         
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_bored=Strongly disagree,                                                                              
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05092170  0.9554795 8.103826
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05073919  0.9553265 8.115091
 8  {lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
     lag_bored=Strongly disagree,                                                                              
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05073919  0.9553265 8.102529
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9551724 8.113782
 9  {lag_frustrated=Strongly disagree,                                                                         
     lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_bored=Strongly disagree,                                                                              
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9551724 8.101222
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05037416  0.9550173 8.112465
 10 {lag_frustrated=Strongly disagree,                                                                         
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_bored=Strongly disagree}         =&gt; {lag_calm=Strongly agree}           0.05019164  0.9548611 8.098582
-11 {lag_frustrated=Strongly disagree,                                                                         
-    lag_sad=Strongly disagree,                                                                                
+    lag_bored=Strongly disagree}         =&gt; {lag_calm=Strongly agree}           0.05000913  0.9547038 8.109802
+11 {lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_bored=Strongly disagree}         =&gt; {lag_calm=Strongly agree}           0.05000913  0.9547038 8.097248
-12 {lag_sad=Strongly disagree,                                                                                
-    lag_worried=Strongly disagree,                                                                            
-    lag_restless=Strongly disagree,                                                                           
-    lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05256434  0.9536424 8.088246
-13 {lag_frustrated=Strongly disagree,                                                                         
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05238182  0.9534884 8.099477
+12 {lag_frustrated=Strongly disagree,                                                                         
     lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05146925  0.9527027 8.080276
-14 {lag_worried=Strongly disagree,                                                                            
+    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05128673  0.9525424 8.091441
+13 {lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
     lag_bored=Strongly disagree,                                                                              
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05110422  0.9523810 8.077547
-15 {lag_happy=Strongly agree,                                                                                 
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05092170  0.9522184 8.088690
+14 {lag_happy=Strongly agree,                                                                                 
     lag_sad=Strongly disagree,                                                                                
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9518900 8.073383
-16 {lag_happy=Strongly agree,                                                                                 
-    lag_frustrated=Strongly disagree,                                                                         
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05037416  0.9517241 8.084491
+15 {lag_frustrated=Strongly disagree,                                                                         
+    lag_worried=Strongly disagree,                                                                            
+    lag_restless=Strongly disagree,                                                                           
+    lag_excited=Strongly agree,                                                                               
+    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05146925  0.9494949 8.065555
+16 {lag_frustrated=Strongly disagree,                                                                         
     lag_sad=Strongly disagree,                                                                                
+    lag_restless=Strongly disagree,                                                                           
+    lag_excited=Strongly agree,                                                                               
+    lag_lonely=Strongly disagree,                                                                             
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05055667  0.9486301 8.058209
+17 {lag_happy=Strongly agree,                                                                                 
+    lag_frustrated=Strongly disagree,                                                                         
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05000913  0.9513889 8.069133
-17 {lag_frustrated=Strongly disagree,                                                                         
-    lag_worried=Strongly disagree,                                                                            
-    lag_restless=Strongly disagree,                                                                           
-    lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05165176  0.9496644 8.054507
+    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05000913  0.9480969 8.053679
 18 {lag_frustrated=Strongly disagree,                                                                         
     lag_sad=Strongly disagree,                                                                                
-    lag_restless=Strongly disagree,                                                                           
-    lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05073919  0.9488055 8.047222
-19 {lag_happy=Strongly agree,                                                                                 
-    lag_frustrated=Strongly disagree,                                                                         
     lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
-    lag_lonely=Strongly disagree}        =&gt; {lag_calm=Strongly agree}           0.05019164  0.9482759 8.042730
-20 {lag_happy=Strongly agree,                                                                                 
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05292937  0.9477124 8.050413
+19 {lag_happy=Strongly agree,                                                                                 
     lag_frustrated=Strongly disagree,                                                                         
+    lag_sad=Strongly disagree,                                                                                
+    lag_worried=Strongly disagree,                                                                            
+    lag_restless=Strongly disagree,                                                                           
+    lag_calm=Strongly agree,                                                                                  
+    lag_sluggish=Strongly disagree}      =&gt; {lag_excited=Strongly agree}        0.05165176  0.8447761 8.049615
+20 {lag_worried=Strongly disagree,                                                                            
     lag_restless=Strongly disagree,                                                                           
     lag_excited=Strongly agree,                                                                               
     lag_lonely=Strongly disagree,                                                                             
-    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05000913  0.9480969 8.041212</code></pre>
-<p>Still rough. Need to dig deeper.</p>
+    lag_sluggish=Strongly disagree}      =&gt; {lag_calm=Strongly agree}           0.05274685  0.9475410 8.048957</code></pre>
+<p>Still rough. Need to dig deeper. Find rules that include substances, acitivities, etc. Not just feelings.</p>
+<p>Ignore rules that are just mood predicting mood. These aren’t very interesting. This really amounts to not including any of the mood items in the rhs.</p>
+<pre class="r"><code>rules
+set of 155738 rules 
+moods &lt;- c(&quot;frustrated&quot;, &quot;sad&quot;, &quot;worried&quot;, &quot;restless&quot;, &quot;excited&quot;, &quot;calm&quot;, &quot;lonely&quot;, &quot;bored&quot;, &quot;sluggish&quot;)
+rules_no_mood &lt;- subset(rules, subset = !rhs %pin% &quot;happy&quot;)
+rules_no_mood
+set of 146750 rules 
+for (mood in moods) {
+  rules_no_mood &lt;- subset(rules_no_mood, subset = !rhs %pin% mood)
+}
+rules_no_mood
+set of 46765 rules 
+
+# Top 20 rules by support (commonly occurring)
+inspect(sort(rules_no_mood, by = &quot;support&quot;)[1:100])
+    lhs                               rhs                              support confidence      lift
+1   {free_cleaned}                 =&gt; {yest_cleaning}                0.3672203  0.7971474 1.5750344
+2   {yest_cleaning}                =&gt; {free_cleaned}                 0.3672203  0.7255680 1.5750344
+3   {free_time_sat=Somewhat}       =&gt; {food_sat=Somewhat}            0.2989597  0.7030043 1.6022298
+4   {food_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}       0.2989597  0.6813644 1.6022298
+5   {interaction_sat=Somewhat}     =&gt; {free_time_sat=Somewhat}       0.2847235  0.7550823 1.7755776
+6   {free_time_sat=Somewhat}       =&gt; {interaction_sat=Somewhat}     0.2847235  0.6695279 1.7755776
+7   {serv_sweets=0}                =&gt; {min_group=15 or less minutes} 0.2739551  0.5956349 1.1726496
+8   {min_group=15 or less minutes} =&gt; {serv_sweets=0}                0.2739551  0.5393460 1.1726496
+9   {lag_sad=Disagree}             =&gt; {min_group=15 or less minutes} 0.2686622  0.5470085 1.0769169
+10  {lag_act_sit}                  =&gt; {free_internet}                0.2686622  0.5443787 1.1055044
+11  {free_internet}                =&gt; {lag_act_sit}                  0.2686622  0.5455893 1.1055044
+12  {free_internet}                =&gt; {yest_cleaning}                0.2648293  0.5378058 1.0626173
+13  {yest_cleaning}                =&gt; {free_internet}                0.2648293  0.5232600 1.0626173
+14  {interaction_sat=Somewhat}     =&gt; {food_sat=Somewhat}            0.2642818  0.7008712 1.5973684
+15  {food_sat=Somewhat}            =&gt; {interaction_sat=Somewhat}     0.2642818  0.6023295 1.5973684
+16  {min_group=15 or less minutes} =&gt; {free_internet}                0.2626392  0.5170679 1.0500427
+17  {free_internet}                =&gt; {min_group=15 or less minutes} 0.2626392  0.5333580 1.0500427
+18  {free_cleaned}                 =&gt; {free_internet}                0.2620916  0.5689382 1.1553789
+19  {free_internet}                =&gt; {free_cleaned}                 0.2620916  0.5322461 1.1553789
+20  {lag_act_sit}                  =&gt; {min_group=15 or less minutes} 0.2600840  0.5269970 1.0375195
+21  {min_group=15 or less minutes} =&gt; {lag_act_sit}                  0.2600840  0.5120374 1.0375195
+22  {lag_sad=Disagree}             =&gt; {lag_act_sit}                  0.2535134  0.5161650 1.0458831
+23  {sub_none}                     =&gt; {free_internet}                0.2513232  0.5161169 1.0481115
+24  {free_internet}                =&gt; {sub_none}                     0.2513232  0.5103781 1.0481115
+25  {serv_sweets=0}                =&gt; {lag_act_sit}                  0.2507757  0.5452381 1.1047927
+26  {lag_act_sit}                  =&gt; {serv_sweets=0}                0.2507757  0.5081361 1.1047927
+27  {sub_none}                     =&gt; {min_group=15 or less minutes} 0.2484030  0.5101199 1.0042929
+28  {lag_sad=Disagree}             =&gt; {free_internet}                0.2478554  0.5046451 1.0248149
+29  {serv_sweets=0}                =&gt; {free_internet}                0.2471254  0.5373016 1.0911325
+30  {free_internet}                =&gt; {serv_sweets=0}                0.2471254  0.5018532 1.0911325
+31  {lag_sad=Disagree}             =&gt; {yest_cleaning}                0.2463953  0.5016722 0.9912233
+32  {food_sat=Somewhat}            =&gt; {min_group=15 or less minutes} 0.2425625  0.5528286 1.0883751
+33  {free_time_sat=Somewhat}       =&gt; {min_group=15 or less minutes} 0.2409199  0.5665236 1.1153370
+34  {lag_bored=Disagree}           =&gt; {min_group=15 or less minutes} 0.2398248  0.5511745 1.0851186
+35  {free_cleaned}                 =&gt; {min_group=15 or less minutes} 0.2343493  0.5087163 1.0015295
+36  {free_social}                  =&gt; {free_internet}                0.2338018  0.6347869 1.2891021
+37  {lag_lonely=Disagree}          =&gt; {min_group=15 or less minutes} 0.2321592  0.5499351 1.0826786
+38  {lag_frustrated=Disagree}      =&gt; {min_group=15 or less minutes} 0.2308815  0.5462003 1.0753258
+39  {yest_bike}                    =&gt; {free_internet}                0.2308815  0.5614736 1.1402201
+40  {free_time_sat=Somewhat}       =&gt; {free_internet}                0.2296039  0.5399142 1.0964380
+41  {food_sat=Somewhat}            =&gt; {free_internet}                0.2296039  0.5232945 1.0626874
+42  {serv_fruit=0}                 =&gt; {min_group=15 or less minutes} 0.2286914  0.6601686 1.2996995
+43  {lag_bored=Disagree}           =&gt; {sub_none}                     0.2274138  0.5226510 1.0733152
+44  {serv_ssb=0}                   =&gt; {serv_sweets=0}                0.2268662  0.6682796 1.4529777
+45  {lag_bored=Disagree}           =&gt; {free_internet}                0.2265012  0.5205537 1.0571215
+46  {free_social}                  =&gt; {yest_cleaning}                0.2254061  0.6119921 1.2091975
+47  {serv_fruit=0}                 =&gt; {serv_sweets=0}                0.2237635  0.6459431 1.4044136
+48  {free_time_sat=Somewhat,                                                                       
+     interaction_sat=Somewhat}     =&gt; {food_sat=Somewhat}            0.2230334  0.7833333 1.7853092
+49  {food_sat=Somewhat,                                                                            
+     interaction_sat=Somewhat}     =&gt; {free_time_sat=Somewhat}       0.2230334  0.8439227 1.9844859
+50  {food_sat=Somewhat,                                                                            
+     free_time_sat=Somewhat}       =&gt; {interaction_sat=Somewhat}     0.2230334  0.7460317 1.9784646
+51  {lag_frustrated=Disagree}      =&gt; {serv_sweets=0}                0.2224859  0.5263385 1.1443685
+52  {lag_frustrated=Disagree}      =&gt; {lag_act_sit}                  0.2217558  0.5246114 1.0629977
+53  {free_time_sat=Somewhat}       =&gt; {lag_act_sit}                  0.2213908  0.5206009 1.0548713
+54  {lag_lonely=Disagree}          =&gt; {yest_cleaning}                0.2206607  0.5226978 1.0327664
+55  {lag_bored=Disagree}           =&gt; {yest_cleaning}                0.2206607  0.5071309 1.0020087
+56  {food_sat=Somewhat}            =&gt; {lag_act_sit}                  0.2204782  0.5024958 1.0181859
+57  {yest_bike}                    =&gt; {yest_cleaning}                0.2197481  0.5343986 1.0558853
+58  {lag_bored=Disagree}           =&gt; {lag_act_sit}                  0.2197481  0.5050336 1.0233280
+59  {yest_bike}                    =&gt; {sub_none}                     0.2195656  0.5339547 1.0965285
+60  {food_sat=Somewhat}            =&gt; {sub_none}                     0.2195656  0.5004160 1.0276533
+61  {sub_cig}                      =&gt; {yest_cleaning}                0.2190181  0.5298013 1.0468018
+62  {sub_cig}                      =&gt; {lag_act_sit}                  0.2171929  0.5253863 1.0645679
+63  {sub_cig}                      =&gt; {serv_sweets=0}                0.2155503  0.5214128 1.1336590
+64  {lag_excited=Neutral}          =&gt; {food_sat=Somewhat}            0.2153678  0.5552941 1.2655809
+65  {lag_happy=Agree}              =&gt; {sub_none}                     0.2133601  0.5313636 1.0912074
+66  {lag_restless=Disagree}        =&gt; {min_group=15 or less minutes} 0.2131776  0.5491302 1.0810940
+67  {lag_lonely=Disagree}          =&gt; {free_cleaned}                 0.2128126  0.5041072 1.0942961
+68  {free_social}                  =&gt; {free_cleaned}                 0.2119000  0.5753221 1.2488866
+69  {lag_happy=Agree}              =&gt; {lag_act_sit}                  0.2117175  0.5272727 1.0683903
+70  {lag_restless=Disagree}        =&gt; {sub_none}                     0.2111699  0.5439586 1.1170725
+71  {lag_happy=Agree}              =&gt; {free_internet}                0.2111699  0.5259091 1.0679970
+72  {sub_cig}                      =&gt; {min_group=15 or less minutes} 0.2108049  0.5099338 1.0039264
+73  {lag_restless=Disagree}        =&gt; {free_internet}                0.2098923  0.5406676 1.0979681
+74  {lag_happy=Agree}              =&gt; {serv_sweets=0}                0.2095273  0.5218182 1.1345404
+75  {lag_excited=Neutral}          =&gt; {free_time_sat=Somewhat}       0.2091623  0.5392941 1.2681513
+76  {yest_bike}                    =&gt; {free_cleaned}                 0.2089797  0.5082113 1.1032051
+77  {lag_happy=Agree}              =&gt; {min_group=15 or less minutes} 0.2082497  0.5186364 1.0210595
+78  {lag_worried=Disagree}         =&gt; {min_group=15 or less minutes} 0.2077021  0.5357815 1.0548139
+79  {interaction_sat=Somewhat}     =&gt; {min_group=15 or less minutes} 0.2069721  0.5488867 1.0806146
+80  {free_internet,                                                                                
+     free_cleaned}                 =&gt; {yest_cleaning}                0.2069721  0.7896936 1.5603070
+81  {yest_cleaning,                                                                                
+     free_cleaned}                 =&gt; {free_internet}                0.2069721  0.5636183 1.1445755
+82  {yest_cleaning,                                                                                
+     free_internet}                =&gt; {free_cleaned}                 0.2069721  0.7815300 1.6965146
+83  {free_pray}                    =&gt; {yest_cleaning}                0.2067896  0.6515239 1.2873059
+84  {lag_excited=Neutral}          =&gt; {free_internet}                0.2062420  0.5317647 1.0798884
+85  {lag_calm=Agree}               =&gt; {serv_sweets=0}                0.2051469  0.5504407 1.1967718
+86  {serv_ssb=0}                   =&gt; {min_group=15 or less minutes} 0.2047819  0.6032258 1.1875940
+87  {lag_frustrated=Disagree,                                                                      
+     lag_sad=Disagree}             =&gt; {min_group=15 or less minutes} 0.2044169  0.5574913 1.0975547
+88  {lag_worried=Disagree}         =&gt; {serv_sweets=0}                0.2035043  0.5249529 1.1413560
+89  {lag_worried=Disagree}         =&gt; {lag_act_sit}                  0.2024092  0.5221281 1.0579658
+90  {lag_restless=Disagree}        =&gt; {lag_act_sit}                  0.2016791  0.5195110 1.0526631
+91  {free_pray}                    =&gt; {free_social}                  0.2014966  0.6348476 1.7236522
+92  {free_social}                  =&gt; {free_pray}                    0.2014966  0.5470763 1.7236522
+93  {interaction_sat=Somewhat}     =&gt; {free_internet}                0.2014966  0.5343659 1.0851708
+94  {free_pray}                    =&gt; {free_internet}                0.2005840  0.6319724 1.2833865
+95  {lag_restless=Disagree}        =&gt; {serv_sweets=0}                0.2000365  0.5152797 1.1203245
+96  {lag_excited=Neutral}          =&gt; {sub_none}                     0.1989414  0.5129412 1.0533751
+97  {lag_frustrated=Disagree,                                                                      
+     lag_sad=Disagree}             =&gt; {serv_sweets=0}                0.1989414  0.5425585 1.1796341
+98  {lag_frustrated=Disagree,                                                                      
+     lag_sad=Disagree}             =&gt; {lag_act_sit}                  0.1949261  0.5316078 1.0771742
+99  {serv_ssb=0}                   =&gt; {sub_none}                     0.1945611  0.5731183 1.1769547
+100 {free_pray}                    =&gt; {free_cleaned}                 0.1941960  0.6118459 1.3281710
+
+# Top 20 rules by confidence
+inspect(sort(rules_no_mood, by = &quot;confidence&quot;)[1:100])
+    lhs                                      rhs                                    support confidence     lift
+1   {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_volunteer}                      =&gt; {yest_cleaning}                     0.06223763  0.9715100 1.919547
+2   {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {yest_cleaning}                     0.05749224  0.9692308 1.915043
+3   {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     free_social,                                                                                              
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05092170  0.9687500 1.914093
+4   {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     sub_none}                            =&gt; {yest_cleaning}                     0.06096003  0.9681159 1.912841
+5   {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05165176  0.9658703 1.908404
+6   {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05457200  0.9614148 1.899600
+7   {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05420697  0.9611650 1.899107
+8   {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     lag_sad=Disagree,                                                                                         
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05384194  0.9609121 1.898607
+9   {lag_act_talk,                                                                                             
+     free_internet,                                                                                            
+     free_social}                         =&gt; {lag_pre_who}                       0.06187260  0.9603399 3.489193
+10  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05968242  0.9589443 1.894719
+11  {lag_act_talk,                                                                                             
+     free_internet,                                                                                            
+     free_pray}                           =&gt; {lag_pre_who}                       0.05110422  0.9589041 3.483976
+12  {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     free_social,                                                                                              
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05055667  0.9584775 1.893797
+13  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_worried=Disagree,                                                                                     
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05311188  0.9572368 1.891345
+14  {yest_bike,                                                                                                
+     yest_run,                                                                                                 
+     free_cleaned}                        =&gt; {yest_cleaning}                     0.05895236  0.9556213 1.888153
+15  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     sub_none}                            =&gt; {yest_cleaning}                     0.07063333  0.9555556 1.888023
+16  {free_music,                                                                                               
+     free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {yest_cleaning}                     0.05055667  0.9551724 1.887266
+17  {yest_run,                                                                                                 
+     free_cleaned,                                                                                             
+     free_walk}                           =&gt; {yest_cleaning}                     0.05019164  0.9548611 1.886651
+18  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_sad=Disagree,                                                                                         
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.06388027  0.9536785 1.884315
+19  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     free_shop}                           =&gt; {yest_cleaning}                     0.05256434  0.9536424 1.884243
+20  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.05420697  0.9519231 1.880846
+21  {yest_cleaning,                                                                                            
+     free_music,                                                                                               
+     free_cleaned,                                                                                             
+     free_volunteer}                      =&gt; {free_social}                       0.05055667  0.9518900 2.584443
+22  {yest_cleaning,                                                                                            
+     free_pray,                                                                                                
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {free_cleaned}                      0.05749224  0.9516616 2.065830
+23  {free_music,                                                                                               
+     free_cleaned,                                                                                             
+     free_volunteer}                      =&gt; {yest_cleaning}                     0.05311188  0.9509804 1.878984
+24  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_social,                                                                                              
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05311188  0.9509804 1.878984
+25  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.06333272  0.9506849 1.878400
+26  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.07738638  0.9506726 1.878376
+27  {free_internet,                                                                                            
+     free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     sub_none}                            =&gt; {yest_cleaning}                     0.05457200  0.9492063 1.875478
+28  {free_music,                                                                                               
+     free_cleaned,                                                                                             
+     free_volunteer}                      =&gt; {free_social}                       0.05292937  0.9477124 2.573100
+29  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     min_group=15 or less minutes}        =&gt; {yest_cleaning}                     0.05292937  0.9477124 1.872527
+30  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     free_shop}                           =&gt; {yest_bike}                         0.05219931  0.9470199 2.303028
+31  {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_shop}                           =&gt; {yest_cleaning}                     0.07975908  0.9458874 1.868921
+32  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     lag_frustrated=Disagree,                                                                                  
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05092170  0.9457627 1.868674
+33  {free_book,                                                                                                
+     free_music,                                                                                               
+     serv_meat=0}                         =&gt; {free_internet}                     0.05037416  0.9452055 1.919489
+34  {serv_ssb=0,                                                                                               
+     serv_meat=0,                                                                                              
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05621464  0.9447853 2.221665
+35  {sub_none,                                                                                                 
+     lag_worried=Disagree,                                                                                     
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05219931  0.9438944 2.219570
+36  {yest_bike,                                                                                                
+     free_internet,                                                                                            
+     free_cleaned,                                                                                             
+     free_shop}                           =&gt; {yest_cleaning}                     0.06077751  0.9433428 1.863893
+37  {food_sat=Extremely satisfied,                                                                             
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied} 0.06315021  0.9427793 8.609146
+38  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_walk}                           =&gt; {yest_cleaning}                     0.06260266  0.9423077 1.861848
+39  {yest_cleaning,                                                                                            
+     free_volunteer,                                                                                           
+     free_social,                                                                                              
+     lag_sad=Disagree}                    =&gt; {free_cleaned}                      0.05055667  0.9421769 2.045241
+40  {yest_none,                                                                                                
+     lag_excited=Neutral,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05055667  0.9421769 2.215531
+41  {yest_run,                                                                                                 
+     free_cleaned,                                                                                             
+     free_pray}                           =&gt; {yest_cleaning}                     0.05037416  0.9419795 1.861199
+42  {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05311188  0.9417476 1.860741
+43  {yest_run,                                                                                                 
+     free_music,                                                                                               
+     free_cleaned}                        =&gt; {yest_cleaning}                     0.05238182  0.9409836 1.859232
+44  {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {yest_cleaning}                     0.07811644  0.9406593 1.858591
+45  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_lonely=Disagree,                                                                                      
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.05749224  0.9402985 1.857878
+46  {sub_none,                                                                                                 
+     lag_excited=Neutral,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     min_group=15 or less minutes,                                                                             
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05146925  0.9400000 2.210412
+47  {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_walk}                           =&gt; {yest_cleaning}                     0.05110422  0.9395973 1.856492
+48  {yest_cleaning,                                                                                            
+     free_walk,                                                                                                
+     free_shop}                           =&gt; {yest_bike}                         0.05384194  0.9394904 2.284717
+49  {yest_cleaning,                                                                                            
+     free_pray,                                                                                                
+     free_volunteer}                      =&gt; {free_cleaned}                      0.06223763  0.9393939 2.039199
+50  {yest_cleaning,                                                                                            
+     free_pets,                                                                                                
+     lag_happy=Neutral}                   =&gt; {free_cleaned}                      0.05019164  0.9385666 2.037403
+51  {free_cleaned,                                                                                             
+     free_shop,                                                                                                
+     free_social}                         =&gt; {yest_cleaning}                     0.07191093  0.9380952 1.853525
+52  {yest_cleaning,                                                                                            
+     free_music,                                                                                               
+     free_volunteer}                      =&gt; {free_social}                       0.05438949  0.9371069 2.544306
+53  {lag_frustrated=Disagree,                                                                                  
+     lag_worried=Disagree,                                                                                     
+     lag_excited=Neutral,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05128673  0.9366667 2.202574
+54  {free_cleaned,                                                                                             
+     free_volunteer}                      =&gt; {yest_cleaning}                     0.08632962  0.9366337 1.850637
+55  {free_cleaned,                                                                                             
+     free_shop}                           =&gt; {yest_cleaning}                     0.11005658  0.9363354 1.850047
+56  {free_walk,                                                                                                
+     free_shop}                           =&gt; {yest_bike}                         0.06169009  0.9362881 2.276930
+57  {yest_cleaning,                                                                                            
+     free_volunteer,                                                                                           
+     free_social,                                                                                              
+     lag_lonely=Disagree}                 =&gt; {free_cleaned}                      0.05092170  0.9362416 2.032356
+58  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.06150757  0.9361111 1.849604
+59  {lag_sad=Disagree,                                                                                         
+     lag_worried=Disagree,                                                                                     
+     lag_restless=Disagree,                                                                                    
+     lag_calm=Agree,                                                                                           
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05037416  0.9355932 2.200049
+60  {sub_none,                                                                                                 
+     serv_meat=0,                                                                                              
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05548458  0.9353846 2.199559
+61  {lag_frustrated=Disagree,                                                                                  
+     lag_worried=Disagree,                                                                                     
+     lag_restless=Disagree,                                                                                    
+     lag_calm=Agree,                                                                                           
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05019164  0.9353741 2.199534
+62  {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_sad=Disagree}                    =&gt; {free_social}                       0.05274685  0.9352751 2.539332
+63  {free_cleaned,                                                                                             
+     free_social,                                                                                              
+     lag_worried=Disagree,                                                                                     
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.06296769  0.9349593 1.847329
+64  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     lag_worried=Disagree}                =&gt; {yest_cleaning}                     0.05238182  0.9348534 1.847119
+65  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_shop}                           =&gt; {yest_cleaning}                     0.06004745  0.9346591 1.846735
+66  {yest_cleaning,                                                                                            
+     free_volunteer,                                                                                           
+     lag_sad=Disagree}                    =&gt; {free_cleaned}                      0.05420697  0.9339623 2.027409
+67  {serv_fruit=0,                                                                                             
+     serv_meat=0,                                                                                              
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05384194  0.9335443 2.195231
+68  {lag_sad=Disagree,                                                                                         
+     lag_worried=Disagree,                                                                                     
+     lag_excited=Neutral,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05384194  0.9335443 2.195231
+69  {yest_cleaning,                                                                                            
+     free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_lonely=Disagree}                 =&gt; {free_social}                       0.05092170  0.9331104 2.533455
+70  {free_cleaned,                                                                                             
+     free_social,                                                                                              
+     lag_sad=Disagree,                                                                                         
+     lag_worried=Disagree,                                                                                     
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05822230  0.9327485 1.842960
+71  {lag_act_sit,                                                                                              
+     lag_act_talk,                                                                                             
+     free_internet}                       =&gt; {lag_pre_who}                       0.05055667  0.9326599 3.388623
+72  {yest_cleaning,                                                                                            
+     free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_sad=Disagree}                    =&gt; {free_social}                       0.05055667  0.9326599 2.532232
+73  {lag_excited=Neutral,                                                                                      
+     serv_sweets=0,                                                                                            
+     food_sat=Somewhat,                                                                                        
+     min_group=15 or less minutes,                                                                             
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05055667  0.9326599 2.193152
+74  {free_music,                                                                                               
+     free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_sad=Disagree}                    =&gt; {yest_cleaning}                     0.05037416  0.9324324 1.842336
+75  {free_pray,                                                                                                
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {yest_cleaning}                     0.06041248  0.9323944 1.842261
+76  {free_book,                                                                                                
+     free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_social}                         =&gt; {yest_cleaning}                     0.06278518  0.9322493 1.841974
+77  {yest_bike,                                                                                                
+     free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     sub_none}                            =&gt; {yest_cleaning}                     0.05000913  0.9319728 1.841428
+78  {lag_happy=Strongly agree,                                                                                 
+     food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied} 0.05238182  0.9318182 8.509053
+79  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.07063333  0.9302885 1.838100
+80  {lag_act_sit,                                                                                              
+     free_cleaned,                                                                                             
+     free_shop}                           =&gt; {yest_cleaning}                     0.05055667  0.9295302 1.836602
+81  {yest_cleaning,                                                                                            
+     free_music,                                                                                               
+     free_volunteer,                                                                                           
+     free_social}                         =&gt; {free_cleaned}                      0.05055667  0.9295302 2.017788
+82  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     lag_sad=Disagree,                                                                                         
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.05530206  0.9294479 1.836439
+83  {lag_frustrated=Disagree,                                                                                  
+     lag_sad=Disagree,                                                                                         
+     lag_calm=Agree,                                                                                           
+     lag_lonely=Disagree,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05037416  0.9292929 2.185234
+84  {lag_excited=Neutral,                                                                                      
+     serv_ssb=0,                                                                                               
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05968242  0.9289773 2.184492
+85  {free_cleaned,                                                                                             
+     free_walk,                                                                                                
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05657967  0.9281437 1.833862
+86  {serv_veg=0,                                                                                               
+     serv_ssb=0,                                                                                               
+     serv_sweets=0,                                                                                            
+     serv_meat=0}                         =&gt; {serv_fruit=0}                      0.06351524  0.9280000 2.678879
+87  {lag_act_talk,                                                                                             
+     free_internet}                       =&gt; {lag_pre_who}                       0.08924986  0.9278937 3.371306
+88  {free_cleaned,                                                                                             
+     free_social,                                                                                              
+     lag_worried=Disagree,                                                                                     
+     lag_lonely=Disagree,                                                                                      
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.05329440  0.9269841 1.831571
+89  {lag_worried=Disagree,                                                                                     
+     lag_calm=Agree,                                                                                           
+     lag_lonely=Disagree,                                                                                      
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05092170  0.9269103 2.179632
+90  {lag_worried=Disagree,                                                                                     
+     lag_calm=Agree,                                                                                           
+     lag_bored=Disagree,                                                                                       
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05073919  0.9266667 2.179059
+91  {lag_excited=Neutral,                                                                                      
+     serv_sweets=0,                                                                                            
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.07136339  0.9265403 2.178761
+92  {free_cleaned,                                                                                             
+     free_social,                                                                                              
+     lag_sad=Disagree,                                                                                         
+     lag_worried=Disagree,                                                                                     
+     lag_lonely=Disagree,                                                                                      
+     lag_bored=Disagree}                  =&gt; {yest_cleaning}                     0.05037416  0.9261745 1.829971
+93  {free_cleaned,                                                                                             
+     free_volunteer,                                                                                           
+     lag_lonely=Disagree}                 =&gt; {free_social}                       0.05256434  0.9260450 2.514272
+94  {free_pray,                                                                                                
+     free_volunteer}                      =&gt; {yest_cleaning}                     0.06625297  0.9260204 1.829667
+95  {free_cleaned,                                                                                             
+     free_pray,                                                                                                
+     free_volunteer}                      =&gt; {free_social}                       0.05931739  0.9259259 2.513949
+96  {yest_bike,                                                                                                
+     free_internet,                                                                                            
+     free_cleaned,                                                                                             
+     lag_sad=Disagree,                                                                                         
+     lag_lonely=Disagree}                 =&gt; {yest_cleaning}                     0.05384194  0.9247649 1.827186
+97  {lag_act_sit,                                                                                              
+     free_book,                                                                                                
+     free_cleaned,                                                                                             
+     free_pray}                           =&gt; {yest_cleaning}                     0.05146925  0.9245902 1.826841
+98  {yest_cleaning,                                                                                            
+     free_volunteer,                                                                                           
+     lag_sad=Disagree}                    =&gt; {free_social}                       0.05365943  0.9245283 2.510154
+99  {lag_happy=Agree,                                                                                          
+     lag_frustrated=Disagree,                                                                                  
+     lag_sad=Disagree,                                                                                         
+     lag_worried=Disagree,                                                                                     
+     lag_restless=Disagree,                                                                                    
+     food_sat=Somewhat,                                                                                        
+     interaction_sat=Somewhat}            =&gt; {free_time_sat=Somewhat}            0.05128673  0.9243421 2.173592
+100 {free_book,                                                                                                
+     free_time=More than 10 hours}        =&gt; {free_internet}                     0.05329440  0.9240506 1.876528
+
+# Top 20 rules by lift
+inspect(sort(rules_no_mood, by = &quot;lift&quot;)[1:100])
+    lhs                                      rhs                                      support confidence     lift
+1   {lag_happy=Strongly agree,                                                                                   
+     free_time_sat=Extremely satisfied}   =&gt; {food_sat=Extremely satisfied}        0.05238182  0.7673797 9.200160
+2   {free_time_sat=Extremely satisfied,                                                                          
+     interaction_sat=Extremely satisfied} =&gt; {food_sat=Extremely satisfied}        0.06315021  0.7377399 8.844807
+3   {food_sat=Extremely satisfied,                                                                               
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.06315021  0.9427793 8.609146
+4   {lag_happy=Strongly agree,                                                                                   
+     food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied}   0.05238182  0.9318182 8.509053
+5   {lag_happy=Strongly agree,                                                                                   
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05785727  0.8637602 7.887570
+6   {lag_frustrated=Strongly disagree,                                                                           
+     lag_sad=Strongly disagree,                                                                                  
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05055667  0.8602484 7.855502
+7   {food_sat=Extremely satisfied}        =&gt; {free_time_sat=Extremely satisfied}   0.07136339  0.8555799 7.812870
+8   {free_time_sat=Extremely satisfied}   =&gt; {food_sat=Extremely satisfied}        0.07136339  0.6516667 7.812870
+9   {lag_restless=Strongly disagree,                                                                             
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05037416  0.8414634 7.683963
+10  {lag_sad=Strongly disagree,                                                                                  
+     lag_worried=Strongly disagree,                                                                              
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05019164  0.8409786 7.679536
+11  {lag_sad=Strongly disagree,                                                                                  
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05420697  0.8342697 7.618272
+12  {lag_frustrated=Strongly disagree,                                                                           
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05256434  0.8323699 7.600925
+13  {lag_sluggish=Strongly disagree,                                                                             
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05384194  0.8171745 7.462165
+14  {free_social,                                                                                                
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05201679  0.8166189 7.457092
+15  {lag_worried=Strongly disagree,                                                                              
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05110422  0.8163265 7.454422
+16  {yest_cleaning,                                                                                              
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05274685  0.7506494 6.854680
+17  {lag_bored=Strongly disagree,                                                                                
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05329440  0.7487179 6.837043
+18  {food_sat=Extremely satisfied,                                                                               
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.06315021  0.8849105 6.800034
+19  {lag_lonely=Strongly disagree,                                                                               
+     interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.05219931  0.7314578 6.679429
+20  {lag_sluggish=Strongly disagree,                                                                             
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05384194  0.8600583 6.609060
+21  {lag_frustrated=Strongly disagree,                                                                           
+     lag_sad=Strongly disagree,                                                                                  
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05055667  0.8575851 6.590055
+22  {lag_restless=Strongly disagree,                                                                             
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05037416  0.8518519 6.545998
+23  {lag_frustrated=Strongly disagree,                                                                           
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05256434  0.8495575 6.528367
+24  {lag_sad=Strongly disagree,                                                                                  
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05420697  0.8485714 6.520789
+25  {lag_happy=Strongly agree,                                                                                   
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05785727  0.8475936 6.513275
+26  {lag_bored=Strongly disagree,                                                                                
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05329440  0.8463768 6.503925
+27  {lag_sad=Strongly disagree,                                                                                  
+     lag_worried=Strongly disagree,                                                                              
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05019164  0.8435583 6.482266
+28  {lag_lonely=Strongly disagree,                                                                               
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05219931  0.8338192 6.407427
+29  {lag_worried=Strongly disagree,                                                                              
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05110422  0.8308605 6.384691
+30  {free_social,                                                                                                
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05201679  0.8050847 6.186619
+31  {food_sat=Extremely satisfied}        =&gt; {interaction_sat=Extremely satisfied} 0.06698303  0.8030635 6.171087
+32  {interaction_sat=Extremely satisfied} =&gt; {food_sat=Extremely satisfied}        0.06698303  0.5147265 6.171087
+33  {yest_cleaning,                                                                                              
+     free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.05274685  0.7939560 6.101101
+34  {interaction_sat=Extremely satisfied} =&gt; {free_time_sat=Extremely satisfied}   0.08559956  0.6577840 6.006664
+35  {free_time_sat=Extremely satisfied}   =&gt; {interaction_sat=Extremely satisfied} 0.08559956  0.7816667 6.006664
+36  {lag_happy=Strongly agree,                                                                                   
+     lag_excited=Strongly agree}          =&gt; {free_time_sat=Extremely satisfied}   0.05347691  0.6041237 5.516656
+37  {lag_happy=Strongly agree,                                                                                   
+     lag_calm=Strongly agree}             =&gt; {free_time_sat=Extremely satisfied}   0.05165176  0.5581854 5.097163
+38  {lag_excited=Strongly agree}          =&gt; {free_time_sat=Extremely satisfied}   0.05712721  0.5443478 4.970803
+39  {yest_cleaning,                                                                                              
+     free_cleaned,                                                                                               
+     free_social,                                                                                                
+     lag_lonely=Disagree}                 =&gt; {free_volunteer}                      0.05092170  0.5625000 4.830623
+40  {free_cleaned,                                                                                               
+     free_social,                                                                                                
+     lag_lonely=Disagree}                 =&gt; {free_volunteer}                      0.05256434  0.5284404 4.538127
+41  {yest_cleaning,                                                                                              
+     free_music,                                                                                                 
+     free_cleaned,                                                                                               
+     free_social}                         =&gt; {free_volunteer}                      0.05055667  0.5276190 4.531073
+42  {yest_cleaning,                                                                                              
+     free_cleaned,                                                                                               
+     free_social,                                                                                                
+     lag_sad=Disagree}                    =&gt; {free_volunteer}                      0.05055667  0.5236295 4.496812
+43  {lag_happy=Strongly agree,                                                                                   
+     lag_excited=Strongly agree}          =&gt; {interaction_sat=Extremely satisfied} 0.05165176  0.5835052 4.483906
+44  {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05019164  0.8184524 4.409342
+45  {sub_none,                                                                                                   
+     lag_frustrated=Disagree,                                                                                    
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05037416  0.8070175 4.347738
+46  {lag_sad=Disagree,                                                                                           
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05329440  0.8044077 4.333677
+47  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05073919  0.8034682 4.328616
+48  {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05292937  0.8011050 4.315884
+49  {yest_cleaning,                                                                                              
+     free_cleaned,                                                                                               
+     free_pray,                                                                                                  
+     free_social}                         =&gt; {free_volunteer}                      0.05749224  0.5015924 4.307562
+50  {sub_none,                                                                                                   
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05274685  0.7983425 4.301002
+51  {lag_frustrated=Disagree,                                                                                    
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05128673  0.7960340 4.288565
+52  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05073919  0.7942857 4.279146
+53  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05201679  0.7916667 4.265036
+54  {lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05019164  0.7902299 4.257296
+55  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05000913  0.7896254 4.254039
+56  {lag_frustrated=Disagree,                                                                                    
+     lag_restless=Disagree,                                                                                      
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05110422  0.7887324 4.249228
+57  {lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05165176  0.7883008 4.246903
+58  {lag_sad=Disagree,                                                                                           
+     lag_calm=Agree,                                                                                             
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05311188  0.7864865 4.237128
+59  {yest_bike,                                                                                                  
+     yest_cleaning,                                                                                              
+     free_cleaned,                                                                                               
+     free_social}                         =&gt; {free_walk}                           0.05931739  0.7065217 4.235265
+60  {lag_calm=Agree,                                                                                             
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05000913  0.7851003 4.229660
+61  {lag_frustrated=Disagree,                                                                                    
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05055667  0.7847025 4.227517
+62  {lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05183428  0.7845304 4.226590
+63  {lag_worried=Disagree,                                                                                       
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05110422  0.7843137 4.225423
+64  {lag_frustrated=Disagree,                                                                                    
+     lag_worried=Disagree,                                                                                       
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05037416  0.7840909 4.224222
+65  {lag_frustrated=Disagree,                                                                                    
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05256434  0.7826087 4.216237
+66  {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05438949  0.7821522 4.213778
+67  {lag_happy=Strongly agree,                                                                                   
+     lag_calm=Strongly agree}             =&gt; {interaction_sat=Extremely satisfied} 0.05055667  0.5463511 4.198398
+68  {sub_none,                                                                                                   
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05365943  0.7777778 4.190211
+69  {sub_none,                                                                                                   
+     lag_calm=Agree,                                                                                             
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05000913  0.7762040 4.181732
+70  {lag_sad=Disagree,                                                                                           
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05676218  0.7755611 4.178269
+71  {yest_bike,                                                                                                  
+     yest_cleaning,                                                                                              
+     free_cleaned,                                                                                               
+     free_pray}                           =&gt; {free_walk}                           0.05110422  0.6965174 4.175294
+72  {serv_fruit=3}                        =&gt; {serv_veg=3}                          0.05420697  0.5111876 4.167853
+73  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05110422  0.7734807 4.167061
+74  {sub_none,                                                                                                   
+     lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05292937  0.7733333 4.166267
+75  {lag_restless=Disagree,                                                                                      
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05457200  0.7726098 4.162369
+76  {lag_sad=Disagree,                                                                                           
+     lag_calm=Agree,                                                                                             
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05146925  0.7726027 4.162331
+77  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05311188  0.7718833 4.158455
+78  {lag_worried=Disagree,                                                                                       
+     lag_calm=Agree,                                                                                             
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05000913  0.7718310 4.158173
+79  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05493703  0.7717949 4.157978
+80  {lag_frustrated=Disagree,                                                                                    
+     lag_calm=Agree,                                                                                             
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05110422  0.7713499 4.155581
+81  {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_calm=Agree,                                                                                             
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05019164  0.7703081 4.149969
+82  {lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05256434  0.7700535 4.148597
+83  {lag_frustrated=Disagree,                                                                                    
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05128673  0.7698630 4.147571
+84  {sub_none,                                                                                                   
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05165176  0.7669377 4.131811
+85  {lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05219931  0.7667560 4.130832
+86  {lag_frustrated=Disagree,                                                                                    
+     lag_calm=Agree,                                                                                             
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05037416  0.7666667 4.130351
+87  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05256434  0.7659574 4.126530
+88  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05548458  0.7657431 4.125375
+89  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_calm=Agree,                                                                                             
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05165176  0.7648649 4.120644
+90  {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05840482  0.7637232 4.114493
+91  {lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05584961  0.7630923 4.111094
+92  {lag_frustrated=Disagree,                                                                                    
+     lag_worried=Disagree,                                                                                       
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05274685  0.7625330 4.108081
+93  {lag_frustrated=Disagree,                                                                                    
+     lag_restless=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05603212  0.7617866 4.104060
+94  {lag_frustrated=Disagree,                                                                                    
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05420697  0.7615385 4.102723
+95  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05420697  0.7615385 4.102723
+96  {lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_calm=Agree,                                                                                             
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05000913  0.7611111 4.100421
+97  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_bored=Disagree,                                                                                         
+     free_time_sat=Very,                                                                                         
+     interaction_sat=Very}                =&gt; {food_sat=Very}                       0.05548458  0.7600000 4.094435
+98  {lag_frustrated=Disagree,                                                                                    
+     lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_calm=Agree,                                                                                             
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05201679  0.7579787 4.083545
+99  {lag_worried=Disagree,                                                                                       
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05256434  0.7578947 4.083093
+100 {lag_sad=Disagree,                                                                                           
+     lag_restless=Disagree,                                                                                      
+     lag_bored=Disagree,                                                                                         
+     lag_sluggish=Disagree,                                                                                      
+     free_time_sat=Very}                  =&gt; {food_sat=Very}                       0.05767476  0.7577938 4.082549</code></pre>
 </div>
 <div id="look-at-the-rules-that-include-heavy-drinking" class="section level1">
 <h1>Look at the rules that include heavy drinking</h1>
 <pre class="r"><code>rules_heavy_drink &lt;- subset(rules, items %in% &quot;heavy_drink&quot;)
 rules_heavy_drink
 set of 0 rules </code></pre>
+<p><strong>Heavy drinking doesn’t occur enough to generate rules at the current supoort level</strong></p>
 <p> </p>
 <hr />
 <p> </p>
@@ -906,7 +1755,7 @@ set of 0 rules </code></pre>
 <h4>Session Info:</h4>
 <pre><code>R version 3.3.1 (2016-06-21)
 Platform: x86_64-apple-darwin13.4.0 (64-bit)
-Running under: OS X 10.11.4 (El Capitan)
+Running under: OS X 10.11.6 (El Capitan)
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -919,9 +1768,9 @@ other attached packages:
 [5] dplyr_0.5.0    
 
 loaded via a namespace (and not attached):
- [1] Rcpp_0.12.5     lattice_0.20-33 digest_0.6.9    assertthat_0.1 
- [5] grid_3.3.1      R6_2.1.2        DBI_0.4-1       formatR_1.4    
- [9] magrittr_1.5    evaluate_0.9    stringi_1.1.1   lazyeval_0.2.0 
+ [1] Rcpp_0.12.4     lattice_0.20-33 digest_0.6.9    assertthat_0.1 
+ [5] grid_3.3.1      R6_2.1.2        DBI_0.4-1       formatR_1.3    
+ [9] magrittr_1.5    evaluate_0.9    stringi_1.0-1   lazyeval_0.2.0 
 [13] rmarkdown_0.9.6 tools_3.3.1     stringr_1.0.0   yaml_2.1.13    
 [17] htmltools_0.3.5 knitr_1.13      tibble_1.1     </code></pre>
 </div>

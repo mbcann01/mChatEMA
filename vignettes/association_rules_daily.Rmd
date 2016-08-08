@@ -1,7 +1,7 @@
 ---
 title: "Association Rules Analysis - Daily"
 author: "Brad Cannell"
-date: "August 03, 2016"
+date: "August 07, 2016"
 output: 
   html_document:
     toc: true
@@ -265,7 +265,30 @@ inspect(sort(rules, by = "confidence")[1:20])
 inspect(sort(rules, by = "lift")[1:20])
 ```
 
-Still rough. Need to dig deeper.
+Still rough. Need to dig deeper. Find rules that include substances, acitivities, etc. Not just feelings.
+
+Ignore rules that are just mood predicting mood. These aren't very interesting. This really amounts to not including any of the mood items in the rhs.
+
+```{r rules_no_mood}
+rules
+moods <- c("frustrated", "sad", "worried", "restless", "excited", "calm", "lonely", "bored", "sluggish")
+rules_no_mood <- subset(rules, subset = !rhs %pin% "happy")
+rules_no_mood
+for (mood in moods) {
+  rules_no_mood <- subset(rules_no_mood, subset = !rhs %pin% mood)
+}
+rules_no_mood
+
+# Top 20 rules by support (commonly occurring)
+inspect(sort(rules_no_mood, by = "support")[1:100])
+
+# Top 20 rules by confidence
+inspect(sort(rules_no_mood, by = "confidence")[1:100])
+
+# Top 20 rules by lift
+inspect(sort(rules_no_mood, by = "lift")[1:100])
+```
+
 
 # Look at the rules that include heavy drinking 
 
@@ -273,6 +296,8 @@ Still rough. Need to dig deeper.
 rules_heavy_drink <- subset(rules, items %in% "heavy_drink")
 rules_heavy_drink
 ```
+
+**Heavy drinking doesn't occur enough to generate rules at the current supoort level**
 
 &nbsp;
 
