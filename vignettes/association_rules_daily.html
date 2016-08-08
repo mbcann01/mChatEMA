@@ -523,8 +523,8 @@ set item appearances ...[0 item(s)] done [0.00s].
 set transactions ...[170 item(s), 5479 transaction(s)] done [0.01s].
 sorting and recoding items ... [127 item(s)] done [0.00s].
 creating transaction tree ... done [0.00s].
-checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.35s].
-writing ... [155738 rule(s)] done [0.01s].
+checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.37s].
+writing ... [155738 rule(s)] done [0.02s].
 creating S4 object  ... done [0.04s].
 
 write(rules, file = &quot;data/arules.csv&quot;, sep = &quot;,&quot;, col.names = NA)</code></pre>
@@ -1747,6 +1747,369 @@ inspect(sort(rules_no_mood, by = &quot;lift&quot;)[1:100])
 rules_heavy_drink
 set of 0 rules </code></pre>
 <p><strong>Heavy drinking doesn’t occur enough to generate rules at the current supoort level</strong></p>
+</div>
+<div id="look-at-rules-with-sub-on-rhs" class="section level1">
+<h1>Look at rules with sub on RHS</h1>
+<pre class="r"><code>sub_rules &lt;- subset(rules, rhs %pin% &quot;sub&quot;)
+sub_rules
+set of 3550 rules 
+# Top 20 rules by support (commonly occurring)
+inspect(sort(sub_rules, by = &quot;support&quot;)[1:20])
+   lhs                          rhs          support confidence     lift
+1  {free_internet}           =&gt; {sub_none} 0.2513232  0.5103781 1.048111
+2  {lag_bored=Disagree}      =&gt; {sub_none} 0.2274138  0.5226510 1.073315
+3  {yest_bike}               =&gt; {sub_none} 0.2195656  0.5339547 1.096528
+4  {food_sat=Somewhat}       =&gt; {sub_none} 0.2195656  0.5004160 1.027653
+5  {lag_happy=Agree}         =&gt; {sub_none} 0.2133601  0.5313636 1.091207
+6  {lag_restless=Disagree}   =&gt; {sub_none} 0.2111699  0.5439586 1.117072
+7  {lag_excited=Neutral}     =&gt; {sub_none} 0.1989414  0.5129412 1.053375
+8  {serv_ssb=0}              =&gt; {sub_none} 0.1945611  0.5731183 1.176955
+9  {lag_sad=Disagree,                                                   
+    lag_bored=Disagree}      =&gt; {sub_none} 0.1847052  0.5385844 1.106036
+10 {lag_frustrated=Disagree,                                            
+    lag_sad=Disagree}        =&gt; {sub_none} 0.1837927  0.5012444 1.029355
+11 {lag_sad=Disagree,                                                   
+    lag_restless=Disagree}   =&gt; {sub_none} 0.1805074  0.5638540 1.157930
+12 {lag_restless=Disagree,                                              
+    lag_bored=Disagree}      =&gt; {sub_none} 0.1763095  0.5911873 1.214061
+13 {lag_sluggish=Disagree}   =&gt; {sub_none} 0.1730243  0.5118790 1.051194
+14 {lag_lonely=Disagree,                                                
+    lag_bored=Disagree}      =&gt; {sub_none} 0.1701040  0.5126513 1.052780
+15 {lag_happy=Agree,                                                    
+    lag_sad=Disagree}        =&gt; {sub_none} 0.1670013  0.5443189 1.117812
+16 {lag_frustrated=Disagree,                                            
+    lag_restless=Disagree}   =&gt; {sub_none} 0.1597007  0.5510076 1.131548
+17 {lag_frustrated=Disagree,                                            
+    lag_worried=Disagree}    =&gt; {sub_none} 0.1586056  0.5129870 1.053469
+18 {lag_sad=Disagree,                                                   
+    lag_restless=Disagree,                                              
+    lag_bored=Disagree}      =&gt; {sub_none} 0.1576930  0.6004170 1.233015
+19 {lag_frustrated=Disagree,                                            
+    lag_bored=Disagree}      =&gt; {sub_none} 0.1571455  0.5401506 1.109252
+20 {food_sat=Somewhat,                                                  
+    free_time_sat=Somewhat}  =&gt; {sub_none} 0.1547728  0.5177045 1.063157
+
+# Top 20 rules by confidence
+inspect(sort(sub_rules, by = &quot;confidence&quot;)[1:20])
+   lhs                                       rhs           support confidence     lift
+1  {yest_run,                                                                         
+    serv_sweets=0}                        =&gt; {sub_none} 0.05073919  0.8176471 1.679119
+2  {lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05037416  0.8023256 1.647654
+3  {lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05165176  0.7949438 1.632495
+4  {yest_bike,                                                                        
+    yest_run,                                                                         
+    yest_cleaning}                        =&gt; {sub_none} 0.05566709  0.7901554 1.622662
+5  {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05037416  0.7863248 1.614795
+6  {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05219931  0.7835616 1.609121
+7  {lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05274685  0.7747989 1.591126
+8  {lag_frustrated=Disagree,                                                          
+    lag_restless=Disagree,                                                            
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05037416  0.7688022 1.578811
+9  {lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05274685  0.7665782 1.574244
+10 {yest_bike,                                                                        
+    yest_run}                             =&gt; {sub_none} 0.06369776  0.7653509 1.571723
+11 {lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05165176  0.7648649 1.570725
+12 {yest_bike,                                                                        
+    yest_cleaning,                                                                    
+    free_cleaned,                                                                     
+    free_shop}                            =&gt; {sub_none} 0.06096003  0.7643021 1.569569
+13 {lag_lonely=Strongly agree}            =&gt; {sub_none} 0.05329440  0.7624021 1.565668
+14 {lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05438949  0.7621483 1.565146
+15 {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_lonely=Disagree,                                                              
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05110422  0.7608696 1.562520
+16 {yest_run,                                                                         
+    lag_frustrated=Disagree}              =&gt; {sub_none} 0.05219931  0.7566138 1.553781
+17 {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_bored=Disagree,                                                               
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05365943  0.7538462 1.548097
+18 {lag_restless=Disagree,                                                            
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05694470  0.7536232 1.547639
+19 {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_lonely=Disagree,                                                              
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05384194  0.7506361 1.541505
+20 {yest_run,                                                                         
+    lag_sad=Disagree}                     =&gt; {sub_none} 0.05876985  0.7505828 1.541395
+
+# Top 20 rules by lift
+inspect(sort(sub_rules, by = &quot;lift&quot;)[1:20])
+   lhs                                       rhs           support confidence     lift
+1  {yest_run,                                                                         
+    serv_sweets=0}                        =&gt; {sub_none} 0.05073919  0.8176471 1.679119
+2  {lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05037416  0.8023256 1.647654
+3  {lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05165176  0.7949438 1.632495
+4  {yest_bike,                                                                        
+    yest_run,                                                                         
+    yest_cleaning}                        =&gt; {sub_none} 0.05566709  0.7901554 1.622662
+5  {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05037416  0.7863248 1.614795
+6  {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05219931  0.7835616 1.609121
+7  {yest_cleaning,                                                                    
+    serv_sweets=0,                                                                    
+    free_time_sat=Somewhat}               =&gt; {sub_cig}  0.05639715  0.6645161 1.607454
+8  {lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05274685  0.7747989 1.591126
+9  {lag_frustrated=Disagree,                                                          
+    lag_restless=Disagree,                                                            
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05037416  0.7688022 1.578811
+10 {lag_sad=Disagree,                                                                 
+    lag_restless=Disagree,                                                            
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05274685  0.7665782 1.574244
+11 {yest_cleaning,                                                                    
+    serv_sweets=0,                                                                    
+    interaction_sat=Somewhat}             =&gt; {sub_cig}  0.05092170  0.6503497 1.573186
+12 {yest_bike,                                                                        
+    yest_run}                             =&gt; {sub_none} 0.06369776  0.7653509 1.571723
+13 {lag_restless=Disagree,                                                            
+    lag_bored=Disagree,                                                               
+    food_sat=Very,                                                                    
+    free_time_sat=Very}                   =&gt; {sub_none} 0.05165176  0.7648649 1.570725
+14 {lag_frustrated=Disagree,                                                          
+    lag_excited=Disagree,                                                             
+    serv_sweets=0}                        =&gt; {sub_cig}  0.05128673  0.6489607 1.569826
+15 {yest_bike,                                                                        
+    yest_cleaning,                                                                    
+    free_cleaned,                                                                     
+    free_shop}                            =&gt; {sub_none} 0.06096003  0.7643021 1.569569
+16 {lag_lonely=Strongly agree}            =&gt; {sub_none} 0.05329440  0.7624021 1.565668
+17 {lag_happy=Agree,                                                                  
+    lag_restless=Disagree,                                                            
+    free_time=More than 4 hours- 6 hours} =&gt; {sub_none} 0.05438949  0.7621483 1.565146
+18 {free_internet,                                                                    
+    lag_happy=Agree,                                                                  
+    lag_sad=Disagree,                                                                 
+    lag_lonely=Disagree,                                                              
+    min_group=15 or less minutes}         =&gt; {sub_none} 0.05110422  0.7608696 1.562520
+19 {free_pray,                                                                        
+    lag_happy=Strongly agree}             =&gt; {sub_cig}  0.05055667  0.6441860 1.558276
+20 {yest_run,                                                                         
+    lag_frustrated=Disagree}              =&gt; {sub_none} 0.05219931  0.7566138 1.553781</code></pre>
+</div>
+<div id="smoking-on-rhs" class="section level1">
+<h1>Smoking on RHS</h1>
+<pre class="r"><code>cig_rules &lt;- subset(rules, rhs %pin% &quot;cig&quot;)
+cig_rules
+set of 261 rules 
+# Top 20 rules by support (commonly occurring)
+inspect(sort(cig_rules, by = &quot;support&quot;)[1:20])
+   lhs                                       rhs          support confidence     lift
+1  {lag_act_sit,                                                                     
+    serv_sweets=0}                        =&gt; {sub_cig} 0.13396605  0.5342067 1.292238
+2  {yest_cleaning,                                                                   
+    serv_sweets=0}                        =&gt; {sub_cig} 0.10804891  0.5004227 1.210515
+3  {serv_sweets=0,                                                                   
+    free_time_sat=Somewhat}               =&gt; {sub_cig} 0.10403358  0.5158371 1.247802
+4  {lag_worried=Disagree,                                                            
+    serv_sweets=0}                        =&gt; {sub_cig} 0.10220843  0.5022422 1.214916
+5  {free_time=More than 6 hours- 8 hours} =&gt; {sub_cig} 0.09673298  0.5190989 1.255692
+6  {serv_sweets=0,                                                                   
+    interaction_sat=Somewhat}             =&gt; {sub_cig} 0.09417777  0.5019455 1.214198
+7  {lag_sad=Disagree,                                                                
+    lag_worried=Disagree,                                                            
+    serv_sweets=0}                        =&gt; {sub_cig} 0.09326519  0.5024582 1.215439
+8  {interaction_sat=A little}             =&gt; {sub_cig} 0.09308268  0.5009823 1.211868
+9  {lag_act_sit,                                                                     
+    free_pray}                            =&gt; {sub_cig} 0.08669465  0.5037116 1.218470
+10 {lag_happy=Strongly agree}             =&gt; {sub_cig} 0.08395693  0.5348837 1.293875
+11 {free_pray,                                                                       
+    serv_sweets=0}                        =&gt; {sub_cig} 0.08395693  0.5174353 1.251668
+12 {lag_act_sit,                                                                     
+    yest_cleaning,                                                                   
+    free_cleaned}                         =&gt; {sub_cig} 0.08340938  0.5094760 1.232415
+13 {lag_happy=Agree,                                                                 
+    lag_sad=Disagree,                                                                
+    serv_sweets=0}                        =&gt; {sub_cig} 0.08304435  0.5066815 1.225655
+14 {lag_sad=Disagree,                                                                
+    lag_excited=Disagree}                 =&gt; {sub_cig} 0.08231429  0.5078829 1.228561
+15 {yest_cleaning,                                                                   
+    free_cleaned,                                                                    
+    serv_sweets=0}                        =&gt; {sub_cig} 0.08012411  0.5086906 1.230515
+16 {free_craft}                           =&gt; {sub_cig} 0.07975908  0.5075494 1.227754
+17 {lag_act_sit,                                                                     
+    free_internet,                                                                   
+    serv_sweets=0}                        =&gt; {sub_cig} 0.07957657  0.5159763 1.248139
+18 {lag_excited=Disagree,                                                            
+    serv_sweets=0}                        =&gt; {sub_cig} 0.07884650  0.5721854 1.384108
+19 {free_pray,                                                                       
+    min_group=15 or less minutes}         =&gt; {sub_cig} 0.07720387  0.5300752 1.282244
+20 {free_cleaned,                                                                    
+    serv_meat=2}                          =&gt; {sub_cig} 0.07537872  0.5398693 1.305935
+
+# Top 20 rules by confidence
+inspect(sort(cig_rules, by = &quot;confidence&quot;)[1:20])
+   lhs                               rhs          support confidence     lift
+1  {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    free_time_sat=Somewhat}       =&gt; {sub_cig} 0.05639715  0.6645161 1.607454
+2  {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    interaction_sat=Somewhat}     =&gt; {sub_cig} 0.05092170  0.6503497 1.573186
+3  {lag_frustrated=Disagree,                                                 
+    lag_excited=Disagree,                                                    
+    serv_sweets=0}                =&gt; {sub_cig} 0.05128673  0.6489607 1.569826
+4  {free_pray,                                                               
+    lag_happy=Strongly agree}     =&gt; {sub_cig} 0.05055667  0.6441860 1.558276
+5  {lag_lonely=Agree}             =&gt; {sub_cig} 0.05858733  0.6331361 1.531546
+6  {yest_cleaning,                                                           
+    lag_frustrated=Disagree,                                                 
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05238182  0.6239130 1.509236
+7  {yest_cleaning,                                                           
+    lag_worried=Disagree,                                                    
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05165176  0.6206140 1.501256
+8  {lag_sad=Disagree,                                                        
+    lag_excited=Disagree,                                                    
+    serv_sweets=0}                =&gt; {sub_cig} 0.05657967  0.6200000 1.499770
+9  {lag_act_sit,                                                             
+    yest_cleaning,                                                           
+    serv_sweets=0}                =&gt; {sub_cig} 0.06497536  0.6137931 1.484756
+10 {free_pray,                                                               
+    serv_veg=2}                   =&gt; {sub_cig} 0.05803979  0.6127168 1.482152
+11 {lag_frustrated=Disagree,                                                 
+    lag_sad=Disagree,                                                        
+    lag_worried=Disagree,                                                    
+    lag_excited=Disagree}         =&gt; {sub_cig} 0.05457200  0.6114519 1.479093
+12 {lag_frustrated=Disagree,                                                 
+    lag_sad=Disagree,                                                        
+    lag_worried=Disagree,                                                    
+    serv_veg=2}                   =&gt; {sub_cig} 0.05347691  0.6104167 1.476588
+13 {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05639715  0.6094675 1.474292
+14 {free_music,                                                              
+    serv_meat=0}                  =&gt; {sub_cig} 0.05201679  0.6089744 1.473100
+15 {lag_frustrated=Disagree,                                                 
+    lag_worried=Disagree,                                                    
+    lag_excited=Disagree}         =&gt; {sub_cig} 0.05584961  0.6047431 1.462864
+16 {free_pray,                                                               
+    serv_meat=0}                  =&gt; {sub_cig} 0.06734806  0.6029412 1.458505
+17 {lag_frustrated=Disagree,                                                 
+    lag_worried=Disagree,                                                    
+    serv_veg=2}                   =&gt; {sub_cig} 0.05657967  0.6019417 1.456088
+18 {yest_cleaning,                                                           
+    free_cleaned,                                                            
+    serv_sweets=0,                                                           
+    min_group=15 or less minutes} =&gt; {sub_cig} 0.05311188  0.6012397 1.454389
+19 {free_pray,                                                               
+    serv_sweets=0,                                                           
+    min_group=15 or less minutes} =&gt; {sub_cig} 0.05146925  0.5987261 1.448309
+20 {lag_act_sit,                                                             
+    serv_sweets=0,                                                           
+    free_time_sat=Somewhat}       =&gt; {sub_cig} 0.07172842  0.5981735 1.446972
+
+# Top 20 rules by lift
+inspect(sort(cig_rules, by = &quot;lift&quot;)[1:20])
+   lhs                               rhs          support confidence     lift
+1  {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    free_time_sat=Somewhat}       =&gt; {sub_cig} 0.05639715  0.6645161 1.607454
+2  {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    interaction_sat=Somewhat}     =&gt; {sub_cig} 0.05092170  0.6503497 1.573186
+3  {lag_frustrated=Disagree,                                                 
+    lag_excited=Disagree,                                                    
+    serv_sweets=0}                =&gt; {sub_cig} 0.05128673  0.6489607 1.569826
+4  {free_pray,                                                               
+    lag_happy=Strongly agree}     =&gt; {sub_cig} 0.05055667  0.6441860 1.558276
+5  {lag_lonely=Agree}             =&gt; {sub_cig} 0.05858733  0.6331361 1.531546
+6  {yest_cleaning,                                                           
+    lag_frustrated=Disagree,                                                 
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05238182  0.6239130 1.509236
+7  {yest_cleaning,                                                           
+    lag_worried=Disagree,                                                    
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05165176  0.6206140 1.501256
+8  {lag_sad=Disagree,                                                        
+    lag_excited=Disagree,                                                    
+    serv_sweets=0}                =&gt; {sub_cig} 0.05657967  0.6200000 1.499770
+9  {lag_act_sit,                                                             
+    yest_cleaning,                                                           
+    serv_sweets=0}                =&gt; {sub_cig} 0.06497536  0.6137931 1.484756
+10 {free_pray,                                                               
+    serv_veg=2}                   =&gt; {sub_cig} 0.05803979  0.6127168 1.482152
+11 {lag_frustrated=Disagree,                                                 
+    lag_sad=Disagree,                                                        
+    lag_worried=Disagree,                                                    
+    lag_excited=Disagree}         =&gt; {sub_cig} 0.05457200  0.6114519 1.479093
+12 {lag_frustrated=Disagree,                                                 
+    lag_sad=Disagree,                                                        
+    lag_worried=Disagree,                                                    
+    serv_veg=2}                   =&gt; {sub_cig} 0.05347691  0.6104167 1.476588
+13 {yest_cleaning,                                                           
+    serv_sweets=0,                                                           
+    food_sat=Somewhat}            =&gt; {sub_cig} 0.05639715  0.6094675 1.474292
+14 {free_music,                                                              
+    serv_meat=0}                  =&gt; {sub_cig} 0.05201679  0.6089744 1.473100
+15 {lag_frustrated=Disagree,                                                 
+    lag_worried=Disagree,                                                    
+    lag_excited=Disagree}         =&gt; {sub_cig} 0.05584961  0.6047431 1.462864
+16 {free_pray,                                                               
+    serv_meat=0}                  =&gt; {sub_cig} 0.06734806  0.6029412 1.458505
+17 {lag_frustrated=Disagree,                                                 
+    lag_worried=Disagree,                                                    
+    serv_veg=2}                   =&gt; {sub_cig} 0.05657967  0.6019417 1.456088
+18 {yest_cleaning,                                                           
+    free_cleaned,                                                            
+    serv_sweets=0,                                                           
+    min_group=15 or less minutes} =&gt; {sub_cig} 0.05311188  0.6012397 1.454389
+19 {free_pray,                                                               
+    serv_sweets=0,                                                           
+    min_group=15 or less minutes} =&gt; {sub_cig} 0.05146925  0.5987261 1.448309
+20 {lag_act_sit,                                                             
+    serv_sweets=0,                                                           
+    free_time_sat=Somewhat}       =&gt; {sub_cig} 0.07172842  0.5981735 1.446972</code></pre>
+<p>Are we asking the right questions? Are any of these patterns possible to intervene on even if they are highly predictive?</p>
 <p> </p>
 <hr />
 <p> </p>

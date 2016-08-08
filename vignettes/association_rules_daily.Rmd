@@ -297,6 +297,38 @@ rules_heavy_drink
 
 **Heavy drinking doesn't occur enough to generate rules at the current supoort level**
 
+# Look at rules with sub on RHS
+
+```{r sub_rules}
+sub_rules <- subset(rules, rhs %pin% "sub")
+sub_rules
+# Top 20 rules by support (commonly occurring)
+inspect(sort(sub_rules, by = "support")[1:20])
+
+# Top 20 rules by confidence
+inspect(sort(sub_rules, by = "confidence")[1:20])
+
+# Top 20 rules by lift
+inspect(sort(sub_rules, by = "lift")[1:20])
+```
+
+# Smoking on RHS
+
+```{r smoking_rhs}
+cig_rules <- subset(rules, rhs %pin% "cig")
+cig_rules
+# Top 20 rules by support (commonly occurring)
+inspect(sort(cig_rules, by = "support")[1:20])
+
+# Top 20 rules by confidence
+inspect(sort(cig_rules, by = "confidence")[1:20])
+
+# Top 20 rules by lift
+inspect(sort(cig_rules, by = "lift")[1:20])
+```
+
+Are we asking the right questions? Are any of these patterns possible to intervene on even if they are highly predictive?
+
 &nbsp;
 
 -------------------------------------------------------------------------------   
